@@ -4,8 +4,8 @@ module.exports = defineConfig({
 });
 
 // 引入插件
-import Icons from "unplugin-icons/vite";
-import IconsResolver from "unplugin-icons/resolver";
+const Icons = require("unplugin-icons/vite");
+const IconsResolver = require("unplugin-icons/resolver");
 const AutoImport = require("unplugin-auto-import/webpack");
 const Components = require("unplugin-vue-components/webpack");
 const { ElementPlusResolver } = require("unplugin-vue-components/resolvers");

@@ -20,26 +20,42 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, watch } from "vue"
 import { ElMessage } from "element-plus";
+import { useLoginStore } from "@/store/login/login";
 
-const isRemPwd = ref(false)
-let formLabelName = ref("")
-let formLabelPwd = ref("")
+// 记住密码框是否勾选
+const isRemPwd = ref(localStorage.getItem("isRemPwd" ?? false))
+watch(isRemPwd, (newvalue) => {
+    localStorage.setItem("isRemPwd", newvalue)
+})
+
+// 对账号密码进行初始化
+let formLabelName = ref(localStorage.getItem("name") ?? "")
+let formLabelPwd = ref(localStorage.getItem("password") ?? "")
+const loginStore = useLoginStore()
 
 function loginAction() {
-    console.log("点击登录");
+    console.log("点击登录", formLabelName.value);
     if (formLabelName.value && formLabelPwd.value) {
-        console.log("登录成功");
+        // 判断是否要记住密码
+        if (isRemPwd) {
+            localStorage.setItem("name", formLabelName.value)
+            localStorage.setItem("password", formLabelPwd.value)
+        } else {
+            localStorage.removeItem("name")
+            localStorage.removeItem("password")
+        }
+        // 向服务器发送请求
+        loginStore.loginAccountAction(formLabelName.value, formLabelPwd.value)
     } else {
-        ElMessage.error("请重新输入账户和密码")
+        ElMessage.error("请重新输入账号和密码")
     }
 }
 </script>
 
 
 <style scoped>
-@import url("element-plus/theme-chalk/el-message.css");
 @import url("/src/style/reset.css");
 @import url("/src/style/common.css");
 

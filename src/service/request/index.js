@@ -1,9 +1,8 @@
 import axios from "axios";
-// import { reject, resolve } from 'core-js/fn/promise'
-import { BASE_URL, TIMEOUT } from "./config";
+import { BASE_URL, TIMEOUT } from "../config/config";
 
 // 对axios的封装
-export class ZYRequest {
+class ZYRequest {
   constructor(baseURL, timeout = 10000) {
     this.instance = axios.create({
       baseURL,
@@ -46,3 +45,5 @@ export class ZYRequest {
     });
   }
 }
+
+export let requests = new ZYRequest(BASE_URL, TIMEOUT);
