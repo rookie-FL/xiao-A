@@ -4,6 +4,8 @@ module.exports = defineConfig({
 });
 
 // 引入插件
+import Icons from "unplugin-icons/vite";
+import IconsResolver from "unplugin-icons/resolver";
 const AutoImport = require("unplugin-auto-import/webpack");
 const Components = require("unplugin-vue-components/webpack");
 const { ElementPlusResolver } = require("unplugin-vue-components/resolvers");
@@ -18,10 +20,20 @@ module.exports = {
     // plugins配置里加下面的代码
     plugins: [
       AutoImport({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          ElementPlusResolver(),
+          IconsResolver({
+            prefix: "Icon",
+          }),
+        ],
       }),
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          IconsResolver({
+            enabledCollections: ["ep"],
+          }),
+          ElementPlusResolver(),
+        ],
       }),
     ],
   },
