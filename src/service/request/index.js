@@ -23,24 +23,38 @@ class ZYRequest {
     });
   }
 
-  get(config) {
+  get(config, token) {
     return this.request({
       ...config,
       method: "get",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*", // 或指定允许访问的特定源
+        token: `${token}`,
       },
     });
   }
 
-  post(config) {
+  post(config, token) {
     return this.request({
       ...config,
       method: "post",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*", // 或指定允许访问的特定源
+        token: `${token}`,
+      },
+    });
+  }
+
+  delete(config, token) {
+    return this.request({
+      ...config,
+      method: "delete",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*", // 或指定允许访问的特定源
+        token: `${token}`,
       },
     });
   }

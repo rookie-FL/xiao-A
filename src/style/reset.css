@@ -65,3 +65,13 @@ img {
   visibility: hidden;
   height: 0;
 }
+
+input,
+textarea {
+  border: 1px solid gray;
+  outline: none; /* 取消聚焦时的外边框 */
+  background: none; /* 取消背景色 */
+  padding: 0; /* 取消内边距 */
+  margin: 0; /* 取消外边距 */
+  /* 添加其他您需要的样式 */
+}

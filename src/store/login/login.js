@@ -18,6 +18,7 @@ export const useLoginStore = defineStore("login", {
         this.id = account;
         this.password = pwd;
         // 保存token
+
         localStorage.setItem("token", loginResult.data.token);
         console.log("登录成功", loginResult);
         // 跳转页面

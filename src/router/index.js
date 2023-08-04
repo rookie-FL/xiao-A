@@ -26,9 +26,29 @@ const routes = [
         component: () => import("../views/main/appraisalMan/appraisalMan.vue"),
       },
       {
+        path: "/main/show",
+        name: "setShow",
+        component: () => import("../views/main/set/setShow/setShow.vue"),
+      },
+      {
+        path: "/main/annouce",
+        name: "annouce",
+        component: () => import("../views/main/set/annouce/announce.vue"),
+      },
+      {
+        path: "/main/annouce/create",
+        name: "createAnn",
+        component: () => import("../views/main/set/annouce/createAnn.vue"),
+      },
+      {
         path: "/main/accMan",
         name: "accMan",
         component: () => import("../views/main/accMan/accMan.vue"),
+      },
+      {
+        path: "/main/annouce/detail/:id",
+        name: "deatilAnn",
+        component: () => import("../views/main/set/annouce/detailAnn.vue"),
       },
     ],
   },
@@ -48,7 +68,9 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   if (to.path === "/main") {
     const token = localStorage.getItem("token");
+    console.log("导航守卫判断", token);
     if (token) {
+      return "/main/home";
       console.log("用户已经登录");
     } else {
       return "/login";
