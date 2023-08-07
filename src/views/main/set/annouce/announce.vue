@@ -6,7 +6,7 @@
         </el-button>
 
         <div class="container">
-
+            <!--  -->
             <el-table :data="filterTableData" style="width: 100%" class="table" @row-click="handleRowClick">
                 <el-table-column label="标题" prop="title" align="center" />
                 <el-table-column label="组别" prop="noGroup" align="center" />
@@ -17,7 +17,7 @@
 
                     <template #default="scope">
                         <el-button size="small" type="primary" @click="handleDelete(scope.$index, scope.row)"
-                            class="delete button">删除</el-button>
+                            class="delete button" style="position: relative; z-index: 100;">删除</el-button>
                         <el-button size="small" @click="handleEdit(scope.$index, scope.row)" class="edit button">
                             <router-link to="/main/annouce/create" data-row="scope.row">编辑</router-link></el-button>
                     </template>
@@ -50,7 +50,7 @@ const results = storeToRefs(annouces)
 let filterTableData = results.annouce
 let pages = Number(results.pages.value) * 10
 
-console.log("打印一些a", pages);
+console.log("打印一些a", filterTableData);
 
 const handleEdit = (index, row) => {
     console.log(index, row, "点击编辑")

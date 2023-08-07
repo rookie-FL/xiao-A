@@ -1,11 +1,11 @@
 import { requests } from "../request/index";
 
-export async function deleteAnn(id) {
+export async function deleteAnn(idi) {
   return requests.delete(
     {
       url: `/notification/delete`,
       data: {
-        id,
+        id: idi,
       },
     },
     localStorage.getItem("token")
