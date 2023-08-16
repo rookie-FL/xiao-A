@@ -34,62 +34,27 @@
 import {reactive, ref} from 'vue'
 import { useLoginStore } from '../../../../store/login/login'
 import { requests } from '@/service/request'
+import { getprogress } from '@/store/home/home'
+import { storeToRefs } from "pinia";
 export default{
 name: "ShowFirst1",
 
 
 setup(){
-  const counter = useLoginStore()
-
- let signupCount=ref(0)
- let count=ref(0)
- let statusCount=reactive([])
- let id=reactive([1,2,3])
-
-  var sign = new XMLHttpRequest();
-  sign.open('get', 'http://119.29.250.245:8080/wx/user/signupCount', true);
-  sign.setRequestHeader("Content-Type", "application/json")
-  sign.setRequestHeader('token', counter.token)
-  sign.send();
-  sign.onreadystatechange = function () {
-    if (sign.readyState == 4 && sign.status == 200) {
-      signupCount.value=JSON.parse(sign.responseText).data
-    }
-
-  }
-
-  var enroll= new XMLHttpRequest();
-  enroll.open('get', 'http://119.29.250.245:8080/wx/user/count', true);
-  enroll.setRequestHeader("Content-Type", "application/json")
-  enroll.setRequestHeader('token', counter.token)
-  enroll.send();
-  enroll.onreadystatechange = function () {
-    if (enroll.readyState == 4 && enroll.status == 200) {
-      count.value=JSON.parse(this.responseText).data
-    }
-
-  }
-
-for(let i=0;i<3;i++){
-  let status = new XMLHttpRequest();
-  status.open('get', 'http://119.29.250.245:8080/wx/user/assessCount?id='+id[i]+'', true);
-  status.setRequestHeader("Content-Type", "application/json")
-  status.setRequestHeader('token', counter.token)
-  status.send();
-  status.onreadystatechange = function () {
-    if (status.readyState == 4 && status.status == 200) {
-      console.log(this.responseText);
-      statusCount[i]=JSON.parse(this.responseText).data
-    }
-
-  }
-}
-
+  let get=getprogress()
+  let gets=storeToRefs(get)
+  get.sign()
+  get.getcount()
+  get.status()
+ let signupCount=gets.signupCount
+ let count=gets.counts
+ let statusCount=gets.statusCount
 
  return {
+
   signupCount,
   count,
-  statusCount
+  statusCount,
  }
 
 }

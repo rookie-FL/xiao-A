@@ -10,7 +10,7 @@ export const getList = defineStore("getList", {
   state: () => ({
     gethref: '',
     list: '',
-    length:'',
+    length:'8'
   }),
   actions: {
 
@@ -62,9 +62,10 @@ for(let i=0;i<this.list.length;i++)
 
 },
 async getlength(){
-const results=await requests.get({
+let results=await requests.get({
   url:`/user/info?page=${1}&pageSize=${999}`
 }, useLoginStore().token)
+
 this.length=results.data.records.length
 }
 

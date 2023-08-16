@@ -24,7 +24,7 @@ export const getprogress = defineStore("getprogresss", {
         endTime.push(0)
       }
       const result = await requests.post({
-        url: "http://119.29.250.245:8080/web/assess/add",
+        url: "/web/assess/add",
         data: {
           id: id,
           assessGroup: anyToken().userGroup,
@@ -67,7 +67,6 @@ export const getprogress = defineStore("getprogresss", {
           assessGroup: anyToken().userGroup,
         },
       }, useLoginStore().token)
-
       for (let i = 0; i < result.data.data.length; i++) {
         //处理时间戳
         result.data.data[i].startTime.splice(3, 3)
@@ -87,7 +86,8 @@ export const getprogress = defineStore("getprogresss", {
           'name': result.data.data[i].name,
           'time': result.data.data[i].startTime.join('.') + '-' + result.data.data[i].endTime.join('.'),
           'status': status,
-          'changeable': changeable
+          'changeable': changeable,
+          'contentUrl':result.data.data[i].contentUrl
         }
 
       }

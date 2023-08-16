@@ -11,6 +11,9 @@ export const getprogress = defineStore("getprogressz", {
     noification: {},
     progress: [[], [], [], [], [], [],[]],
     pages:[],
+    signupCount:'',
+    counts:'',
+    statusCount:[],
 
 
   }),
@@ -25,6 +28,33 @@ export const getprogress = defineStore("getprogressz", {
       if ( this.base == 6) { this.group = '管理组' }
 
     },
+    
+    async sign() {
+      let result= await requests.get({
+      url:'/user/signupCount'
+    },
+    useLoginStore().token)
+    this.signupCount=result.data
+  },
+  
+    async getcount(){
+      let result=await requests.get({
+      url:'/user/count'
+    },
+    useLoginStore().token)
+this.counts=result.data
+  },
+
+  
+async status(){
+  for(let i=0;i<3;i++){
+    let result=await requests.get({
+      url:`/user/signupCount?id=${i}`
+    },
+    useLoginStore().token)
+this.statusCount[i]=result.data
+  }
+},
 
     async getinformation() {
       let result={data:{}}

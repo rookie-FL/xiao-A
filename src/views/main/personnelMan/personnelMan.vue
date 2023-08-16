@@ -124,7 +124,7 @@ assessIndex:'',
   })
 
     let  List
-    let length=ref(0)
+    let length
     let searchpage=ref(1)
     let isShow=ref(false)
     let disabled=ref(true)
@@ -137,7 +137,8 @@ assessIndex:'',
     get.getList(spot.page,spot.size,spot.groupOption,spot.assessIndex,spot.name,spot.college,spot.major,spot.assessld)
     const href=gets.gethref
     List=gets.list
-    length.value=Math.ceil((gets.length.value)/10)
+    length=Math.ceil((gets.length.value)/10)
+    console.log(length);
 
 
 

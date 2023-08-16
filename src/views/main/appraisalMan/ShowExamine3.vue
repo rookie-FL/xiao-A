@@ -1,36 +1,15 @@
 <template>
   <div class="content">
 
-    <div class="fileline">
-      <div class="e_picture"></div>
-      <li class="see">查看</li>
-      <li class="download">下载</li>
+    <div class="fileline" v-for="(n,index) in progress" :key="index">
+      <div class="e_picture">
+        <img src="../../../assets/img/pdfPicture.png" >
+        <li>{{ n.name }}</li>
+      </div>
+      <a class="see" v-bind:href="n.contentUrl">查看</a>
+      <a class="download" v-bind:href="n.contentUrl" :download="n.name+'.pdf'">下载</a>
     </div>
-    <div class="fileline">
-      <div class="e_picture"></div>
-      <li class="see">查看</li>
-      <li class="download">下载</li>
-    </div>
-    <div class="fileline">
-      <div class="e_picture"></div>
-      <li class="see">查看</li>
-      <li class="download">下载</li>
-    </div>
-    <div class="fileline">
-      <div class="e_picture"></div>
-      <li class="see">查看</li>
-      <li class="download">下载</li>
-    </div>
-    <div class="fileline">
-      <div class="e_picture"></div>
-      <li class="see">查看</li>
-      <li class="download">下载</li>
-    </div>
-    <div class="fileline">
-      <div class="e_picture"></div>
-      <li class="see">查看</li>
-      <li class="download">下载</li>
-    </div>
+   
 
     <div class="pageslist">
 
@@ -52,8 +31,16 @@
 </template>
 
 <script>
+import { getprogress } from '@/store/appraisalMan/appraisalMan';
+import {ref} from 'vue'
 export default {
-  name: "ShowExamine3"
+  name: "ShowExamine3",
+  setup(){
+const progress=ref(getprogress().progress)
+return {
+  progress
+}
+  }
 }
 </script>
 
@@ -82,7 +69,20 @@ export default {
   float: left;
   width: 70%;
   height: 90%;
-  background-color: rgb(201, 250, 250);
+  background-color: white
+}
+
+.e_picture img{
+  float: left;
+  width: 30%;
+  height: 100%;
+}
+.e_picture li{
+  display: flex;
+  align-items: center;
+  float: left;
+  width: 70%;
+  height: 100%;
 }
 
 .see {
