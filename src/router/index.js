@@ -43,7 +43,7 @@ const routes = [
       {
         path: "/main/accMan",
         name: "accMan",
-        component: () => import("../views/main/accMan/accMan.vue"),
+        component: () => import("../views/main/accMan/accMans.vue"),
       },
       {
         path: "/main/annouce/detail/:id",

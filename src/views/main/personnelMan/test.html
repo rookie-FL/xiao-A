@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+
+
+  <a>下载文件</a>
+
+</body>
+
+<script>
+  import axios from 'axios';
+
+  let abc
+  var url
+  let ap = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ7XG4gIFwidXNlcm5hbWVcIiA6IFwiMTIzXCIsXG4gIFwidXNlckdyb3VwXCIgOiAwLFxuICBcIm5pY2tuYW1lXCIgOiBcIuaYteensFwiLFxuICBcInJvbGVcIiA6IDRcbn0iLCJpYXQiOjE2OTE1MDQ4ODEsImV4cCI6MTY5NDA5Njg4MX0.3YCPKQV9CQ3RNfWfZnMGiOJPRrT4V1XbJR8fr1jjIgp9A_6LFh_Eo5b0ABtj2bTgbEEHkjv_ElFtlKK8o1TKlw'
+
+
+  axios({
+    responseType: 'blob',
+    method: "get",
+    url: "http://119.29.250.245:8080/web/assess/download",
+    data: {},
+    headers: {
+      'Content-Type': 'application/json',
+      'token': ap,
+    }
+  }).then((result) => {
+    console.log(result);
+    var elink = document.querySelector('a');
+    var blob = new Blob([result.data], { type: 'application/vnd.ms-excel' });
+    elink.href = URL.createObjectURL(blob);
+    console.log(blob);
+    elink.download = "小A后台管理系统.xlsx"
+
+  })
+
+  let chuli = (e) => {
+    var af = document.querySelector('.upload')
+    af.onchange = function () {
+      const file = e.target.files;
+      console.log(file);
+      const fileReader = new FileReader(e);
+      reader.readAsText(file);
+      fileReader.onload=function(){
+        const data = e.target.result;
+        const workbook = XLSX.read(data, { type: 'binary' })
+        const wsname = workbook.SheetNames[0]
+        const ws = xlsx.utils.sheet_to_json(workbook.Sheets[wsname])
+      }
+      
+  
+
+    }
+  }
+
+
+</script>
