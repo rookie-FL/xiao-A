@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import axios from 'axios';
-import XLSX from 'xlsx'
 import { useLoginStore } from "@/store/login/login";
 import { requests } from "../../service/request/index";
 
