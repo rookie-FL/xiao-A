@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from 'axios';
-import { useLoginStore } from "@/store/login/login";
 import XLSX from 'xlsx'
+import { useLoginStore } from "@/store/login/login";
 import { requests } from "../../service/request/index";
 
 
@@ -36,7 +36,6 @@ export const getList = defineStore("getList", {
 
       //     ws.push(XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[i]]))
       //   }
-
       // }
       // console.log(ws);
     },
