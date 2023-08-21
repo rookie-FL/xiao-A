@@ -28,7 +28,7 @@ let updatetime = data.updateTime
 let time = updatetime
 
 function back() {
-    router.push("/main/annouce")
+    window.history.back();
 }
 </script>
 
