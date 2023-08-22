@@ -136,11 +136,13 @@ assessIndex:'',
     const gets = storeToRefs(get)
     get.excel()
 
+    //路由切换
     if(route.params.group!=undefined){
     spot.groupOption=route.params.group
     isShow.value=true;disabled.value=false
   }
     
+  
     get.getList(spot.page,spot.size,spot.groupOption,spot.assessIndex,spot.name,spot.college,spot.major,spot.assessld)
     const href=gets.gethref
     List=gets.list
