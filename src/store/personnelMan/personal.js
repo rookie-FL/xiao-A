@@ -35,7 +35,6 @@ export const getList = defineStore("getList", {
 
       //     ws.push(XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[i]]))
       //   }
-
       // }
       // console.log(ws);
     },

@@ -116,6 +116,7 @@ function handleItemClick(event) {
 
 .container {
     height: 85vh;
+    margin-bottom: 0;
 }
 
 .side {
