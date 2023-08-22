@@ -1,7 +1,5 @@
 import { defineStore } from "pinia";
-import axios from 'axios';
 import { useLoginStore } from "@/store/login/login";
-import XLSX from 'xlsx'
 import { requests } from "../../service/request/index";
 
 
@@ -10,7 +8,8 @@ export const getList = defineStore("getList", {
   state: () => ({
     gethref: '',
     list: '',
-    length:'8'
+    length: '8',
+    trade:''
   }),
   actions: {
 
@@ -41,33 +40,62 @@ export const getList = defineStore("getList", {
       // console.log(ws);
     },
 
-async getList(page,size,groupOption,assessIndex,name,college,major,assessld){
-const result=await requests.get({
-  url:`/user/info?page=${page}&pageSize=${size}&assessIndex=${assessIndex}&name=${name}&college=${college}&major=${major}&groupOption=${groupOption}&assessld=${assessld}`
+    async getList(page, size, groupOption, assessIndex, name, college, major, assessld, sort) {
+      const result = await requests.get({
+        url: `/user/info?page=${page}&pageSize=${size}&assessIndex=${assessIndex}&name=${name}&college=${college}&major=${major}&groupOption=${groupOption}&assessld=${assessld}`
 
-}, useLoginStore().token)
-this.list=result.data.records
-//组别识别
-for(let i=0;i<this.list.length;i++)
-{
-  if ( this.list[i].group_option == 0) { this.list[i].group_option = '后台组' }
-  if ( this.list[i].group_option == 1) { this.list[i].group_option = '前端组' }
-  if ( this.list[i].group_option == 2) { this.list[i].group_option = 'ai组' }
-  if ( this.list[i].group_option == 3) { this.list[i].group_option = '传媒组' }
-  if ( this.list[i].group_option == 4) { this.list[i].group_option = '机械组' }
-  if ( this.list[i].group_option == 5) { this.list[i].group_option = '电控组' }
-  if ( this.list[i].group_option == 6) { this.list[i].group_option = '管理组' }
-}
+      }, useLoginStore().token)
+      this.list = result.data.records
 
 
-},
-async getlength(){
-let results=await requests.get({
-  url:`/user/info?page=${1}&pageSize=${999}`
-}, useLoginStore().token)
+      //总分排序
+      if (sort === '1') {
+        for (let i = 0; i < this.list.length; i++) {
+          for (let j = i; j < this.list.length; j++) {
+            if (this.list[i].scores[0].score < this.list[j].scores[0].score) {
+              this.trade = this.list[i]
+              this.list[i] = this.list[j]
+              this.list[j] = this.trade
+            }
 
-this.length=results.data.records.length
-}
+          }
+        }
+      }
+      
+      if(sort === '0'){
+        for (let i = 0; i < this.list.length; i++) {
+          for (let j = i; j < this.list.length; j++) {
+            if (this.list[i].scores[0].score > this.list[j].scores[0].score) {
+              this.trade = this.list[i]
+              this.list[i] = this.list[j]
+              this.list[j] = this.trade
+            }
+
+          }
+        }
+      }
+
+
+      //组别识别
+      for (let i = 0; i < this.list.length; i++) {
+        if (this.list[i].group_option == 0) { this.list[i].group_option = '后台组' }
+        if (this.list[i].group_option == 1) { this.list[i].group_option = '前端组' }
+        if (this.list[i].group_option == 2) { this.list[i].group_option = 'ai组' }
+        if (this.list[i].group_option == 3) { this.list[i].group_option = '传媒组' }
+        if (this.list[i].group_option == 4) { this.list[i].group_option = '机械组' }
+        if (this.list[i].group_option == 5) { this.list[i].group_option = '电控组' }
+        if (this.list[i].group_option == 6) { this.list[i].group_option = '管理组' }
+      }
+
+
+    },
+    async getlength() {
+      let results = await requests.get({
+        url: `/user/info?page=${1}&pageSize=${999}`
+      }, useLoginStore().token)
+
+      this.length = results.data.records.length
+    }
 
   }
 

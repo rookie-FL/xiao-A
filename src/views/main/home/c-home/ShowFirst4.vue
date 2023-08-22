@@ -1,5 +1,5 @@
 <template>
-  <div class="chart">
+  <div class="chart" @click="leave">
     <div class="headword">各组考核进度</div>
     <div class="category">
       <li>后台组</li>
@@ -34,6 +34,7 @@
 import { getprogress } from '@/store/home/home';
 import { storeToRefs } from "pinia";
 import {reactive, ref} from 'vue'
+import router from "@/router";
 export default {
   name: "ShowFirst4",
   setup() {
@@ -47,6 +48,12 @@ export default {
 
     let long=reactive([])
 
+    const leave=function(){
+      let item = document.querySelectorAll('.item')
+      for (let i = 0; i < item.length; i++) { item[i].style.backgroundColor = '#4E99CA' }
+      item[2].style.backgroundColor = 'rgba(187, 187, 187, 100)'
+router.push("/main/appraisalMan")
+}
 
 
 setTimeout(()=>{
@@ -60,46 +67,15 @@ setTimeout(()=>{
     }
     
   }
-  console.log(long);
 
 },200)
-
-
 
 
     return {
       progress,
       long,
+      leave,
 
-
-    }
-  },
-  methods: {
-    justify() {
-     
-
-      // for (let i = 0; i < this.progresss.length; i++) {
-      //   let rlis = real[i].getElementsByTagName('li')
-      //   for (let j = 0; j < this.longer.length; j++) {
-      //     rlis[j].style.opacity = 0.15;
-      //   }
-
-      //   for (let g =0; g <this.progresss[i].length; g++) {
-
-      //     for (let k = 0; k < rlis.length; k++) {
-      //       if (this.progresss[i][g].exam == rlis[k].getAttribute('class')) {
-      //         if(this.progresss[i][g].status=='已完成')
-      //         {rlis[k].style.opacity = 1;}
-      //         else{
-      //           rlis[k].style.opacity = 0;
-      //         }
-      //       }
-          
-      //     }
-      //   }
-
-
-      // }
 
     }
   },
@@ -134,7 +110,7 @@ setTimeout(()=>{
   position: relative;
   float: right;
   width: 45%;
-  height: 51%;
+  height: 54.5%;
   background-color: white;
   border-radius: 10px;
   box-shadow: 5px 5px 5px rgba(187, 187, 187, 100);

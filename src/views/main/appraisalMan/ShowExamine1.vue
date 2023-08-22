@@ -58,6 +58,7 @@
 <script>
 import { getprogress } from '@/store/appraisalMan/appraisalMan';
 import { Teleport } from 'vue'
+import { ElMessage } from "element-plus";
 
 export default {
   name: "ShowExamine1",
@@ -90,14 +91,15 @@ export default {
     //确认按钮
     addsure() {
       if(this.addstatus == true){
-      if (this.add.name != "" && this.add.time != "") {
+        let spot=this.judge(this.add.time)
+      if (this.add.name != "" && spot==true) {
        this.get.add(this.add.name, this.add.time)
         this.addstatus = false
         this.$refs.add.style.display = "block";
         this.add.name = ''
         this.add.time = ''
       }else{
-        alert('内容不能为空')
+       ElMessage.error('输入不符合格式，格式应该为xxxx.xx.xx-xxxx.xx.xx')
       }
     }
     },
@@ -122,15 +124,23 @@ export default {
       this.changes.time = ''
     },
     changesure() {
-      if (this.changes.name != "" && this.changes.time != ""){
+      let spot=this.judge(this.changes.time)
+      console.log(spot);
+      if (this.changes.name != "" && spot==true){
       this.get.add(this.changes.name, this.changes.time, this.changetarget)
       this.isShow = false;
       this.changes.name = ''
       this.changes.time = ''
       }else{
-        alert('内容不能为空')
+        ElMessage.error('输入不符合格式，格式应该为xxxx.xx.xx-xxxx.xx.xx')
       }
+    },
+
+    judge(strings){
+      let regObj=new RegExp(/^[0-9]{4}[.]([0-1][0-2]|[0-9])[.]([0-9]|[1-3][0-9])[-][0-9]{4}[.]([0-1][0-2]|[0-9])[.]([0-9]|[1-3][0-9])$/)
+      return regObj.test(strings)
     }
+
 
 
   },
@@ -179,10 +189,6 @@ export default {
   border-style: solid;
 }
 
-.headtitle li {
-  line-height: 300%;
-}
-
 .M_data li {
   margin-top: 10px;
   float: left;
@@ -210,11 +216,11 @@ export default {
 .sure {
   float: right;
   margin-top: 10px;
-  width: 20%;
-  height: 50%;
+  width: 70px;
+  height: 25px;
+  line-height: 25px;
 
   text-align: center;
-  line-height: 200%;
   background-color: white;
   border-radius: 5px;
   box-shadow: 1px 2px 5px rgba(187, 187, 187, 100);
@@ -281,6 +287,7 @@ export default {
 }
 
 input{
-  
+  background-color: white;
 }
+
 </style>

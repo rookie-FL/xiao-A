@@ -18,6 +18,7 @@ import { detailAnnStore } from "@/store/annouce/detailAnn"
 import { storeToRefs } from "pinia";
 
 const route = useRoute()
+console.log(route.params);
 let id = route.params.id
 const detailAnn = detailAnnStore()
 detailAnn.getDetailAction(id)

@@ -8,18 +8,6 @@
 
 export default {
   name: "ShowFirst0",
-
-  setup() {
-
-
-    return {
-  
-    }
-
-
-
-
-  }
 }
 </script>
 

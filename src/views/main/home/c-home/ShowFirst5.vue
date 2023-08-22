@@ -1,5 +1,5 @@
 <template>
-  <div class="information">
+  <div class="information" @click="leave">
     <div class="head">
       <li class="headword" style="float: left; text-align: left">通知公告</li>
       <li class="more"></li>
@@ -15,9 +15,8 @@
 
 <script >
 import { getprogress } from '@/store/home/home';
-import {reactive, ref}  from 'vue'
 import { storeToRefs } from 'pinia';
-import { anyToken, utils } from '@/utils/anyToken';
+import router from "@/router";
 
 export default {
   name: "ShowFirst5",
@@ -30,11 +29,19 @@ export default {
 const getss=gets.noification
 const group=get.group
 
+const leave=function(){
+  let item = document.querySelectorAll('.item')
+      for (let i = 0; i < item.length; i++) { item[i].style.backgroundColor = '#4E99CA' }
+      item[5].style.backgroundColor = 'rgba(187, 187, 187, 100)'
+      router.push("/main/annouce")
+}
+
     return {
       get,
      gets,
      getss,
      group,
+     leave
     }
   },
 

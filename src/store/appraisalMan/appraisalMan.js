@@ -1,14 +1,13 @@
 import { defineStore } from "pinia";
-import axios from 'axios';
 import { useLoginStore } from "@/store/login/login";
-import { get } from "@/service/appraisalMan/appraisalMan";
 import { anyToken } from '@/utils/anyToken'
 import { requests } from "@/service/request";
 
 export const getprogress = defineStore("getprogresss", {
   state: () => ({
     add: '555',
-    progress: [],
+    length:'999',
+    progress:[],
   }),
   actions: {
 
@@ -24,7 +23,7 @@ export const getprogress = defineStore("getprogresss", {
         endTime.push(0)
       }
       const result = await requests.post({
-        url: "/web/assess/add",
+        url: "/assess/add",
         data: {
           id: id,
           assessGroup: anyToken().userGroup,
@@ -67,6 +66,7 @@ export const getprogress = defineStore("getprogresss", {
           assessGroup: anyToken().userGroup,
         },
       }, useLoginStore().token)
+      this.length=result.data.data.length/6
       for (let i = 0; i < result.data.data.length; i++) {
         //处理时间戳
         result.data.data[i].startTime.splice(3, 3)

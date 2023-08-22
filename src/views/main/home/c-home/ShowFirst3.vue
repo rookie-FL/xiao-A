@@ -1,7 +1,6 @@
 <template>
-  <div class="progress2" style="overflow: hidden" ref="bigbox">
-    <select class="group" style="float: right;z-index: 1;margin:2% 4% 0 0 ;" v-model="group" ref="sel">
-    <!-- <option value="">选择组别</option> -->
+  <div class="progress2" style="overflow: hidden" ref="bigbox" @click="leave">
+    <select class="group" style="float: right;z-index: 1;margin:2% 4% 0 0 ;" v-model="group" ref="sel" @click="stop">
     <option value="0">后台组</option>
     <option value="1">前端组</option>
     <option value="2">Al组</option>
@@ -10,8 +9,7 @@
     <option value="5">电控组</option>
     <option value="6">管理组</option>
   </select>
-    <!-- <ShowFirst0 ></ShowFirst0> -->
-    <div class="headword">考核管理</div>
+    <div class="headword" >考核管理</div>
 
     <ul class="lunbo">
       <ul class="piece" v-for="(n, index) in progress" :key="index" v-bind:style="{width:pagesize_x+'px',height:pagesize_y+'px'}">
@@ -26,7 +24,7 @@
 
 <script>
 import { getprogress } from '@/store/home/home';
-// import ShowFirst0 from '../c-home/ShowFirst0.vue';
+import router from "@/router";
 import { storeToRefs } from "pinia";
 import {ref, watch,reactive} from 'vue'
 
@@ -69,6 +67,22 @@ export default {
         move(lunbo, x * n);
       };
     }
+
+
+
+    const leave=function(){
+      let item = document.querySelectorAll('.item')
+      for (let i = 0; i < item.length; i++) { item[i].style.backgroundColor = '#4E99CA' }
+      item[2].style.backgroundColor = 'rgba(187, 187, 187, 100)'
+router.push("/main/appraisalMan")
+}
+
+const stop=function(event){
+  event.stopPropagation();
+}
+
+
+
     return {
      gets,
       progress,
@@ -77,6 +91,8 @@ export default {
       pagesize_y,
       makeanimation,
      group,
+     leave,
+     stop
     };
   },
 
@@ -171,13 +187,13 @@ li.arrow {
 }
 
 .picture2 {
-  margin: 10% auto;
+  margin: 0% auto;
   width: 80%;
   height: 40%;
 
-  background-size: 60% 60%;
+  /* background-size: 60% 60%;
   background-position: 50% 50%;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
 
   border-radius: 10px;
 
@@ -189,7 +205,7 @@ li.arrow {
 }
 
 .status {
-  margin: 10% auto;
+  margin: 0% auto;
   width: 70%;
   height: 10%;
   color: rgba(140, 137, 137, 100);
@@ -197,7 +213,7 @@ li.arrow {
 }
 
 .time {
-  margin: 10% auto;
+  margin: 0% auto;
   width: 80%;
   height: 20%;
   text-align: center;

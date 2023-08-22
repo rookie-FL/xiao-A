@@ -1,5 +1,5 @@
 <template>
-  <div class="member">
+  <div class="member" @click="leave">
     <div class="headword" style="float: left;">人员管理</div>
     <div class="more"></div>
     <div class="M_data">
@@ -23,27 +23,37 @@
 import { getList } from '@/store/personnelMan/personal';
 import { getprogress } from '@/store/home/home';
 import { storeToRefs } from 'pinia';
+import router from "@/router";
 export default {
 
   name: "ShowFirst2",
   setup() {
     const get = getList()
     const gets = storeToRefs(get)
-    let assessIndex=''
-   let name=''
-   let college=''
-   let major=''
-   let assessld=''
+    let assessIndex = ''
+    let name = ''
+    let college = ''
+    let major = ''
+    let assessld = ''
 
-     get.getList(1, 5,getprogress().base,assessIndex,name,college,major,assessld)
-    let member=gets.list
+    let groups = getprogress().base
+
+    get.getList(1, 5, getprogress().base, assessIndex, name, college, major, assessld)
+    let member = gets.list
     console.log(member);
 
+    const leave = function () {
+      let item = document.querySelectorAll('.item')
+      for (let i = 0; i < item.length; i++) { item[i].style.backgroundColor = '#4E99CA' }
+      item[1].style.backgroundColor = 'rgba(187, 187, 187, 100)'
+      router.push(`/main/personnelMan/${groups}`)
+    }
 
     return {
       get,
       gets,
-      member
+      member,
+      leave
     }
 
   },
@@ -84,7 +94,7 @@ export default {
 .member {
   margin-top: 1%;
   width: 50%;
-  height: 30%;
+  height: 33%;
   background-color: white;
   border-radius: 10px;
   box-shadow: 5px 5px 5px rgba(187, 187, 187, 100);
@@ -103,9 +113,7 @@ export default {
   border-style: solid;
 }
 
-.headtitle li {
-  line-height: 300%;
-}
+
 
 .M_data li {
   margin-top: 5px;

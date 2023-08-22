@@ -26,8 +26,8 @@ export default {
         ShowFirst3,
         ShowFirst4,
         ShowFirst5,
-    }
+    },
+    
 }
 
-
-</script>
+</script>s
