@@ -1,5 +1,5 @@
 <template>
-  <div class="c_member" style="width: 100%;height: 100%;">
+  <div class="c_member" style="width: 100%;height: 90%;">
     <li class="c_headline">人员管理页</li>
     <div class="SelectMember">
       <ul>
@@ -49,8 +49,8 @@
         <li>排序</li>
         <select name="" id="" v-model="spot.sort" :disabled="disabled">
           <option value="">选择排序</option>
-          <option value="按面试成绩排序">按总分降序</option>
-          <option value="按一轮成绩排序">按总分升序</option>
+          <option value="0">按总分降序</option>
+          <option value="1">按总分升序</option>
 
         </select>
       </ul>
@@ -111,6 +111,14 @@ import { ref, reactive, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getList } from '@/store/personnelMan/personal';
 import { storeToRefs } from 'pinia';
+<<<<<<< HEAD
+=======
+import { watch,reactive } from 'vue';
+import {ref} from 'vue'
+import { ElMessage } from "element-plus";
+import { useRoute } from 'vue-router';
+
+>>>>>>> a075e4b2e130b27e1fae09f1b610a0a9841c0d50
 
 export default {
   name: 'personnelMen',
@@ -159,6 +167,7 @@ export default {
     };
 
 
+<<<<<<< HEAD
     // 使用 computed 计算属性来筛选信息
     const filteredList = computed(() => {
       return List.filter((item) => {
@@ -208,6 +217,48 @@ export default {
       },
       { deep: true }
     );
+=======
+    const get = getList()
+    const route=useRoute()
+    const gets = storeToRefs(get)
+    get.excel()
+
+    //路由切换
+    if(route.params.group!=undefined){
+    spot.groupOption=route.params.group
+    isShow.value=true;disabled.value=false
+  }
+    
+  
+    get.getList(spot.page,spot.size,spot.groupOption,spot.assessIndex,spot.name,spot.college,spot.major,spot.assessld)
+    const href=gets.gethref
+    List=gets.list
+    length=Math.ceil((gets.length.value)/10)
+
+const changepage=function(page){
+spot.page=page
+}
+
+//筛选监控
+watch(spot,(a)=>{
+  get.getList(spot.page,spot.size,spot.groupOption,spot.assessIndex,spot.name,spot.college,spot.major,spot.assessld,spot.sort)
+  if(spot.groupOption!=''){isShow.value=true;disabled.value=false}else{isShow.value=false;disabled.value=true}
+},
+{deep:true},
+)
+
+
+//检查收搜索页格式
+watch(searchpage,(newValue)=>{
+if(isNaN(newValue)==false&&newValue!=''&&newValue!=0){
+spot.page=newValue
+}
+else if(newValue!=''){
+  ElMessage.error('页数搜索格式不正确')
+}
+
+})
+>>>>>>> a075e4b2e130b27e1fae09f1b610a0a9841c0d50
 
     watch(searchpage, (newValue) => {
       if (newValue != '') {
@@ -254,23 +305,7 @@ export default {
 //     //   });
 //     // },
 
-//     //切换页数
-//   //   pagestouch(num) {
-//   //     this.pages = num;
-//   //   },
 
-//   //   //页数搜索
-//   //   pagessearch(e) {
-//   //     if (e.keyCode == 13) {
-//   //       this.pages = event.target.value;
-//   //     }
-//   //   },
-//   // },
-
-//   // mounted() {
-//   // this.list.List()
-//   // }
-// }
 
 
 
@@ -304,10 +339,8 @@ select {
 }
 
 .SelectMember ul {
-
   width: 20%;
 margin-left: 5%;
-  height: 50px;
 }
 
 .SelectMember li {
@@ -341,7 +374,6 @@ margin-left: 5%;
   margin-top: 20px;
 
   width: 8%;
-  height: 45%;
 
   color: white;
   line-height: 30px;
@@ -384,7 +416,7 @@ margin:1% auto;
 }
 
 .M_pages {
-  margin: 30px auto;
+  margin: 10% auto;
   overflow: hidden;
   width: 90%;
 }

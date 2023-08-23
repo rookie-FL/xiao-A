@@ -61,18 +61,15 @@ export default {
 }
 
 .headtitle {
-  height: 25%;
+  height: 15%;
   border-width: 0px 0px 2px 0px;
   border-color: rgba(187, 187, 187, 100);
   border-style: solid;
 }
 
-.headtitle li {
-  line-height: 300%;
-}
 
 .M_data li {
-  margin-top: 10px;
+  margin-top: 1%;
   float: left;
   width: 20%;
   text-align: center;

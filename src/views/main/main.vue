@@ -12,15 +12,21 @@
             </el-header>
             <el-container class="container">
                 <el-aside width="190px" class="side">
-                    <div @click="handleItemClick" data-url="/main/home" class="item">首页</div>
-                    <div @click="handleItemClick" data-url="/main/personnelMan" class="item">人员管理</div>
-                    <div @click="handleItemClick" data-url="/main/appraisalMan" class="item">考核管理</div>
+                    <div @click="handleItemClick" data-url="/main/home" class="item" style="background-color:rgb(187, 187, 187) ;"> 首页</div>
+                    <div @click="handleItemClick" data-url="/main/personnelMan" class="item"> 人员管理</div>
+                    <div @click="handleItemClick" data-url="/main/appraisalMan" class="item"> 考核管理</div>
                     <div class="set-item">
+<<<<<<< HEAD
                         <div @click="handleItemClick" data-url="/main/set" class="item">设置</div>
                         <div @click="handleItemClick" data-url="/main/show" class="item">展示设置</div>
                         <div @click="handleItemClick" data-url="/main/annouce" class="item">公告设置</div>
+=======
+                        <div @click="handleItemClick" data-url="/main/show" style=" font-family: 'icomoon';padding-left: 35px;" class="item" > 设置</div>
+                        <div @click="handleItemClick" data-url="/main/show" class="item" > 展示设置</div>
+                        <div @click="handleItemClick" data-url="/main/annouce" class="item"> 公告设置</div>
+>>>>>>> a075e4b2e130b27e1fae09f1b610a0a9841c0d50
                     </div>
-                    <div @click="handleItemClick" data-url="/main/accMan" class="item">账号管理</div>
+                    <div @click="handleItemClick" data-url="/main/accMan" class="item"> 账号管理</div>
                 </el-aside>
                 <!-- 动态展示右侧页面 -->
                 <el-main class="hidden">
@@ -33,6 +39,7 @@
 
 
 <script setup>
+let group=''
 
 import router from '@/router';
 import jwtDecode from "jwt-decode";
@@ -46,16 +53,35 @@ function exit(params) {
 }
 
 function handleItemClick(event) {
+    let item=document.querySelectorAll('.item')
+    for(let i=0;i<item.length;i++){item[i].style.backgroundColor='#4E99CA'}
+    event.target.style.backgroundColor='rgba(187, 187, 187, 100)'
     const url = event.target.dataset.url;
     console.log("监听一下点击", url);
     router.push(url)
 }
 
 
+
+
 </script>
+
+
+
 
 <style scoped>
 /* 退出按钮 */
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?bt2g0o');
+  src:  url('fonts/icomoon.eot?bt2g0o#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?bt2g0o') format('truetype'),
+    url('fonts/icomoon.woff?bt2g0o') format('woff'),
+    url('fonts/icomoon.svg?bt2g0o#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
 .quit,
 .welcome {
     position: absolute;
@@ -87,10 +113,11 @@ function handleItemClick(event) {
 }
 
 .header .title {
-    margin-left: 140px;
+    position: absolute;
+    margin-left: 15%;
     line-height: 15vh;
     font-weight: 800;
-    font-size: 23px;
+    font-size: 30px;
 }
 
 .container {
@@ -107,11 +134,12 @@ function handleItemClick(event) {
     font-weight: 800;
 }
 
-.set-item {
-    padding-left: 35px;
+.set-item div{
+    padding-left: 70px;
 }
 
 .item {
+    font-family: "icomoon";
     height: 50px;
     line-height: 50px;
     padding-left: 35px;

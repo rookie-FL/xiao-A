@@ -21,10 +21,16 @@ const routes = [
         component: () => import("../views/main/personnelMan/personnelMan.vue"),
       },
       {
+        path: "/main/personnelMan/:group",
+        name: "personnelMans",
+        component: () => import("../views/main/personnelMan/personnelMan.vue"),
+      },
+      {
         path: "/main/appraisalMan",
         name: "appraisalMan",
         component: () => import("../views/main/appraisalMan/appraisalMan.vue"),
       },
+      
       {
         path: "/main/show",
         name: "setShow",
