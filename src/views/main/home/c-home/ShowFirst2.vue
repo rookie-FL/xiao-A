@@ -100,29 +100,33 @@ export default {
   box-shadow: 5px 5px 5px rgba(187, 187, 187, 100);
 }
 
-.M_data ul {
-  overflow: hidden;
-  width: 100%;
-  padding-inline-start: 0px;
-}
+
 
 .headtitle {
-  height: 25%;
   border-width: 0px 0px 2px 0px;
   border-color: rgba(187, 187, 187, 100);
   border-style: solid;
 }
+.M_data {
+  height: 100%;
+}
 
+.M_data ul {
+  overflow: hidden;
+  width: 100%;
+  height: 12%;
+  padding-inline-start: 0px;
+}
 
 
 .M_data li {
-  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
   float: left;
-  width: 20%;
-  text-align: center;
+  width: 25%;
+
 }
 
-.M_data li {
-  width: 25%;
-}
 </style>

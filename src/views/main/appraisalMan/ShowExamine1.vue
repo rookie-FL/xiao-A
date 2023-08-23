@@ -125,7 +125,6 @@ export default {
     },
     changesure() {
       let spot=this.judge(this.changes.time)
-      console.log(spot);
       if (this.changes.name != "" && spot==true){
       this.get.add(this.changes.name, this.changes.time, this.changetarget)
       this.isShow = false;
@@ -140,8 +139,6 @@ export default {
       let regObj=new RegExp(/^[0-9]{4}[.]([0-1][0-2]|[0-9])[.]([0-9]|[1-3][0-9])[-][0-9]{4}[.]([0-1][0-2]|[0-9])[.]([0-9]|[1-3][0-9])$/)
       return regObj.test(strings)
     }
-
-
 
   },
 

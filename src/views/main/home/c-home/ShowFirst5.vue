@@ -75,10 +75,8 @@ const leave=function(){
 .more {
   float: right;
   font-family: "icomoon";
-  /* width: 15%; */
 
   font-size: 20px;
-  padding-top: 15px;
   text-align: right;
 }
 
