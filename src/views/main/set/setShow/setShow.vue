@@ -77,6 +77,7 @@ function deleteImg(event) {
     imagePreviews.value.splice(index, 1)
 }
 
+
 </script>
 
 <style>

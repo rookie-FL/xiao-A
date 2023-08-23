@@ -50,6 +50,30 @@ const routes = [
         name: "deatilAnn",
         component: () => import("../views/main/set/annouce/detailAnn.vue"),
       },
+      {
+        path: "/main/set",
+        name: "set",
+        component: () => import("../views/main/set/set.vue"),
+      },
+      {
+        path: "/main/infoView",
+        name: "infoViewBasic", 
+        component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
+      },
+      {
+        path: "/main/infoView/:index", 
+        name: "infoViewWithIndex", 
+        component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
+        props: true 
+      },
+        {
+          path: '/main/infoView/:index',
+          name: 'infoView',
+          component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
+          props: true
+        }
+    
+      
     ],
   },
   {

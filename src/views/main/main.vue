@@ -16,14 +16,14 @@
                     <div @click="handleItemClick" data-url="/main/personnelMan" class="item">人员管理</div>
                     <div @click="handleItemClick" data-url="/main/appraisalMan" class="item">考核管理</div>
                     <div class="set-item">
-                        <span>设置</span>
+                        <div @click="handleItemClick" data-url="/main/set" class="item">设置</div>
                         <div @click="handleItemClick" data-url="/main/show" class="item">展示设置</div>
                         <div @click="handleItemClick" data-url="/main/annouce" class="item">公告设置</div>
                     </div>
                     <div @click="handleItemClick" data-url="/main/accMan" class="item">账号管理</div>
                 </el-aside>
                 <!-- 动态展示右侧页面 -->
-                <el-main>
+                <el-main class="hidden">
                     <router-view></router-view>
                 </el-main>
             </el-container>

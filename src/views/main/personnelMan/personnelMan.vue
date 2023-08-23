@@ -82,7 +82,11 @@
         <li>{{ n.currentAssess }}</li>
         <li>{{ n.phone}}</li>
         <li v-if="isShow">{{ n.scores[0].score }}</li>
+        <router-link :to="`/main/infoView/${n.index}`">
         <li style="color: rgb(11, 147, 234);">查看</li>
+      </router-link>
+
+
       </ul>
     </div>
     <div class="M_pages">
@@ -101,65 +105,115 @@
 
 <script>
 
+
+
+import { ref, reactive, computed, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { getList } from '@/store/personnelMan/personal';
 import { storeToRefs } from 'pinia';
-import { watch,reactive } from 'vue';
-import { getprogress } from "@/store/appraisalMan/appraisalMan";
-import {ref} from 'vue'
-
 
 export default {
-  name: "personnelMen",
+  name: 'personnelMen',
   setup() {
-let spot=reactive({
-assessIndex:'',
- name:'',
- college:'',
- major:'',
- groupOption:'',
- assessld:'',
- sort:'',
- page:'1',
-  size:10,
-  })
+    let spot = reactive({
+      assessIndex: '',
+      name: '',
+      college: '',
+      major: '',
+      groupOption: '',
+      assessld: '',
+      sort: '',
+      page: '1',
+      size: 10,
+    });
 
-    let  List
-    let length
-    let searchpage=ref(1)
-    let isShow=ref(false)
-    let disabled=ref(true)
+    let List;
+    let length;
+    let searchpage = ref(1);
+    let isShow = ref(false);
+    let disabled = ref(true);
+
+    const get = getList();
+    const gets = storeToRefs(get);
+    get.excel();
+    get.getlength();
+    get.getList(
+      spot.page,
+      spot.size,
+      spot.groupOption,
+      spot.assessIndex,
+      spot.name,
+      spot.college,
+      spot.major,
+      spot.assessld
+    );
+    const href = gets.gethref;
+    List = gets.list;
+    length = Math.ceil(gets.length.value / 10);
+
+    const route = useRoute();
+    const router = useRouter();
+    
+    const goToInfoView = (index) => {
+      router.push(`/main/infoView/${index}`);
+    };
 
 
-    const get = getList()
-    const gets = storeToRefs(get)
-    get.excel()
-    get.getlength()
-    get.getList(spot.page,spot.size,spot.groupOption,spot.assessIndex,spot.name,spot.college,spot.major,spot.assessld)
-    const href=gets.gethref
-    List=gets.list
-    length=Math.ceil((gets.length.value)/10)
-    console.log(length);
+    // 使用 computed 计算属性来筛选信息
+    const filteredList = computed(() => {
+      return List.filter((item) => {
+        const namePass = item.name.includes(spot.name);
+        const collegePass = item.college.includes(spot.college);
+        const majorPass = item.major.includes(spot.major);
+        const groupOptionPass =
+          spot.groupOption === '' || item.group_option === spot.groupOption;
+        const assessIndexPass =
+          spot.assessIndex === '' || item.currentAssess === spot.assessIndex;
 
+        return (
+          namePass &&
+          collegePass &&
+          majorPass &&
+          groupOptionPass &&
+          assessIndexPass
+        );
+      });
+    });
 
+  
+    const changepage = function (page) {
+      spot.page = page;
+    };
 
-const changepage=function(page){
-spot.page=page
-}
+    watch(
+      spot,
+      (a) => {
+        get.getList(
+          spot.page,
+          spot.size,
+          spot.groupOption,
+          spot.assessIndex,
+          spot.name,
+          spot.college,
+          spot.major,
+          spot.assessld
+        );
+        if (spot.groupOption != '') {
+          isShow.value = true;
+          disabled.value = false;
+        } else {
+          isShow.value = false;
+          disabled.value = true;
+        }
+      },
+      { deep: true }
+    );
 
-
-watch(spot,(a)=>{
-  get.getList(spot.page,spot.size,spot.groupOption,spot.assessIndex,spot.name,spot.college,spot.major,spot.assessld)
-  if(spot.groupOption!=''){isShow.value=true;disabled.value=false}else{isShow.value=false;disabled.value=true}
-},
-{deep:true},
-)
-
-watch(searchpage,(newValue)=>{
-if(newValue!=''){
-spot.page=newValue
-}
-})
-
+    watch(searchpage, (newValue) => {
+      if (newValue != '') {
+        spot.page = newValue;
+      }
+    });
 
     return {
       spot,
@@ -169,12 +223,15 @@ spot.page=newValue
       changepage,
       searchpage,
       isShow,
-      disabled
-    }
+      disabled,
+      filteredList,
+      href,
+      goToInfoView,
+    };
+  },
+};
 
-},
 
-}
 
 
 //   methods: {
