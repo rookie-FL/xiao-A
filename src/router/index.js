@@ -62,6 +62,17 @@ const routes = [
         component: () => import("../views/main/set/set.vue"),
       },
       {
+        path: "/main/set/infoSet",
+        name: "inforSet",
+        component: () => import("../views/main/set/infoSet.vue"),
+      },
+      {
+        path: "/main/set/infoEdit",
+        name: "inforEdit",
+        component: () => import("../views/main/set/infoEdit.vue"),
+      },
+      
+      {
         path: "/main/infoView",
         name: "infoViewBasic", 
         component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
