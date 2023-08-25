@@ -15,7 +15,7 @@
       <ul class="piece" v-for="(n, index) in progress" :key="index"
         v-bind:style="{ width: pagesize_x + 'px', height: pagesize_y + 'px' }">
         <li class="arrow"></li>
-        <li class="picture2" v-bind:style="{ width: pagesize_x * 0.8 + 'px' }">{{ n.name }}</li>
+        <li class="picture2" v-bind:style="{ width: pagesize_x * 0.8 + 'px', backgroundColor:color(n.status)}">{{ n.name }}</li>
         <li class="status">{{ n.status }}</li>
         <li class="time">{{ n.time }}</li>
       </ul>
@@ -39,14 +39,21 @@ export default {
     let pagesize_y = ref(0)
     let page = ref(0)
 
+    //获取信息
     get.getinformation()
     let group = ref(gets.base.value)
     let progress = ref(gets.progress.value[0])
 
+    //监视组别
     watch(group, (newValue) => {
       progress.value = gets.progress.value[newValue]
       console.log(progress);
     })
+
+    //更改颜色
+    const color=function(status){
+if(status=='已完成'){return 'rgba(75,135,250,100)'}
+    }
 
 
 
@@ -93,7 +100,8 @@ export default {
       makeanimation,
       group,
       leave,
-      stop
+      stop,
+      color
     };
   },
 
@@ -177,7 +185,7 @@ li.arrow {
 
 .lunbo {
   position: absolute;
-  margin-top: 1%;
+  margin-top: 2%;
 }
 
 .piece {
@@ -197,15 +205,18 @@ li.arrow {
 
   font-size: 18px;
   font-weight: 600;
-  background-color: rgb(183, 244, 241);
+  background-color: rgb(147, 233, 229);
 }
 
 .status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0% auto;
+  
   width: 80%;
   height: 10%;
   color: rgba(140, 137, 137, 100);
-  text-align: center;
 }
 
 .time {

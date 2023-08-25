@@ -44,7 +44,7 @@
   };
   </script>
   
-  <style>
+  <style scoped>
  .swiper{
     height: 200px;
     width: 28%;
