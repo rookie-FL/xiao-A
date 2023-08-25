@@ -9,9 +9,9 @@
         <img src="../../../assets/img/pdfPicture.png" />
         <li>{{ n.name }}</li>
       </div>
-      <a class="see" v-bind:href="n.contentUrl">查看</a>
+      <a class="see" v-bind:href="n.contentUrl" target=_blank>查看</a>
       <a class="download" v-bind:href="n.contentUrl" :download="n.name + '.pdf'"
-        >下载</a
+      target=_blank>下载</a
       >
     </div>
 <div class="page">

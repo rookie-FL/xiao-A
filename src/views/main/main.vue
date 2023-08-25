@@ -16,15 +16,9 @@
                     <div @click="handleItemClick" data-url="/main/personnelMan" class="item"> 人员管理</div>
                     <div @click="handleItemClick" data-url="/main/appraisalMan" class="item"> 考核管理</div>
                     <div class="set-item">
-<<<<<<< HEAD
-                        <div @click="handleItemClick" data-url="/main/set" class="item">设置</div>
-                        <div @click="handleItemClick" data-url="/main/show" class="item">展示设置</div>
-                        <div @click="handleItemClick" data-url="/main/annouce" class="item">公告设置</div>
-=======
                         <div @click="handleItemClick" data-url="/main/show" style=" font-family: 'icomoon';padding-left: 35px;" class="item" > 设置</div>
                         <div @click="handleItemClick" data-url="/main/show" class="item" > 展示设置</div>
                         <div @click="handleItemClick" data-url="/main/annouce" class="item"> 公告设置</div>
->>>>>>> a075e4b2e130b27e1fae09f1b610a0a9841c0d50
                     </div>
                     <div @click="handleItemClick" data-url="/main/accMan" class="item"> 账号管理</div>
                 </el-aside>
@@ -43,6 +37,9 @@ let group=''
 
 import router from '@/router';
 import jwtDecode from "jwt-decode";
+import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
+import {watch} from 'vue'
 
 const code = jwtDecode(localStorage.getItem("token"));
 let info = JSON.parse(code.sub);
@@ -53,14 +50,32 @@ function exit(params) {
 }
 
 function handleItemClick(event) {
-    let item=document.querySelectorAll('.item')
-    for(let i=0;i<item.length;i++){item[i].style.backgroundColor='#4E99CA'}
-    event.target.style.backgroundColor='rgba(187, 187, 187, 100)'
     const url = event.target.dataset.url;
     console.log("监听一下点击", url);
     router.push(url)
+    
 }
-
+// router.push('/main/home')
+const routers = useRouter()
+// 监听当前路由
+watch(
+  () => routers.currentRoute.value,
+  (newValue) => {
+    let item=document.querySelectorAll('.item')
+    for(let i=0;i<item.length;i++){
+        if(newValue.fullPath==item[i].getAttribute('data-url'))
+        {
+            console.log(1);
+            for(let j=0;j<item.length;j++)
+            {
+                item[j].style.backgroundColor='#4E99CA'
+            }
+            item[i].style.backgroundColor='rgb(187, 187, 187)'
+        }
+    }
+  },
+  { immediate: true }
+)
 
 
 
@@ -139,6 +154,7 @@ function handleItemClick(event) {
 }
 
 .item {
+    cursor: pointer;
     font-family: "icomoon";
     height: 50px;
     line-height: 50px;

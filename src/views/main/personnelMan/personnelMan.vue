@@ -20,7 +20,7 @@
       </ul>
       <ul>
         <li>组别</li>
-        <select name="" id="" v-model="spot.groupOption" >
+        <select name="" id="" v-model="spot.groupOption">
           <option value="">选择组别</option>
           <option value="0">后台组</option>
           <option value="1">前端组</option>
@@ -58,7 +58,7 @@
 
     <div class="datafun">
       <a class="output" @click="output" v-bind:href="href" download="2023年小A工作室考核信息.xlsx">数据导出</a>
-      <div class="clean" >数据清空</div>
+      <div class="clean">数据清空</div>
     </div>
 
     <div class="M_data">
@@ -77,25 +77,21 @@
         <li>{{ index + 1 }}</li>
         <li>{{ n.name }}</li>
         <li>{{ n.college }}</li>
-        <li style="width:20%">{{ n.grade+n.major }}</li>
+        <li style="width:20%">{{ n.grade + n.major }}</li>
         <li>{{ n.group_option }}</li>
         <li>{{ n.currentAssess }}</li>
-        <li>{{ n.phone}}</li>
+        <li>{{ n.phone }}</li>
         <li v-if="isShow">{{ n.scores[0].score }}</li>
-        <router-link :to="`/main/infoView/${n.index}`">
-        <li style="color: rgb(11, 147, 234);">查看</li>
-      </router-link>
-
-
+          <li style="color: rgb(11, 147, 234); cursor: pointer;" @click="goToInfoView(index)">查看</li>
       </ul>
     </div>
     <div class="M_pages">
       <div>
-        <li>共{{length}}页</li>
+        <li>共{{ length }}页</li>
         <li>《</li>
-        <li v-for="(i,index) in length" :key="index" @click="changepage(index+1)">{{index+1}}</li>
+        <li v-for="(i, index) in length" :key="index" @click="changepage(index + 1)">{{ index + 1 }}</li>
         <li>》</li>
-        <li >前往</li>
+        <li>前往</li>
         <input type="text" class="choosenumber" v-model="searchpage" />
         <li>页</li>
       </div>
@@ -111,14 +107,8 @@ import { ref, reactive, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getList } from '@/store/personnelMan/personal';
 import { storeToRefs } from 'pinia';
-<<<<<<< HEAD
-=======
-import { watch,reactive } from 'vue';
-import {ref} from 'vue'
 import { ElMessage } from "element-plus";
-import { useRoute } from 'vue-router';
 
->>>>>>> a075e4b2e130b27e1fae09f1b610a0a9841c0d50
 
 export default {
   name: 'personnelMen',
@@ -161,104 +151,40 @@ export default {
 
     const route = useRoute();
     const router = useRouter();
-    
+
     const goToInfoView = (index) => {
       router.push(`/main/infoView/${index}`);
     };
 
-
-<<<<<<< HEAD
-    // 使用 computed 计算属性来筛选信息
-    const filteredList = computed(() => {
-      return List.filter((item) => {
-        const namePass = item.name.includes(spot.name);
-        const collegePass = item.college.includes(spot.college);
-        const majorPass = item.major.includes(spot.major);
-        const groupOptionPass =
-          spot.groupOption === '' || item.group_option === spot.groupOption;
-        const assessIndexPass =
-          spot.assessIndex === '' || item.currentAssess === spot.assessIndex;
-
-        return (
-          namePass &&
-          collegePass &&
-          majorPass &&
-          groupOptionPass &&
-          assessIndexPass
-        );
-      });
-    });
-
-  
-    const changepage = function (page) {
-      spot.page = page;
-    };
-
-    watch(
-      spot,
-      (a) => {
-        get.getList(
-          spot.page,
-          spot.size,
-          spot.groupOption,
-          spot.assessIndex,
-          spot.name,
-          spot.college,
-          spot.major,
-          spot.assessld
-        );
-        if (spot.groupOption != '') {
-          isShow.value = true;
-          disabled.value = false;
-        } else {
-          isShow.value = false;
-          disabled.value = true;
-        }
-      },
-      { deep: true }
-    );
-=======
-    const get = getList()
-    const route=useRoute()
-    const gets = storeToRefs(get)
-    get.excel()
-
     //路由切换
-    if(route.params.group!=undefined){
-    spot.groupOption=route.params.group
-    isShow.value=true;disabled.value=false
-  }
-    
-  
-    get.getList(spot.page,spot.size,spot.groupOption,spot.assessIndex,spot.name,spot.college,spot.major,spot.assessld)
-    const href=gets.gethref
-    List=gets.list
-    length=Math.ceil((gets.length.value)/10)
+    if (route.params.group != undefined) {
+      spot.groupOption = route.params.group
+      isShow.value = true; disabled.value = false
+    }
 
-const changepage=function(page){
-spot.page=page
-}
+    const changepage = function (page) {
+      spot.page = page
+    }
 
-//筛选监控
-watch(spot,(a)=>{
-  get.getList(spot.page,spot.size,spot.groupOption,spot.assessIndex,spot.name,spot.college,spot.major,spot.assessld,spot.sort)
-  if(spot.groupOption!=''){isShow.value=true;disabled.value=false}else{isShow.value=false;disabled.value=true}
-},
-{deep:true},
-)
+    //筛选监控
+    watch(spot, (a) => {
+      get.getList(spot.page, spot.size, spot.groupOption, spot.assessIndex, spot.name, spot.college, spot.major, spot.assessld, spot.sort)
+      if (spot.groupOption != '') { isShow.value = true; disabled.value = false } else { isShow.value = false; disabled.value = true }
+    },
+      { deep: true },
+    )
 
 
-//检查收搜索页格式
-watch(searchpage,(newValue)=>{
-if(isNaN(newValue)==false&&newValue!=''&&newValue!=0){
-spot.page=newValue
-}
-else if(newValue!=''){
-  ElMessage.error('页数搜索格式不正确')
-}
+    //检查收搜索页格式
+    watch(searchpage, (newValue) => {
+      if (isNaN(newValue) == false && newValue != '' && newValue != 0) {
+        spot.page = newValue
+      }
+      else if (newValue != '') {
+        ElMessage.error('页数搜索格式不正确')
+      }
 
-})
->>>>>>> a075e4b2e130b27e1fae09f1b610a0a9841c0d50
+    })
 
     watch(searchpage, (newValue) => {
       if (newValue != '') {
@@ -275,8 +201,8 @@ else if(newValue!=''){
       searchpage,
       isShow,
       disabled,
-      filteredList,
       href,
+      get,
       goToInfoView,
     };
   },
@@ -306,10 +232,6 @@ else if(newValue!=''){
 //     // },
 
 
-
-
-
-
 </script>
 
 <style scoped>
@@ -328,7 +250,7 @@ select {
 
 .SelectMember {
   display: flex;
-   flex-flow: wrap;
+  flex-flow: wrap;
   margin: 0 auto;
   width: 90%;
   height: 15%;
@@ -340,7 +262,7 @@ select {
 
 .SelectMember ul {
   width: 20%;
-margin-left: 5%;
+  margin-left: 5%;
 }
 
 .SelectMember li {
@@ -362,7 +284,6 @@ margin-left: 5%;
 }
 
 .datafun {
-  /* overflow: hidden; */
   margin: 0 auto;
   width: 90%;
   height: 10%;
@@ -398,7 +319,7 @@ margin-left: 5%;
 
 .M_data ul {
   display: flex;
-margin:1% auto;
+  margin: 1% auto;
   align-items: center;
   overflow: hidden;
   width: 100%;
@@ -437,7 +358,8 @@ margin:1% auto;
   float: right;
 }
 
-select{
+select {
   outline-style: none;
 }
+
 </style>

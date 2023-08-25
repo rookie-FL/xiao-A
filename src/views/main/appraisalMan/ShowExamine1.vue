@@ -87,6 +87,9 @@ export default {
     //添加功能
     addprogress() {
       this.addstatus = true
+      setTimeout(()=>{
+        document.querySelector('.M_data').scrollTop=888
+      },100)
     },
     //确认按钮
     addsure() {

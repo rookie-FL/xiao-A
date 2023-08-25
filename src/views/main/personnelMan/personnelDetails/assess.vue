@@ -80,7 +80,7 @@
   </script>
   
 
-<style>
+<style scoped>
 .return{
     display: block;
     color: #fff;
@@ -167,6 +167,7 @@ hr{
 }
 
 .progress-text li {
+  margin-top: 10px;
     margin-right: 20px;
     color: rgba(89, 87, 87);
 }
@@ -214,6 +215,7 @@ hr{
 
 .progressSet ul li{
     margin-bottom: 10px;
+    
 }
 
 .set{

@@ -17,7 +17,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .note-input {
   width: 40%;
   height: 40%;
