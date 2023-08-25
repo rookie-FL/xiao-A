@@ -16,9 +16,9 @@
   name: 'InfoView',
   setup() {
     const route = useRoute();
-    const index = route.query.index; // 获取查询参数 index
+    const index = route.query.index; 
 
-    // 在这里可以使用获取到的 index 值进行操作
+   
   },
   components:{
     PersonnelManComponent,

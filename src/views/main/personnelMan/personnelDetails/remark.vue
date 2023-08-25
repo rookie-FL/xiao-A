@@ -1,13 +1,16 @@
 <template>
+  <div>
     <h1 class="remark">备注</h1>
     <div class="note-input">
-      <textarea
-        v-model="note"
-        placeholder="备注"
-      ></textarea>
+      <textarea v-model="note" placeholder="备注"></textarea>
+      <button @click="addRemark">添加备注</button>
     </div>
+  </div>
 </template>
+
 <script>
+import axios from "axios";
+
 export default {
   name: "NoteInput",
   data() {
@@ -15,8 +18,38 @@ export default {
       note: "", // 存储备注文本
     };
   },
+  methods: {
+    addRemark() {
+      const token = "your_token"; 
+      const openid = "student_openid_here";
+
+      const requestBody = {
+        remark: this.note,
+      };
+
+      axios
+        .post("http://your_api_url/web/user/remark?openid=" + openid, requestBody, {
+          headers: {
+            "Content-Type": "application/json",
+            "token": token,
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log("备注添加成功");
+          } else {
+            console.error("备注添加失败");
+          }
+        })
+        .catch((error) => {
+          console.error("发生错误", error);
+        });
+    },
+  },
 };
 </script>
+
+
 <style scoped>
 .note-input {
   width: 40%;

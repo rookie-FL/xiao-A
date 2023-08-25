@@ -16,7 +16,7 @@
                     <div @click="handleItemClick" data-url="/main/personnelMan" class="item"> 人员管理</div>
                     <div @click="handleItemClick" data-url="/main/appraisalMan" class="item"> 考核管理</div>
                     <div class="set-item">
-                        <div @click="handleItemClick" data-url="/main/show" style=" font-family: 'icomoon';padding-left: 35px;" class="item" > 设置</div>
+                        <div @click="handleItemClick" data-url="/main/set" style=" font-family: 'icomoon';padding-left: 35px;" class="item" > 设置</div>
                         <div @click="handleItemClick" data-url="/main/show" class="item" > 展示设置</div>
                         <div @click="handleItemClick" data-url="/main/annouce" class="item"> 公告设置</div>
                     </div>

@@ -1,33 +1,37 @@
-<!-- AnotherComponent.vue -->
 <template>
-    <div class="announceShow">
-      <h1>通知公告</h1>
-      <button class="buttonss"><router-link to="/main/annouce">编辑</router-link></button>
-      <hr>
-      <div>
-        <el-table :data="filterTableDatas" style="width: 100%" class="tables" >
+  <div class="announceShow">
+    <h1>通知公告</h1>
+    <button class="buttonss"><router-link to="/main/annouce">编辑</router-link></button>
+    <hr>
+    <div>
+      <el-table :data="notifications" style="width: 100%" class="tables">
         <el-table-column prop="title" class="tables"/>
       </el-table>
-        
-
-      </div>
     </div>
-  </template>
-  
+  </div>
+</template>
+
 <script setup>
-import { annouceStore } from "/src/store/annouce/getAnnouce.js"
-import { storeToRefs } from "pinia";
+import { useStore } from "vuex";
+import { onMounted, ref } from "vue";
 
+const store = useStore();
+const notifications = ref([]);
 
-const annouces = annouceStore()
-annouces.getAnnouceAction(1, 3)
-const results = storeToRefs(annouces)
+onMounted(async () => {
+  try {
+    const token = "your_token"; 
+    const page = 1;
+    const pageSize = 10; 
 
-let filterTableDatas = results.annouce
-
-
-
+    await store.dispatch("notifications/fetchNotifications", { token, page, pageSize });
+    notifications.value = store.state.notifications.notifications;
+  } catch (error) {
+    console.error("获取通知公告失败", error);
+  }
+});
 </script>
+
   
 <style>
 .buttonss{

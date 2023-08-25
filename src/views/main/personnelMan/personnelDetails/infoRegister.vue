@@ -26,19 +26,16 @@ import { getList } from '@/store/personnelMan/personal';
 
 export default {
   name: 'InfoView',
-  props: ['index'], // 接收父组件传递的 index
+  props: ['index'], 
   setup(props) {
-    // 从 props.index 中获取索引
     const index=useRoute().params.index
-    // 获取信息列表
+
     const get = getList();
     const gets = storeToRefs(get);
     const List = gets.list;
 
-    // 使用信息索引提取特定信息
     const info= ref(List.value[index]);
-
-    // 返回需要的数据和方法
+   
     return {
       info,
       index,

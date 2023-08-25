@@ -51,7 +51,7 @@ export default {
         item[i].style.backgroundColor = "#4E99CA";
       }
       item[5].style.backgroundColor = "rgba(187, 187, 187, 100)";
-      router.push("/main/annouce");
+      router.push("/main/contentEdit");
     };
 
     const handleCurrentChange = function (newPage) {

@@ -72,14 +72,25 @@ const routes = [
         component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
         props: true 
       },
-        {
-          path: '/main/infoView/:index',
-          name: 'infoView',
-          component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
-          props: true
-        }
-    
-      
+      {
+        path: '/main/infoView/:index',
+        name: 'infoView',
+        component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
+        props: true
+      },
+      {
+        path: '/main/contentEdit',
+        name: 'contentEdit',
+        component: () => import('../views/main/appraisalMan/contentEdit.vue'),
+        props: true
+      },
+      {
+        path: '/main/contentEdit1',
+        name: 'contentEdit1',
+        component: () => import('../views/main/appraisalMan/contentEdit1.vue'),
+        props: true
+      },
+
     ],
   },
   {
