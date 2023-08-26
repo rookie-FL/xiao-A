@@ -67,7 +67,7 @@ const routes = [
         component: () => import("../views/main/set/infoSet.vue"),
       },
       {
-        path: "/main/set/infoEdit",
+        path: "/main/set/infoEdit/:group",
         name: "inforEdit",
         component: () => import("../views/main/set/infoEdit.vue"),
       },

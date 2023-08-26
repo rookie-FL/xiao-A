@@ -56,7 +56,18 @@ function handleItemClick(event) {
     
 }
 // router.push('/main/home')
+const route=useRoute()
 const routers = useRouter()
+
+// setInterval(()=>{
+//    console.log(route.fullPath);
+// },1000)
+
+// watch(route,()=>{
+//     console.log(route.fullPath);
+// },
+// {deep:true,immediate:true})
+
 // 监听当前路由
 watch(
   () => routers.currentRoute.value,
@@ -65,7 +76,6 @@ watch(
     for(let i=0;i<item.length;i++){
         if(newValue.fullPath==item[i].getAttribute('data-url'))
         {
-            console.log(1);
             for(let j=0;j<item.length;j++)
             {
                 item[j].style.backgroundColor='#4E99CA'

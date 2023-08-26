@@ -49,9 +49,6 @@ export default {
     let long=reactive([])
 
     const leave=function(){
-      let item = document.querySelectorAll('.item')
-      for (let i = 0; i < item.length; i++) { item[i].style.backgroundColor = '#4E99CA' }
-      item[2].style.backgroundColor = 'rgba(187, 187, 187, 100)'
 router.push("/main/appraisalMan")
 }
 

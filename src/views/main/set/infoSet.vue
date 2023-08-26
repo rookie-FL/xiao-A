@@ -22,17 +22,17 @@
                     <li class="round"></li>
                     <li>工作内容</li>
                 </ul>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.content }}</div>
                 <ul>
                     <li class="round"></li>
                     <li>工作需求</li>
                 </ul>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.required }}</div>
                 <ul>
                     <li class="round"></li>
                     <li>未来收获</li>
                 </ul>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ data.harvest }}</div>
             </div>
         </div>
 
@@ -44,16 +44,24 @@
 import router from '@/router';
 import {ref,watch} from 'vue'
 import { getprogress } from '@/store/home/home';
+import {infoSet} from '@/store/info/infoSet'
+import { storeToRefs } from 'pinia';
+
 
 const gets=getprogress()
-
 let group = ref(gets.base)
+const info=storeToRefs(infoSet())
+infoSet().getinfo(group.value)
+let data=ref(info.data)
+
 
 watch(group, (newValue) => {
-    })
+    console.log(newValue);
+    infoSet().getinfo(newValue)
+})
 
 const edit = function () {
-router.push('/main/set/infoEdit')
+router.push(`/main/set/infoEdit/${group.value}`)
 }
 
 </script>
@@ -61,7 +69,7 @@ router.push('/main/set/infoEdit')
 <style scoped>
 .bigbox {
     float: right;
-    width: 50%;
+    width: 100%;
     height: 35%;
 }
 
@@ -153,7 +161,7 @@ outline: none;
    width: 80%;
     font-size: 12px;
     line-height: 20px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 </style>

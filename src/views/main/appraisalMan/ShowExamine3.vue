@@ -46,11 +46,6 @@ export default {
     let pages = ref(store.length);
 
     const leave = function () {
-      let item = document.querySelectorAll(".item");
-      for (let i = 0; i < item.length; i++) {
-        item[i].style.backgroundColor = "#4E99CA";
-      }
-      item[5].style.backgroundColor = "rgba(187, 187, 187, 100)";
       router.push("/main/contentEdit");
     };
 

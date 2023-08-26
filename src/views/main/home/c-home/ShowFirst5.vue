@@ -30,9 +30,6 @@ const getss=gets.noification
 const group=get.group
 
 const leave=function(){
-  let item = document.querySelectorAll('.item')
-      for (let i = 0; i < item.length; i++) { item[i].style.backgroundColor = '#4E99CA' }
-      item[5].style.backgroundColor = 'rgba(187, 187, 187, 100)'
       router.push("/main/annouce")
 }
 
