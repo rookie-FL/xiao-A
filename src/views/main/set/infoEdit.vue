@@ -18,7 +18,7 @@
         <div class="but">确定</div>
     </div>
 </template>
-
+<!-- tip -->
 <script setup>
 import { useRoute } from 'vue-router';
 import router from '@/router';
