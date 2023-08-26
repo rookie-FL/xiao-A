@@ -40,7 +40,7 @@
       <router-link :to="`/main/personnelMan`">
         <span class="return">返回</span>
       </router-link>
-        <span class="sure">确定</span>
+        <span class="sure" @click="submitAssessment">确定</span>
 
     </div>
   </template>
@@ -64,19 +64,48 @@
       };
     },
     methods: {
-      canSubmit(item) {
-        return item.score !== '' && item.score >= 0 && item.score <= 100;
-      },
-      setPass(item) {
-        item.pass = true;
-        item.fail = false;
-      },
-      setFail(item) {
-        item.fail = true;
-        item.pass = false;
+      
+    async submitAssessment() {
+      const openid = "student_openid_here"; 
+      const currentAssessId = 123; 
+      const nextAssessId = 456; 
+
+      const scores = {};
+      for (const item of this.progressItems) {
+        scores[item.key] = item.score !== "" ? parseInt(item.score) : 0;
+      }
+
+      const requestBody = {
+        openid: openid,
+        scores: scores,
+        currentAssessId: currentAssessId,
+        nextAssessId: nextAssessId,
+        pass: true 
+      };
+
+      try {
+        const response = await this.$axios.post(
+          "http://119.29.250.245:8080/web/assess/pass",
+          requestBody,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: "your_token" 
+            }
+          }
+        );
+
+        if (response.status === 200) {
+          console.log("考核通过成功");
+        } else {
+          console.error("考核通过失败");
+        }
+      } catch (error) {
+        console.error("发生错误", error);
       }
     }
-  };
+  }
+};
   </script>
   
 

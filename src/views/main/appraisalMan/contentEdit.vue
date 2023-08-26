@@ -1,38 +1,74 @@
 <template>
-    <h1>考核管理/考核内容编辑</h1>
-    <div class="content">
-        <div class="add-button">
-          <router-link to="/main/contentEdit1" class="link">+添加</router-link>
-        </div>
-      <el-table :data="filterTableData" style="width: 100%">
-        <el-table-column label="标题"  align="center" />
-        <el-table-column label="组别"  align="center" />
-        <el-table-column label="发布时间"  align="center" />
-        <el-table-column label="发布人"  align="center" />
-        <el-table-column label="操作" align="center">
-          <template #default="scope">
-            <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
-  </template>
-  
-  <script setup>
-import { contentStore } from "/src/store/editContet/getContent.js"
-import { useRouter } from 'vue-router';
-import { storeToRefs } from "pinia";
-import router from '@/router';
-const contents = contentStore()
-const results = storeToRefs(contents)
-let filterTableData = results.content
+  <h1>考核管理/考核内容编辑</h1>
+  <div class="content">
+    <button class="add-button">
+      <router-link to="/main/contentEdit1" class="link" >+添加</router-link>
+    </button>
+    <el-table style="width: 100%" class="el-table">
+      <el-table-column label="标题" align="center">
+        <template #default="scope">{{ scope.row.title }}</template>
+      </el-table-column>
+      <el-table-column label="组别" align="center">
+        <template #default="scope">{{ scope.row.group }}</template>
+      </el-table-column>
+      <el-table-column label="发布时间" align="center">
+        <template #default="scope">{{ scope.row.publishTime }}</template>
+      </el-table-column>
+      <el-table-column label="发布人" align="center">
+        <template #default="scope">{{ scope.row.publisher }}</template>
+      </el-table-column>
+      <el-table-column label="操作" align="center">
+        <template #default="scope">
+          <el-button size="mini" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
 
-  </script>
-  
-  <style>
- .link {
-    color: white;
-    font-size: 16px;
+<script setup>
+import { useStore } from 'vuex';
+import { ref, onMounted } from 'vue';
+
+const store = useStore();
+const assessments = ref([]);
+
+onMounted(async () => {
+  try {
+    await store.dispatch('assessment/fetchAssessments', 'your_token');
+    assessments.value = store.state.assessment.assessments;
+  } catch (error) {
+    console.error('获取考核信息失败', error);
+  }
+});
+
+const handleEdit = (row) => {
+  console.log(row, "点击编辑");
+  this.$router.push({ name: 'contentEdit1', params: { id: row.id } });
+};
+
+const handleDelete = (assessmentId) => {
+  console.log(assessmentId, "点击删除");
+  store.dispatch('assessment/deleteAssessment', assessmentId);
+};
+</script>
+
+<style>
+.add-button{
+  background-color: rgba(55, 127, 127);
+  line-height: 40px;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 10px;
+  width: 80px;
+  height: 40px;
+  border: 0px;
+  float: right;
 }
-  </style>
+
+.link{
+  color: #fff;
+}
+
+</style>

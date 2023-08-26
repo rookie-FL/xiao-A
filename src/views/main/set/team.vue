@@ -40,7 +40,7 @@
     padding: 20px;
     margin-top: 2%;
     margin-left: 80px;
-    width: 30%;
+    width: 70%;
     max-height: 65%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow-y: scroll;

@@ -1,38 +1,52 @@
 <template>
   <div class="set">
-    <!-- 其他 Set 父组件内容 -->
-    <infoSet></infoSet>
-    <programShow></programShow>
-    <team></team> <!-- 嵌套 Team 子组件 -->
-  
-    <!-- 其他 Set 父组件内容 -->
+    <div class="left">
+      <programShow></programShow>
+      <team></team>
+    </div>
+    <div class="right">
+      <announceShow></announceShow>
+      <infoset></infoset>
+    </div>
+
+
+
   </div>
 </template>
 
 <script>
 import Team from './team.vue';
-import programShow from './programShow.vue'// 使用相对路径引入
-import infoSet from './infoSet.vue';
+import programShow from './programShow.vue'
+import announceShow from './announceShow.vue';
+import infoset from './infoSet.vue'
+
 
 export default {
   components: {
     Team,
-    programShow, // 注册子组件
-    infoSet,
+    programShow,
+    announceShow,
+    infoset
+
   },
 
-  // 其他 Set 父组件逻辑
+
 };
 </script>
 
-<style scoped>
-.parent-component {
-  /* 其他样式属性 */
-  overflow: hidden; /* 隐藏父组件的滚动条 */
+
+<style>
+.set {
+  height: 100%;
+  display: flex;
+  overflow: hidden;
 }
 
-.set{
-  width: 100%;
-  height: 100%;
+.left {
+  width: 54%;
+}
+
+.right {
+  width: 45%;
 }
 </style>
