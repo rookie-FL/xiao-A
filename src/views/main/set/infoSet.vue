@@ -11,10 +11,9 @@
                 <option value="0">后台组</option>
                 <option value="1">前端组</option>
                 <option value="2">Al组</option>
-                <option value="3">传媒组</option>
+                <option value="3">运维组</option>
                 <option value="4">机械组</option>
                 <option value="5">电控组</option>
-                <option value="6">管理组</option>
             </select>
             </ul>
             <div class="content">

@@ -22,11 +22,9 @@ export const getprogress = defineStore("getprogressz", {
       if ( this.base == 0) { this.group = '后台组' }
       if ( this.base == 1) { this.group = '前端组' }
       if ( this.base == 2) { this.group = 'ai组' }
-      if ( this.base == 3) { this.group = '传媒组' }
+      if ( this.base == 3) { this.group = '运维组' }
       if ( this.base == 4) { this.group = '机械组' }
       if ( this.base == 5) { this.group = '电控组' }
-      if ( this.base == 6) { this.group = '管理组' }
-
     },
     
     async sign() {
