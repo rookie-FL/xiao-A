@@ -42,6 +42,7 @@
 
 <script setup>
 import router from '@/router';
+import {ref,watch} from 'vue'
 import { getprogress } from '@/store/home/home';
 
 const gets=getprogress()
