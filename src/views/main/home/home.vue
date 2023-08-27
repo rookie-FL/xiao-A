@@ -12,6 +12,7 @@
 
 
 <script>
+import router from '@/router';
 import ShowFirst1 from './c-home/ShowFirst1.vue';
 import ShowFirst2 from './c-home/ShowFirst2.vue';
 import ShowFirst3 from './c-home/ShowFirst3.vue';
