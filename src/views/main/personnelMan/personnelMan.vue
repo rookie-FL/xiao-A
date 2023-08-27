@@ -1,6 +1,6 @@
 <template>
   <div class="c_member" style="width: 100%;height: 90%;">
-    <li class="c_headline">人员管理页</li>
+    <Breadcrumb></Breadcrumb>
     <div class="SelectMember">
       <ul>
         <li>姓名</li>
@@ -105,10 +105,14 @@ import { useRoute, useRouter } from 'vue-router';
 import { getList } from '@/store/personnelMan/personal';
 import { storeToRefs } from 'pinia';
 import { ElMessage } from "element-plus";
+import Breadcrumb from '../Breadcrumb.vue';
 
 
 export default {
   name: 'personnelMen',
+  components:{
+    Breadcrumb
+  },
   setup() {
     let spot = reactive({
       assessIndex: '',

@@ -3,10 +3,8 @@
     <h1>通知公告</h1>
     <button class="buttonss"><router-link to="/main/annouce">编辑</router-link></button>
     <hr>
-    <div>
-      <el-table :data="notifications" style="width: 100%" class="tables">
-        <el-table-column prop="title" class="tables"/>
-      </el-table>
+    <div class="line" v-for="(n,index) in getss" :key=index>
+      <li class="content">{{group}} | {{ n.title}}</li>
     </div>
   </div>
 </template>
@@ -14,6 +12,16 @@
 <script setup>
 import { useStore } from "vuex";
 import { onMounted, ref } from "vue";
+import { getprogress } from '@/store/home/home';
+import { storeToRefs } from 'pinia';
+
+const get= getprogress()
+   const gets=storeToRefs(get)
+   get.getnotification()
+   get.getgroup()
+   
+const getss=gets.noification
+const group=get.group
 
 const store = useStore();
 const notifications = ref([]);
@@ -50,4 +58,6 @@ onMounted(async () => {
 .tables{
   font-size: 18px;
 }
+
+
 </style>

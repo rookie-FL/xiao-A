@@ -29,8 +29,8 @@
               placeholder="输入分数(0-100)"
               class="input"
             >
-            <button v-if="canSubmit(item)" @click="setFail(item)" :style="{ backgroundColor: 'rgba(164, 173, 179)', color: 'white' }" class="pass">不通过</button>
-            <button v-if="canSubmit(item)" @click="setPass(item)" class="pass">通过</button>
+            <button  @click="setFail(item)" :style="{ backgroundColor: 'rgba(164, 173, 179)', color: 'white' }" class="pass">不通过</button>
+            <button  @click="setPass(item)" class="pass">通过</button>
             <span v-if="item.pass" class="span">已通过</span>
             <span v-if="item.fail" class="span">不通过</span>
           </li>
@@ -64,6 +64,14 @@
       };
     },
     methods: {
+      setFail(item) {
+      item.fail = true;
+      item.pass = false;
+    },
+    setPass(item) {
+      item.pass = true;
+      item.fail = false;
+    },
       
     async submitAssessment() {
       const openid = "student_openid_here"; 
@@ -140,7 +148,7 @@
 
 .assess {
     margin-left: 38%;
-    margin-top: -54%;
+   
 }
 
 h1{
