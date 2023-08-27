@@ -6,7 +6,7 @@
     </button>
     <el-table style="width: 100%" class="el-table">
       <el-table-column label="标题" align="center">
-        <template #default="scope">{{ scope.row.title }}</template>
+        <template #default="scope">{{scope.row.group }}</template>
       </el-table-column>
       <el-table-column label="组别" align="center">
         <template #default="scope">{{ scope.row.group }}</template>
@@ -17,6 +17,9 @@
       <el-table-column label="发布人" align="center">
         <template #default="scope">{{ scope.row.publisher }}</template>
       </el-table-column>
+      <!-- <el-table-column label="文件" align="center">
+        <template>{{ uploadedFile }}</template>
+      </el-table-column> -->
       <el-table-column label="操作" align="center">
         <template #default="scope">
           <el-button size="mini" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
@@ -30,9 +33,16 @@
 <script setup>
 import { useStore } from 'vuex';
 import { ref, onMounted } from 'vue';
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
-const store = useStore();
+
 const assessments = ref([]);
+const router = useRouter();
+// const store = useStore('assessment'); 
+
+// const uploadedFile = store.getters.getUploadedFile;
+// const title = store.getters.getTitle;
 
 onMounted(async () => {
   try {
@@ -45,9 +55,8 @@ onMounted(async () => {
 
 const handleEdit = (row) => {
   console.log(row, "点击编辑");
-  this.$router.push({ name: 'contentEdit1', params: { id: row.id } });
-};
-
+  router.push({ name: 'contentEdit1', params: { id: row.id } }); 
+}
 const handleDelete = (assessmentId) => {
   console.log(assessmentId, "点击删除");
   store.dispatch('assessment/deleteAssessment', assessmentId);

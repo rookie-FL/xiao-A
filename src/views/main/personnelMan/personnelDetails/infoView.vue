@@ -1,8 +1,9 @@
 <template>
   <h1>人员管理/人员详情</h1>
+  <assess/>
   <PersonnelManComponent />
   <NoteInput/>
-  <assess/>
+
 
 </template>
   

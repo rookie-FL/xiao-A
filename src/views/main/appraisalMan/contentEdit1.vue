@@ -11,50 +11,57 @@
       <el-button>点击上传附件</el-button>
     </el-upload>
 
-    <div v-if="uploadedFile">已上传的文件：{{ uploadedFile.name }}</div>
+    <div v-if="uploadedFile">已上传的文件：{{ uploadedFile }}</div>
     <el-button type="primary" @click="leave">返回</el-button>
     <el-button type="primary" @click="save">发布</el-button>
   </div>
 </template>
 
-
-// Your component script setup
-<script setup>
+<script>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useStore } from 'vuex'; 
-import uploadService from '@/service/editContent/uploadService'; 
+import { useAssessmentStore } from '@/store/editContent/assessment';
 
-const router = useRouter();
-const store = useStore(); 
+export default {
+  setup() {
+    const router = useRouter();
+    const store = useAssessmentStore();
 
-const title = ref('');
+    const title = ref('');
+    const uploadedFile = ref(null);
 
-const handleBeforeUpload = (file) => {
-  const fileType = file.type;
-  if (fileType !== 'application/pdf') {
-    return false;
-  }
-  return true;
+    const handleUploadSuccess = async (response) => {
+      try {
+        const uploadedFileData = await uploadFile(response.file);
+        uploadedFile.value = uploadedFileData;
+
+        store.setUploadedFile(uploadedFileData);
+        store.setTitle(title.value);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const save = () => {
+      router.push('/main/contentEdit');
+    };
+
+    const leave = () => {
+      router.push('/main/contentEdit');
+    };
+
+    return {
+      title,
+      uploadedFile,
+      handleUploadSuccess,
+      save,
+      leave,
+    };
+  },
 };
-
-const handleUploadSuccess = async (response) => {
-  try {
-    const uploadedFile = await uploadService.uploadFile(response.file); 
-    store.dispatch('setUploadedFile', uploadedFile);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const save = () => {
-  router.push('/main/contentEdit'); 
-};
-
-const leave = ()=>{
-  router.push('/main/contentEdit')
-}
 </script>
+
+
 
 
 <style>
