@@ -16,16 +16,23 @@ const routes = [
         component: () => import("../views/main/home/home.vue"),
       },
       {
-        meta:{title:'人员管理'},
+        meta:{title:'人员管理',show:true},
         path: "/main/personnelMan",
         name: "personnelMan",
         component: () => import("../views/main/personnelMan/personnelMan.vue"),
       },
       {
-        meta:{title:'人员管理'},
+        meta:{title:'人员管理',show:true},
         path: "/main/personnelMan/:group",
         name: "personnelMans",
         component: () => import("../views/main/personnelMan/personnelMan.vue"),
+        children:[{
+          meta:{title:'人员详情',show:false},
+          path: '/main/infoView/:index',
+          name: 'infoView',
+          component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
+          props: true
+        },]
       },
       {
         meta:{title:'考核管理'},
@@ -41,17 +48,18 @@ const routes = [
         component: () => import("../views/main/set/setShow/setShow.vue"),
       },
       {
-        meta:{title:'公告设置/通知公告管理'},
+        meta:{title:'公告设置/通知公告管理',show:true},
         path: "/main/annouce",
         name: "annouce",
         component: () => import("../views/main/set/annouce/announce.vue"),
+        children:[ {
+          meta:{title:'通知公告编辑',show:false},
+          path: "/main/annouce/create",
+          name: "createAnn",
+          component: () => import("../views/main/set/annouce/createAnn.vue"),
+        },]
       },
-      {
-        meta:{title:'通知公告编辑'},
-        path: "/main/annouce/create",
-        name: "createAnn",
-        component: () => import("../views/main/set/annouce/createAnn.vue"),
-      },
+   
       {
         path: "/main/accMan",
         name: "accMan",
@@ -90,13 +98,6 @@ const routes = [
         name: "infoViewWithIndex", 
         component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
         props: true 
-      },
-      {
-        meta:{title:'人员详情'},
-        path: '/main/infoView/:index',
-        name: 'infoView',
-        component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
-        props: true
       },
       {
         meta:{title:'考核内容编辑'},

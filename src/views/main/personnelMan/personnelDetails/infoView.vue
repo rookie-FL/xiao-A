@@ -1,5 +1,6 @@
 <template>
-  <h1>人员管理/人员详情</h1>
+<Breadcrumb></Breadcrumb>
+  <!-- <h1>人员管理/人员详情</h1> -->
   <assess/>
   <PersonnelManComponent />
   <NoteInput/>
@@ -12,6 +13,7 @@
   import NoteInput from "./remark.vue";
   import assess from "./assess.vue";
   import { useRoute } from 'vue-router';
+  import Breadcrumb from '../../Breadcrumb.vue';
   
   export default {
   name: 'InfoView',
@@ -24,7 +26,8 @@
   components:{
     PersonnelManComponent,
     NoteInput,
-    assess
+    assess,
+    Breadcrumb
   }
 };
 

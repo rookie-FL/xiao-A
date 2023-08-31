@@ -1,5 +1,6 @@
 <template>
-  <div class="c_member" style="width: 100%;height: 90%;">
+   <router-view></router-view>
+  <div class="c_member" style="width: 100%;height: 90%;" v-if="$route.matched[$route.matched.length-1].meta.show">
     <Breadcrumb></Breadcrumb>
     <div class="SelectMember">
       <ul>
@@ -108,6 +109,7 @@ import { ElMessage } from "element-plus";
 import Breadcrumb from '../Breadcrumb.vue';
 
 
+
 export default {
   name: 'personnelMen',
   components:{
@@ -148,6 +150,7 @@ export default {
     );
     const href = gets.gethref;
     List = gets.list;
+    console.log(List);
     length = Math.ceil(gets.length.value / 10);
 
     const route = useRoute();
