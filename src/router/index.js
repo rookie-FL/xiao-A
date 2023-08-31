@@ -16,38 +16,47 @@ const routes = [
         component: () => import("../views/main/home/home.vue"),
       },
       {
+        meta:{title:'人员管理'},
         path: "/main/personnelMan",
         name: "personnelMan",
         component: () => import("../views/main/personnelMan/personnelMan.vue"),
       },
       {
+        meta:{title:'人员管理'},
         path: "/main/personnelMan/:group",
         name: "personnelMans",
         component: () => import("../views/main/personnelMan/personnelMan.vue"),
       },
       {
+<<<<<<< HEAD
         path: "/main/personnelMan/:id",
         name: "InfoView", 
         component: () => import("../views/main/personnelMan/personnelMan.vue"),
       },
       
       {
+=======
+        meta:{title:'考核管理'},
+>>>>>>> dc72e593c8c875d4bee881bb208172c7af9f3ea0
         path: "/main/appraisalMan",
         name: "appraisalMan",
         component: () => import("../views/main/appraisalMan/appraisalMan.vue"),
       },
       
       {
+        meta:{title:'展示设置/展示内容编辑'},
         path: "/main/show",
         name: "setShow",
         component: () => import("../views/main/set/setShow/setShow.vue"),
       },
       {
+        meta:{title:'公告设置/通知公告管理'},
         path: "/main/annouce",
         name: "annouce",
         component: () => import("../views/main/set/annouce/announce.vue"),
       },
       {
+        meta:{title:'通知公告编辑'},
         path: "/main/annouce/create",
         name: "createAnn",
         component: () => import("../views/main/set/annouce/createAnn.vue"),
@@ -58,6 +67,7 @@ const routes = [
         component: () => import("../views/main/accMan/accMans.vue"),
       },
       {
+        meta:{title:'公告设置/公告详情'},
         path: "/main/annouce/detail/:id",
         name: "deatilAnn",
         component: () => import("../views/main/set/annouce/detailAnn.vue"),
@@ -73,6 +83,7 @@ const routes = [
         component: () => import("../views/main/set/infoSet.vue"),
       },
       {
+        meta:{title:'组别介绍编辑'},
         path: "/main/set/infoEdit/:group",
         name: "inforEdit",
         component: () => import("../views/main/set/infoEdit.vue"),
@@ -90,12 +101,18 @@ const routes = [
         props: true 
       },
       {
+<<<<<<< HEAD
         path: '/main/infoView/:id',
+=======
+        meta:{title:'人员详情'},
+        path: '/main/infoView/:index',
+>>>>>>> dc72e593c8c875d4bee881bb208172c7af9f3ea0
         name: 'infoView',
         component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
         props: true
       },
       {
+        meta:{title:'考核内容编辑'},
         path: '/main/contentEdit',
         name: 'contentEdit',
         component: () => import('../views/main/appraisalMan/contentEdit.vue'),

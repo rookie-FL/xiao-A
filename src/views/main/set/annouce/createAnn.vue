@@ -24,7 +24,6 @@ import jwtDecode from "jwt-decode";
 
 const code = jwtDecode(localStorage.getItem("token"));
 let info = JSON.parse(code.sub);
-console.log("打印解析后的token", info);
 let title;
 let content;
 let releaseAnn = releaseAnnStore()

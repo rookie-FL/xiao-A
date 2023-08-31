@@ -12,21 +12,35 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue';
 import router from '@/router';
 import { useRoute } from 'vue-router';
 import { detailAnnStore } from "@/store/annouce/detailAnn"
 import { storeToRefs } from "pinia";
 
+let data = ref({
+    title: "",
+    content: "",
+    publisherUsername: "",
+
+
+})
+let time = ref("")
+onMounted(() => {
+
+})
+
 const route = useRoute()
-console.log(route.params);
 let id = route.params.id
 const detailAnn = detailAnnStore()
 detailAnn.getDetailAction(id)
 
 const results = storeToRefs(detailAnn)
-let data = results.detailMess.value
+
+data.value = results.detailMess.value
+console.log("打印获取公告详情的结果s", results.detailMess.value);
 let updatetime = data.updateTime
-let time = updatetime
+time.value = updatetime
 
 function back() {
     window.history.back();

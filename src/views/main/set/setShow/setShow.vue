@@ -23,58 +23,151 @@
         <div class="box">
             <div class="title">内容</div>
             <div class="inputs" v-for="(preview, index) in imagePreviews" :key="index">
-                <el-input v-model="text" maxlength="15" :placeholder="title" show-word-limit type="text" class="text" />
-                <el-input v-model="textarea" :rows="6" type="textarea" placeholder="输入内容" />
+                <el-input v-model="allText[index]" maxlength="15" :placeholder="viewTitle" show-word-limit type="text"
+                    class="text" />
+                <el-input v-model="allTextarea[index]" :rows="6" type="textarea" placeholder="输入内容" />
             </div>
 
             <div class="buttons">
                 <el-button type="primary" style="background-color: white;">返回</el-button>
-                <el-button type="primary">暂存</el-button>
-                <el-button type="primary">确定</el-button>
+                <el-button type="primary" @click="save">暂存</el-button>
+                <el-button type="primary" @click="comfirm">确定</el-button>
             </div>
         </div>
     </div>
 </template>
   
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { uploadFile } from '@/service/upload/upload';
+import { setShow } from '@/service/upload/setShow'
+import { ElMessage } from 'element-plus';
+import { getShow } from '@/service/upload/getShow'
 
-const text = ref('')
-const textarea = ref('')
 const imageInput = ref(null);
 const imageInput1 = ref(null);
 const imagePreviews = ref([]);
-const imageLength = ref(imagePreviews.value.length)
-const title = `输入小标题${imagePreviews.value.length + 1}`
+const imageFile = ref([])
+const allText = ref([])
+const allTextarea = ref([])
+const imageText = ref([])
+const getShowRes = ref([])
+const viewTitle = `输入小标题${imagePreviews.value.length + 1}`
 
 // const uploadImage = (event) => {
 //     imageInput1.value.click(); // 触发文件输入框的点击事件
 // };
 
+onMounted(() => {
+    // 获取轮播图数据
+    getShow(true).then(res => {
+        let obj
+        for (let i = 0; i < res.data.length; i++) {
+            getShowRes.value.push(res.data[i])
+            allText.value.push(res.data[i].title)
+            allTextarea.value.push(res.data[i].content)
+            urls.value.push(res.data[i].url)
+            imagePreviews.value.push(res.data[i].url)
+            imageFile.value.push("")
 
+            obj = {
+                url: res.data[i].url,
+                title: res.data[i].title,
+                content: res.data[i].content
+            }
+            imageText.value.push(obj)
+        }
+
+    })
+
+})
+
+// 增加图片
 const handleImageChange = (event) => {
     const operate = event.target.getAttribute('data-operate')
     const file = event.target.files[0];
+    imageFile.value.push(file)
     const index = event.target.getAttribute('data-index')
     console.log("执行的操作是", operate);
     if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-            if (operate === "add") {
-                imagePreviews.value.push(e.target.result);
-            } else {
-                imagePreviews.value[index] = e.target.result;
-            }
+            imagePreviews.value.push(e.target.result);
+            allText.value.push("")
+            allTextarea.value.push("")
+            // if (operate === "add") {
+            //     imagePreviews.value.push(e.target.result);
+            //     allText.value.push("")
+            //     allTextarea.value.push("")
+            // } else {
+            //     imagePreviews.value[index] = e.target.result;
+            // }
 
         };
         reader.readAsDataURL(file);
     }
 };
 
+// 删除图片
 function deleteImg(event) {
     const index = event.target.getAttribute('data-index')
-    console.log("点击删除图片", index);
     imagePreviews.value.splice(index, 1)
+    imageFile.value.splice(index, 1)
+    allText.value.splice(index, 1)
+    allTextarea.value.splice(index, 1)
+
+    imageText.value.splice(index, 1)
+}
+
+let urls = ref([])
+
+// 暂存内容
+async function save() {
+    let obj
+    for (let i = 0; i < imageFile.value.length; i++) {
+        if (imageFile.value[i]) {
+            await uploadFile(imageFile.value[i]).then(res => {
+                urls.value.push(res.data)
+                obj = {
+                    url: res.data,
+                    title: allText.value[i],
+                    content: allTextarea.value[i]
+                }
+                imageText.value.push(obj)
+            })
+        }
+
+    }
+    await setShow(imageText.value, false).then(res => {
+        ElMessage.success("暂存成功")
+    }).catch(res => {
+        ElMessage.error("暂存失败")
+    })
+}
+
+// 确定保存
+async function comfirm() {
+    console.log("目前图片的数量", imageFile.value.length);
+    let obj
+    for (let i = 0; i < imageFile.value.length; i++) {
+        if (imageFile.value[i]) {
+            console.log("=======================存储图片");
+            await uploadFile(imageFile.value[i]).then(res => {
+                urls.value.push(res.data)
+                obj = {
+                    url: res.data,
+                    title: allText.value[i],
+                    content: allTextarea.value[i]
+                }
+                imageText.value.push(obj)
+            })
+        }
+    }
+    await setShow(imageText.value, true).then(res => {
+        ElMessage.success("保存成功")
+    }).catch(res => {
+        ElMessage.error("保存失败")
+    })
 }
 
 

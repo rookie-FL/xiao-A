@@ -47,6 +47,30 @@ class ZYRequest {
     });
   }
 
+  postFile(config, token) {
+    return this.request({
+      ...config,
+      method: "post",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*", // 或指定允许访问的特定源
+        token: `${token}`,
+      },
+    });
+  }
+
+  postSwiper(config, token) {
+    return this.request({
+      ...config,
+      method: "post",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*", // 或指定允许访问的特定源
+        token: `${token}`,
+      },
+    });
+  }
+
   delete(config, token) {
     return this.request({
       ...config,

@@ -59,14 +59,6 @@ function handleItemClick(event) {
 const route=useRoute()
 const routers = useRouter()
 
-// setInterval(()=>{
-//    console.log(route.fullPath);
-// },1000)
-
-// watch(route,()=>{
-//     console.log(route.fullPath);
-// },
-// {deep:true,immediate:true})
 
 // 监听当前路由
 watch(
