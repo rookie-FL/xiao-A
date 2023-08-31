@@ -9,47 +9,44 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
-  name: "NoteInput",
   data() {
     return {
-      note: "", // 存储备注文本
+      note: '' 
     };
   },
   methods: {
-    addRemark() {
-      const token = "your_token"; 
-      const openid = "student_openid_here";
+    async addRemark() {
+  const requestData = {
+    remark: this.note
+  };
 
-      const requestBody = {
-        remark: this.note,
-      };
+  try {
+    const token = localStorage.getItem('token');
+    // const id = this.$route.params.index; 
+ console.log(id)
+    const response = await axios.get('/web/user/remark', {
+      // params: {
+      //   id: id, 
+      // },
+      headers: {
+        token: token,
+      }
+    });
 
-      axios
-        .post("http://your_api_url/web/user/remark?openid=" + openid, requestBody, {
-          headers: {
-            "Content-Type": "application/json",
-            "token": token,
-          },
-        })
-        .then((response) => {
-          if (response.status === 200) {
-            console.log("备注添加成功");
-          } else {
-            console.error("备注添加失败");
-          }
-        })
-        .catch((error) => {
-          console.error("发生错误", error);
-        });
-    },
-  },
+    console.log('获取备注成功', response.data);
+  } catch (error) {
+    console.error('获取备注失败', error);
+  }
+}
+
+    
+  }
 };
 </script>
-
-
+ 
 <style scoped>
 .note-input {
   width: 40%;

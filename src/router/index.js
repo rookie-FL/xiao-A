@@ -20,6 +20,13 @@ const routes = [
         path: "/main/personnelMan",
         name: "personnelMan",
         component: () => import("../views/main/personnelMan/personnelMan.vue"),
+        children:[{
+          meta:{title:'人员详情',show:false},
+          path: '/main/infoView/:index',
+          name: 'infoView',
+          component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
+          props: true
+        },]
       },
       {
         meta:{title:'人员管理',show:true},
@@ -100,6 +107,14 @@ const routes = [
         props: true 
       },
       {
+        meta:{title:'人员详情'},
+        path: '/main/infoView/:id',
+        name: 'infoView',
+        component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
+        props: true
+      },
+      {
+
         meta:{title:'考核内容编辑'},
         path: '/main/contentEdit',
         name: 'contentEdit',
