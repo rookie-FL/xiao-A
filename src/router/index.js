@@ -26,6 +26,12 @@ const routes = [
         component: () => import("../views/main/personnelMan/personnelMan.vue"),
       },
       {
+        path: "/main/personnelMan/:id",
+        name: "InfoView", 
+        component: () => import("../views/main/personnelMan/personnelMan.vue"),
+      },
+      
+      {
         path: "/main/appraisalMan",
         name: "appraisalMan",
         component: () => import("../views/main/appraisalMan/appraisalMan.vue"),
@@ -84,7 +90,7 @@ const routes = [
         props: true 
       },
       {
-        path: '/main/infoView/:index',
+        path: '/main/infoView/:id',
         name: 'infoView',
         component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
         props: true
