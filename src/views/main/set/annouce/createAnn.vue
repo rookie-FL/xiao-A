@@ -1,6 +1,6 @@
 <template>
     <div class="box">
-        <div>公告设置/通知公告管理/通知公告编辑</div>
+        <Breadcrumb></Breadcrumb>
         <div>
             <span class="title">标题</span>
             <input type="text" placeholder="输入标题" v-model="title">
@@ -21,6 +21,7 @@
 import router from '@/router';
 import { releaseAnnStore } from '@/store/annouce/releaseAnn';
 import jwtDecode from "jwt-decode";
+import Breadcrumb from '../../Breadcrumb.vue';
 
 const code = jwtDecode(localStorage.getItem("token"));
 let info = JSON.parse(code.sub);

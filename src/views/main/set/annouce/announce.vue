@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <div>公告设置/通知公告管理</div>
+    <router-view></router-view>
+    <div v-if="route.matched[route.matched.length-1].meta.show">
+        <Breadcrumb></Breadcrumb>
         <el-button type="primary" class="add">
             <router-link to="/main/annouce/create" class="link">+添加</router-link>
         </el-button>
@@ -19,7 +20,7 @@
                         <el-button size="small" type="primary" @click="handleDelete(scope.$index, scope.row)"
                             class="delete button" style="position: relative; z-index: 100;">删除</el-button>
                         <el-button size="small" @click="handleEdit(scope.$index, scope.row)" class="edit button">
-                            <router-link to="/main/annouce/create" data-row="scope.row">编辑</router-link></el-button>
+                编辑</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -37,6 +38,10 @@ import { annouceStore } from "/src/store/annouce/getAnnouce.js"
 import { deleteAnn } from "@/service/annouce/deleteAnn"
 import { storeToRefs } from "pinia";
 import router from '@/router';
+import { useRoute } from "vue-router";
+import Breadcrumb from "../../Breadcrumb.vue";
+const route = useRoute();
+
 
 
 let currentPage = 1
@@ -76,6 +81,7 @@ function handleRowClick(row) {
         }
     })
 }
+
 
 </script>
 
