@@ -35,7 +35,8 @@ export default {
     const List = gets.list;
 
     const info= ref(List.value[index]);
-   
+    console.log(List)
+    console.log(info._rawValue.openid)
     return {
       info,
       index,

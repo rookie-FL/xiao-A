@@ -28,16 +28,12 @@ const routes = [
         component: () => import("../views/main/personnelMan/personnelMan.vue"),
       },
       {
-<<<<<<< HEAD
         path: "/main/personnelMan/:id",
         name: "InfoView", 
         component: () => import("../views/main/personnelMan/personnelMan.vue"),
       },
       
       {
-=======
-        meta:{title:'考核管理'},
->>>>>>> dc72e593c8c875d4bee881bb208172c7af9f3ea0
         path: "/main/appraisalMan",
         name: "appraisalMan",
         component: () => import("../views/main/appraisalMan/appraisalMan.vue"),
@@ -101,12 +97,7 @@ const routes = [
         props: true 
       },
       {
-<<<<<<< HEAD
-        path: '/main/infoView/:id',
-=======
-        meta:{title:'人员详情'},
         path: '/main/infoView/:index',
->>>>>>> dc72e593c8c875d4bee881bb208172c7af9f3ea0
         name: 'infoView',
         component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
         props: true

@@ -45,9 +45,27 @@
     </div>
   </template>
   
+
   <script>
+  import axios from 'axios';
+  import { storeToRefs } from 'pinia';
+  import { useRoute } from 'vue-router';
+  import { ref, onMounted } from 'vue'; 
+  import { getList } from '@/store/personnelMan/personal';
+  
   export default {
-    data() {
+    setup() {
+      const importedList = ref([]); 
+      
+    
+      onMounted(async () => {
+        const get = getList();
+        const gets = storeToRefs(get);
+        importedList.value = gets.list;
+      });
+    
+     
+  
       return {
         progressItems: [
           { label: '一轮面试', key: 'interview1', color: 'rgba(15, 64, 245)', score: '', pass: false, fail: false },
@@ -60,60 +78,64 @@
           assessment1: '',
           assessment2: '',
           finalPresentation: ''
-        }
+        },
+        userChoice: null,
+        importedList, 
       };
     },
     methods: {
       setFail(item) {
-      item.fail = true;
-      item.pass = false;
-    },
-    setPass(item) {
-      item.pass = true;
-      item.fail = false;
-    },
-      
-    async submitAssessment() {
-      const openid = "student_openid_here"; 
-      const currentAssessId = 123; 
-      const nextAssessId = 456; 
-
-      const scores = {};
-      for (const item of this.progressItems) {
-        scores[item.key] = item.score !== "" ? parseInt(item.score) : 0;
-      }
-
-      const requestBody = {
-        openid: openid,
-        scores: scores,
-        currentAssessId: currentAssessId,
-        nextAssessId: nextAssessId,
-        pass: true 
-      };
-
-      try {
-        const response = await this.$axios.post(
-          "http://119.29.250.245:8080/web/assess/pass",
-          requestBody,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              token: "your_token" 
-            }
+        item.fail = true;
+        item.pass = false;
+        this.userChoice = 'fail';
+      },
+      setPass(item) {
+        item.pass = true;
+        item.fail = false;
+        this.userChoice = 'pass';
+      },
+      async submitAssessment() {
+        try {
+          const index = useRoute().params.index;
+          const info = ref(this.importedList[index]); 
+          const student = info.value;
+  
+          const scores = {};
+          for (const item of this.progressItems) {
+            scores[item.key] = item.score !== "" ? parseInt(item.score) : 0;
           }
-        );
-
-        if (response.status === 200) {
-          console.log("考核通过成功");
-        } else {
-          console.error("考核通过失败");
+  
+          const requestBody = {
+            openid: student.openid,
+            scores: scores,
+            pass: this.userChoice,
+            currentAssessId: student.assess_id,
+            // NextAssessId:importedList._rawValue._object.list[1],
+          };
+         console.log( NextAssessId )
+          const token = localStorage.getItem('token');
+          const response = await this.$axios.post(
+            "http://119.29.250.245:8080/web/assess/pass",
+            requestBody,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                token: token,
+              },
+            }
+          );
+  
+          if (response.status === 200) {
+            console.log("考核通过成功");
+          } else {
+            console.error("考核通过失败");
+          }
+        } catch (error) {
+          console.error("发生错误", error);
         }
-      } catch (error) {
-        console.error("发生错误", error);
-      }
-    }
-  }
-};
+      },
+    },
+  };
   </script>
   
 

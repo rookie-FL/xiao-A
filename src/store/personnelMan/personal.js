@@ -47,6 +47,7 @@ export const getList = defineStore("getList", {
       this.list = result.data.records
 
 
+
       //总分排序
       if (sort === '1') {
         for (let i = 0; i < this.list.length; i++) {

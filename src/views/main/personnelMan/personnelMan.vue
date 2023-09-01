@@ -131,7 +131,7 @@ export default {
     let searchpage = ref(1);
     let isShow = ref(false);
     let disabled = ref(true);
-
+    
     const get = getList();
     const gets = storeToRefs(get);
     get.excel();
@@ -149,10 +149,8 @@ export default {
     const href = gets.gethref;
     List = gets.list;
     length = Math.ceil(gets.length.value / 10);
-
     const route = useRoute();
     const router = useRouter();
-
     const goToInfoView = (index) => {
       router.push(`/main/infoView/${index}`);
     };
@@ -166,7 +164,6 @@ export default {
     const changepage = function (page) {
       spot.page = page
     }
-
     //筛选监控
     watch(spot, (a) => {
       get.getList(spot.page, spot.size, spot.groupOption, spot.assessIndex, spot.name, spot.college, spot.major, spot.assessld, spot.sort)
@@ -175,7 +172,7 @@ export default {
       { deep: true },
     )
 
-
+  
     //检查收搜索页格式
     watch(searchpage, (newValue) => {
       if (isNaN(newValue) == false && newValue != '' && newValue != 0) {
