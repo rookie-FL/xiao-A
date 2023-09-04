@@ -56,7 +56,16 @@ const routes = [
         },]
       },
       {
+<<<<<<< HEAD
+        path: "/main/personnelMan/:id",
+        name: "InfoView", 
+        component: () => import("../views/main/personnelMan/personnelMan.vue"),
+      },
+      
+      {
+=======
         meta:{title:'考核管理'},
+>>>>>>> 78530b326f634e6f5b1a3892245d682de5931d58
         path: "/main/appraisalMan",
         name: "appraisalMan",
         component: () => import("../views/main/appraisalMan/appraisalMan.vue"),
@@ -109,7 +118,32 @@ const routes = [
         component: () => import("../views/main/set/infoEdit.vue"),
       },
       
+<<<<<<< HEAD
       
+=======
+      {
+        path: "/main/infoView",
+        name: "infoViewBasic", 
+        component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
+      },
+      {
+        path: "/main/infoView/:index", 
+        name: "infoViewWithIndex", 
+        component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
+        props: true 
+      },
+      {
+<<<<<<< HEAD
+        path: '/main/infoView/:index',
+=======
+        meta:{title:'人员详情'},
+        path: '/main/infoView/:id',
+>>>>>>> 78530b326f634e6f5b1a3892245d682de5931d58
+        name: 'infoView',
+        component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
+        props: true
+      },
+>>>>>>> 38b578773634e370666351033589c44bf8b19bf9
       {
 
         meta:{title:'考核内容编辑'},

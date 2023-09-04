@@ -6,46 +6,60 @@
       <button @click="addRemark">添加备注</button>
     </div>
   </div>
+ 
 </template>
 
 <script>
 import axios from 'axios';
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+import { ref } from 'vue';
+import { getList } from '@/store/personnelMan/personal';
 
 export default {
-  data() {
+  setup() {
+    const note = ref('');
+    const route = useRoute();
+    const index = route.params.index;
+
+    const get = getList();
+    const gets = storeToRefs(get);
+    const List = gets.list;
+
+    const info = ref(List.value[index]);
+    console.log(info._rawValue)
+    const addRemark = async () => {
+      const requestData = {
+        remark: note.value,
+      };
+      try {
+  const token = localStorage.getItem('token');
+  const openid = info._rawValue.openid
+  const response = await axios.get('/web/user/remark', {
+    params: {
+      openid: openid,
+    },
+    headers: {
+      token: token,
+    },
+  });
+
+  console.log('添加备注成功', response.data);
+} catch (error) {
+  console.error('添加备注失败', error);
+}
+    };
+
     return {
-      note: '' 
+      note,
+      responseData: null, 
+      addRemark,
     };
   },
-  methods: {
-    async addRemark() {
-  const requestData = {
-    remark: this.note
-  };
-
-  try {
-    const token = localStorage.getItem('token');
-    // const id = this.$route.params.index; 
- console.log(id)
-    const response = await axios.get('/web/user/remark', {
-      // params: {
-      //   id: id, 
-      // },
-      headers: {
-        token: token,
-      }
-    });
-
-    console.log('获取备注成功', response.data);
-  } catch (error) {
-    console.error('获取备注失败', error);
-  }
-}
-
-    
-  }
 };
 </script>
+
+
  
 <style scoped>
 .note-input {
