@@ -15,10 +15,12 @@ const routes = [
         name: "home",
         component: () => import("../views/main/home/home.vue"),
       },
+      
       {
         meta: { title: "人员管理", show: true },
         path: "/main/personnelMan",
         name: "personnelMan",
+<<<<<<< HEAD
         component: () =>
           import("../views/main/personnelMan/personnelMan.vue"),
         children: [
@@ -61,6 +63,33 @@ const routes = [
       },
       {
         meta: { title: "考核管理" },
+=======
+        component: () => import("../views/main/personnelMan/personnelMan.vue"),
+        children:[{
+          meta:{title:'人员详情',show:false},
+          path: "/main/infoView",
+          name: "infoViewBasic", 
+          component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
+        },
+        {
+          meta:{title:'人员详情',show:false},
+          path: "/main/infoView/:index", 
+          name: "infoViewWithIndex", 
+          component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
+          props: true 
+        },
+        {
+          meta:{title:'人员详情',show:false},
+          meta:{title:'人员详情'},
+          path: '/main/infoView/:id',
+          name: 'infoView',
+          component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
+          props: true
+        },]
+      },
+      {
+        meta:{title:'考核管理'},
+>>>>>>> 89d657e809083d8b39d2f8824ce56a593dac74cd
         path: "/main/appraisalMan",
         name: "appraisalMan",
         component: () => import("../views/main/appraisalMan/appraisalMan.vue"),
@@ -113,6 +142,7 @@ const routes = [
         name: "inforEdit",
         component: () => import("../views/main/set/infoEdit.vue"),
       },
+<<<<<<< HEAD
       {
         path: "/main/infoView",
         name: "infoViewBasic",
@@ -134,6 +164,27 @@ const routes = [
           import("../views/main/personnelMan/personnelDetails/infoView.vue"),
         props: true,
       },
+=======
+      //移到上面了
+      // {
+      //   path: "/main/infoView",
+      //   name: "infoViewBasic", 
+      //   component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
+      // },
+      // {
+      //   path: "/main/infoView/:index", 
+      //   name: "infoViewWithIndex", 
+      //   component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
+      //   props: true 
+      // },
+      // {
+      //   meta:{title:'人员详情'},
+      //   path: '/main/infoView/:id',
+      //   name: 'infoView',
+      //   component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
+      //   props: true
+      // },
+>>>>>>> 89d657e809083d8b39d2f8824ce56a593dac74cd
       {
         meta: { title: "考核内容编辑" },
         path: "/main/contentEdit",
