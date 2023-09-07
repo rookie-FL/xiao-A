@@ -25,34 +25,33 @@ export default {
     const get = getList();
     const gets = storeToRefs(get);
     const List = gets.list;
-
+    
     const info = ref(List.value[index]);
-    console.log(info._rawValue)
-    const addRemark = async () => {
-      const requestData = {
-        remark: note.value,
-      };
-      try {
-  const token = localStorage.getItem('token');
-  const openid = info._rawValue.openid
-  const response = await axios.get('/web/user/remark', {
-    params: {
-      openid: openid,
-    },
-    headers: {
-      token: token,
-    },
-  });
 
-  console.log('添加备注成功', response.data);
-} catch (error) {
-  console.error('添加备注失败', error);
-}
-    };
+    const addRemark = async () => {
+  const remark = note.value;
+
+  try {
+    const token = localStorage.getItem('token');
+    const openid = info.value.openid;
+    const url = `/web/user/remark?token=${token}&openid=${openid}&remark=${remark}`;
+
+
+    axios.post(url)
+      .then((response) => {
+        console.log('添加备注成功', response.data);
+      })
+      .catch((error) => {
+        console.error('添加备注失败', error);
+      });
+  } catch (error) {
+    console.error('添加备注失败', error);
+  }
+};
+
 
     return {
       note,
-      responseData: null, 
       addRemark,
     };
   },

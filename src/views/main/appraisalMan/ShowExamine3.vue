@@ -42,7 +42,7 @@ export default {
     let progressx = store.progress;
     let progress = progressx.value;
     let page = ref(1);
-
+    console.log(progress)
     let pages = ref(store.length);
 
     const leave = function () {

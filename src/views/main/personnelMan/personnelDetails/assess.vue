@@ -1,143 +1,131 @@
 <template>
-    <div class="assess">
-      <h1>考核信息</h1>
-      <div class="progress">
-        <h1 class="now">目前进度：</h1>
-        <hr>
-        <div class="all">
-          <ul class="round">
-            <li v-for="(item, index) in progressItems" :style="{ 'background-color': item.color }" :key="index"></li>
-          </ul>
-          <ul class="progress-text">
+  <div class="assess">
+    <h1>考核信息</h1>
+    <div class="progress">
+      <h1 class="now">目前进度：</h1>
+      <hr>
+      <div class="all">
+        <ul class="round">
+          <li v-for="(item, index) in progressItems" :style="{ 'background-color': item.color }" :key="index"></li>
+        </ul>
+        <ul class="progress-text">
           <li v-for="(item, index) in progressItems" :key="index">{{ item.label }}: {{ item.score }}</li>
         </ul>
-          <div class="pie-chart">
-            <div class="inner-circle"></div>
-          </div>
+        <div class="pie-chart">
+          <div class="inner-circle"></div>
         </div>
       </div>
-      <h1 class="set">进度设置</h1>
-      <div class="progressSet">
-        <ul>
-          <li v-for="(item, index) in progressItems" :key="index">
-            {{ item.label }}:
-            <input
-              type="number"
-              v-model="item.score"
-              :readonly="item.pass || item.fail"
-              :max="100"
-              placeholder="输入分数(0-100)"
-              class="input"
-            >
-            <button  @click="setFail(item)" :style="{ backgroundColor: 'rgba(164, 173, 179)', color: 'white' }" class="pass">不通过</button>
-            <button  @click="setPass(item)" class="pass">通过</button>
-            <span v-if="item.pass" class="span">已通过</span>
-            <span v-if="item.fail" class="span">不通过</span>
-          </li>
-          <hr>
-        </ul>
-      </div>
-      <router-link :to="`/main/personnelMan`">
-        <span class="return">返回</span>
-      </router-link>
-        <span class="sure" @click="submitAssessment">确定</span>
-
     </div>
-  </template>
-  
+    <h1 class="set">进度设置</h1>
 
-  <script>
-  import axios from 'axios';
-  import { storeToRefs } from 'pinia';
-  import { useRoute } from 'vue-router';
-  import { ref, onMounted } from 'vue'; 
-  import { getList } from '@/store/personnelMan/personal';
-  
-  export default {
-    setup() {
-      const importedList = ref([]); 
-      
-    
-      onMounted(async () => {
+    <div class="progressSet">
+      <ul>
+        <li v-for="(item, index) in progressItems" :key="index">
+  {{ item.label }}:
+  <input
+    type="number"
+    v-model="item.score"
+    :readonly="item.pass || item.fail"
+    :max="100"
+    placeholder="输入分数(0-100)"
+    class="input"
+  >
+  <button @click="setChoice(item, 'fail')" :class="{ 'pass': !item.fail }" v-if="!item.fail && !item.pass">不通过</button>
+  <button @click="setChoice(item, 'pass')" :class="{ 'pass': !item.pass }" v-if="!item.fail && !item.pass">通过</button>
+  <span v-if="item.pass" class="span pass">已通过</span>
+  <span v-if="item.fail" class="span fail">不通过</span>
+</li>
+
+        <hr>
+      </ul>
+    </div>
+    <router-link :to="`/main/personnelMan`">
+      <span class="return">返回</span>
+    </router-link>
+    <span class="sure" @click="submitAssessment">确定</span>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+import { ref, onMounted } from 'vue'; 
+import { getList } from '@/store/personnelMan/personal';
+
+export default {
+  setup() {
+        const index = useRoute().params.index;
+        console.log(index)
         const get = getList();
         const gets = storeToRefs(get);
-        importedList.value = gets.list;
-      });
+        const List = gets.list;
+        const info = ref(List.value[index]);
+        const openid = info._rawValue.openid;
+        console.log(List._object.list[index + 1]);
+    const progressItems = ref([
+      { label: '一轮面试', key: 'interview1', color: 'rgba(15, 64, 245)', score: null, pass: false, fail: false },
+      { label: '一轮考核', key: 'assessment1', color: 'rgba(15, 64, 245)', score: null, pass: false, fail: false },
+      { label: '二轮考核', key: 'assessment2', color: 'rgba(147, 210, 243)', score: null, pass: false, fail: false },
+      { label: '最终答辩', key: 'finalPresentation', color: 'rgba(147, 210, 243)', score: null, pass: false, fail: false }
+    ]);
+
+    const setChoice = (item, choice) => {
+  
+      item.pass = choice === 'pass';
+      item.fail = choice === 'fail';
+    };
+
+    const submitAssessment = async () => {
+      try {
     
-     
-  
-      return {
-        progressItems: [
-          { label: '一轮面试', key: 'interview1', color: 'rgba(15, 64, 245)', score: '', pass: false, fail: false },
-          { label: '一轮考核', key: 'assessment1', color: 'rgba(15, 64, 245)', score: '', pass: false, fail: false },
-          { label: '二轮考核', key: 'assessment2', color: 'rgba(147, 210, 243)', score: '', pass: false, fail: false },
-          { label: '最终答辩', key: 'finalPresentation', color: 'rgba(147, 210, 243)', score: '', pass: false, fail: false }
-        ],
-        scores: {
-          interview1: '',
-          assessment1: '',
-          assessment2: '',
-          finalPresentation: ''
-        },
-        userChoice: null,
-        importedList, 
-      };
-    },
-    methods: {
-      setFail(item) {
-        item.fail = true;
-        item.pass = false;
-        this.userChoice = 'fail';
-      },
-      setPass(item) {
-        item.pass = true;
-        item.fail = false;
-        this.userChoice = 'pass';
-      },
-      async submitAssessment() {
-        try {
-          const index = useRoute().params.index;
-          const info = ref(this.importedList[index]); 
-          const student = info.value;
-  
-          const scores = {};
-          for (const item of this.progressItems) {
-            scores[item.key] = item.score !== "" ? parseInt(item.score) : 0;
+        const token = localStorage.getItem('token');
+        const scores = {};
+    
+        progressItems.value.forEach(item => {
+          scores[item.key] = item.score !== null ? parseInt(item.score) : 0;
+        });
+
+       
+        const requestBody = {
+          openid: openid, 
+          score: scores,
+          pass: progressItems.value.every(item => item.pass),
+          currentAssessId: info._rawValue.assess_id,
+          NextAssessId:info._rawValue.assess_id,
+        };
+
+        
+        const response = await axios.post(
+          'http://119.29.250.245:8080/web/assess/pass',
+          requestBody,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'token': token,
+            },
           }
-  
-          const requestBody = {
-            openid: student.openid,
-            scores: scores,
-            pass: this.userChoice,
-            currentAssessId: student.assess_id,
-            // NextAssessId:importedList._rawValue._object.list[1],
-          };
-         console.log( NextAssessId )
-          const token = localStorage.getItem('token');
-          const response = await this.$axios.post(
-            "http://119.29.250.245:8080/web/assess/pass",
-            requestBody,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                token: token,
-              },
-            }
-          );
-  
-          if (response.status === 200) {
-            console.log("考核通过成功");
-          } else {
-            console.error("考核通过失败");
-          }
-        } catch (error) {
-          console.error("发生错误", error);
+        );
+
+        if (response.status === 200) {
+          console.log('考核信息成功上传');
+        } else {
+          console.error('考核信息上传失败');
         }
-      },
-    },
-  };
-  </script>
-  
+      } catch (error) {
+        console.error('发生错误', error);
+      }
+    };
+
+    return {
+      progressItems,
+      setChoice,
+      submitAssessment,
+    };
+  },
+};
+</script>
+
 
 <style scoped>
 .return{
