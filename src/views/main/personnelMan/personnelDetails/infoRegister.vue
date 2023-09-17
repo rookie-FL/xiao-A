@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h1 class="apply">报名信息</h1>
     <div class="infoRegister">
       <div class="M_data">
@@ -29,14 +29,15 @@ export default {
   props: ['index'], 
   setup(props) {
     const index=useRoute().params.index
-
     const get = getList();
     const gets = storeToRefs(get);
     const List = gets.list;
-
     const info= ref(List.value[index]);
+<<<<<<< HEAD
     console.log(List)
     console.log(info._rawValue.openid)
+=======
+>>>>>>> b6cdb5a (2023.9.17)
     return {
       info,
       index,
@@ -46,6 +47,10 @@ export default {
 </script>
 
 <style scoped>
+.container{
+  width: 100%;
+  height: 100%;
+}
 .infoRegister {
   width: 20%;
   background-color: rgba(239, 239, 239); 

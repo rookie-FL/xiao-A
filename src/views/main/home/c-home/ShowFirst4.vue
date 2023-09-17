@@ -44,7 +44,6 @@ export default {
      get.getinformation()
 
     let progress=gets.progress.value
-    console.log(progress);
 
     let long=reactive([])
 
@@ -89,16 +88,6 @@ setTimeout(()=>{
 
   }
 
-
-
-
-
-
-
-
-
-
-
 };
 </script>
 
@@ -106,21 +95,31 @@ setTimeout(()=>{
 .chart {
   position: relative;
   float: right;
-  width: 45%;
-  height: 54.5%;
+  width: 50%;
+  height: 60%;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 5px 5px 5px rgba(187, 187, 187, 100);
+  cursor: pointer;
+}
+
+.headword{
+  width: 160px;
+  font-size: 18px;
+  font-weight: 600;
+  padding-top: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-family: Microsoft yahei!important;
 }
 
 .category {
   float: left;
-  margin-top: 5%;
+  margin-top: 2%;
   width: 10%;
   height: 75%;
-
-
   font-size: 10px;
+  font-weight: 600!important;
+  font-family: Microsoft yahei!important;
   box-sizing: border-box;
   border-width: 0px 2px 0px 0px;
   border-color: rgba(187, 187, 187, 100);
@@ -131,9 +130,9 @@ setTimeout(()=>{
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 100%;
   height: 14.3%;
+  font-family: Microsoft yahei !important;;
 }
 
 .category li::after {
@@ -143,7 +142,6 @@ setTimeout(()=>{
   content: '';
   width: 2%;
   height: 11%;
-
   box-sizing: border-box;
   border-width: 1.5px 0px 1.5px 0px;
   border-color: rgba(187, 187, 187, 100);
@@ -199,7 +197,8 @@ setTimeout(()=>{
   float: left;
   height: 100%;
   background-color: rgb(33, 99, 223);
-
+  border-top-right-radius:5px ;
+  border-bottom-right-radius:5px ;
 }
 
 
@@ -215,5 +214,6 @@ setTimeout(()=>{
   width: 16.666%;
   font-size: 8px;
   text-align: center;
+  font-weight: 500;
 }
 </style>

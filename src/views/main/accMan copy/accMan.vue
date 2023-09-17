@@ -9,6 +9,7 @@
             <el-table-column prop="phone" label="手机号码" header-align="center" align="center" />
             <el-table-column prop="updateTime" label="创建时间" header-align="center" align="center" />
             <el-table-column align="center" label="操作">
+
                 <template #default="scope">
                     <el-button size="small" type="primary" @click="deleteAcc(scope.row)">删除</el-button>
                 </template>
@@ -29,6 +30,7 @@ let currentPage = 1
 
 accountS.getAccAction(1, 5)
 const results = storeToRefs(accountS)
+console.log("页面数据", results);
 let tableData = results.accounts
 let pages = results.pages
 

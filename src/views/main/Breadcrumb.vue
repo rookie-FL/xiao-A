@@ -26,16 +26,21 @@ export default {
     getBreadcrumb() {
        this.breadList = this.$route.matched;
     },
+<<<<<<< HEAD
     leave(route,index){
       if(index!=this.breadList.length-1)
       router.push(route.path)
+=======
+    leave(route){
+         router.push(route.path)
+>>>>>>> b6cdb5a (2023.9.17)
     }
   },
   created() {
     this.getBreadcrumb();
   },
   mounted() {
-    console.log(this.breadList);
+  
   },
 };
 </script>
@@ -44,11 +49,17 @@ export default {
 ul{
     width: 100%;
     height: 40px;
+    
 }
 li{
     cursor: pointer;
     float: left;
+<<<<<<< HEAD
     font-size: 16px;
+=======
+    font-size: 14px;
+    font-weight: 600;
+>>>>>>> b6cdb5a (2023.9.17)
 }
 
 li:hover{

@@ -6,6 +6,7 @@ const routes = [
     redirect: "/main",
   },
   {
+    meta:{title:'首页'},
     path: "/main",
     name: "main",
     component: () => import("../views/main/main.vue"),
@@ -150,6 +151,7 @@ const routes = [
           import("../views/main/personnelMan/personnelDetails/infoView.vue"),
       },
       {
+<<<<<<< HEAD
         path: "/main/infoView/:index",
         name: "infoViewWithIndex",
         component: () =>
@@ -191,6 +193,13 @@ const routes = [
         name: "contentEdit",
         component: () => import("../views/main/appraisalMan/contentEdit.vue"),
         props: true,
+=======
+        meta:{title:'人员详情'},
+        path: '/main/infoView/:index',
+        name: 'infoView',
+        component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
+        props: true
+>>>>>>> b6cdb5a (2023.9.17)
       },
       {
         path: "/main/contentEdit1",

@@ -1,9 +1,0 @@
-.single-line-input {
-  width: 200px;
-  font-size: 17px;
-  padding: 10px 40px;
-  background-color: transparent;
-  border: none; /* Remove the default border */
-  border-bottom: 1px solid rgb(190, 188, 188); /* Add a 1px solid underline */
-  outline: none; /* Remove the outline when focused (optional, for better visual) */
-}

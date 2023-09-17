@@ -1,6 +1,6 @@
 <template>
-  <div class="progress2" style="overflow: hidden" ref="bigbox" @click="leave">
-    <select class="group" style="float: right;z-index: 1;margin:2% 4% 0 0 ;" v-model="group" ref="sel" @click="stop">
+  <div class="progress2" style="overflow: hidden" ref="bigbox">
+    <select class="group" style="float: right;z-index: 1;margin:2% 4% 0 0 ;" v-model="group" ref="sel" @click=stop>
       <option value="0">后台组</option>
       <option value="1">前端组</option>
       <option value="2">Al组</option>
@@ -8,12 +8,11 @@
       <option value="4">机械组</option>
       <option value="5">电控组</option>
     </select>
-    <div class="headword">考核管理</div>
-
+    <div class="headword" @click="leave">考核管理(滚动鼠标查看进度)</div>
     <ul class="lunbo">
       <ul class="piece" v-for="(n, index) in progress" :key="index"
         v-bind:style="{ width: pagesize_x + 'px', height: pagesize_y + 'px' }">
-        <li class="arrow"></li>
+        <li class="arrow" v-if="index<progress.length-1"></li>
         <li class="picture2" v-bind:style="{ width: pagesize_x * 0.8 + 'px', backgroundColor:color(n.status)}">{{ n.name }}</li>
         <li class="status">{{ n.status }}</li>
         <li class="time">{{ n.time }}</li>
@@ -42,25 +41,19 @@ export default {
     get.getinformation()
     let group = ref(gets.base.value)
     let progress = ref(gets.progress.value[0])
-
     //监视组别
     watch(group, (newValue) => {
       progress.value = gets.progress.value[newValue]
-      console.log(progress);
     })
-
     //更改颜色
     const color=function(status){
-if(status=='已完成'){return 'rgba(75,135,250,100)'}
-    }
-
-
-
+    if(status=='已完成'){return 'rgba(75,135,250,100)'}
+        }
     //轮播图动画
     const makeanimation = function (x, y) {
       let n = 0;
       var lunbo = document.querySelector(".lunbo");
-      lunbo.parentNode.onwheel = function () {
+      lunbo.parentNode.onwheel = function (event) {
         event.preventDefault();
         if (event.wheelDelta > 0) {
           if (n < 0) {
@@ -101,17 +94,11 @@ if(status=='已完成'){return 'rgba(75,135,250,100)'}
     };
   },
 
-  methods: {
-    //轮播图动画
-
-
-  },
-
 
   mounted() {
     this.pagesize_x = parseInt(this.$refs.bigbox.getBoundingClientRect().width * 0.2475)
     this.pagesize_y = parseInt(this.$refs.bigbox.getBoundingClientRect().height)
-
+   
     setTimeout(() => {
       this.page = this.progress.length
       this.makeanimation(this.pagesize_x, this.page)
@@ -150,21 +137,29 @@ function move(obj, distance) {
   height: 10%;
   border-radius: 10px;
   outline: none;
+  border-color: black;
+  transition: all 0.3s;
 }
 
 .headword {
-  font-size: 25px;
-
+  width: 300px;
+  font-size: 18px;
+  font-weight: 600;
+  padding-top: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-family: Microsoft yahei!important;
 }
 
 .progress2 {
   position: relative;
-  margin-top: 3%;
-  width: 50%;
-  height: 40%;
+  margin-top: 20px;
+  width: 46%;
+  height: 36%;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 5px 5px 5px rgba(187, 187, 187, 100);
+  box-sizing: border-box;
+  padding: 10px;
 }
 
 ul {
@@ -173,19 +168,24 @@ ul {
 
 li.arrow {
   position: relative;
+  top:60px;
   right: -93%;
-  top: 25%;
   font-family: "icomoon";
   color: rgba(11, 147, 234, 100);
 }
 
+.piece:last-child{
+  position: relative;
+  top: 18px;
+}
 .lunbo {
+  display: flex;
+  flex-direction: row;
   position: absolute;
-  margin-top: 2%;
 }
 
 .piece {
-  float: left;
+  position: relative;
   padding-inline-start: 0px;
 }
 
@@ -194,14 +194,13 @@ li.arrow {
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  width: 80%;
-  height: 40%;
-
+  width: 60%;
+  height: 50%;
   border-radius: 10px;
-
   font-size: 18px;
   font-weight: 600;
   background-color: rgb(147, 233, 229);
+  font-family: Microsoft yahei!important;
 }
 
 .status {
@@ -209,10 +208,11 @@ li.arrow {
   align-items: center;
   justify-content: center;
   margin: 0% auto;
-  
-  width: 80%;
+  width: 70%;
   height: 10%;
   color: rgba(140, 137, 137, 100);
+  font-weight: 500!important;
+  font-family: Microsoft yahei!important;
 }
 
 .time {
@@ -220,5 +220,10 @@ li.arrow {
   width: 70%;
   height: 20%;
   text-align: center;
+  font-size: 14px;
+}
+
+select:hover{
+  border-color: rgb(238, 174, 93);
 }
 </style>

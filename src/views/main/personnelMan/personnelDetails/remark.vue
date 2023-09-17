@@ -55,6 +55,36 @@ export default {
       addRemark,
     };
   },
+<<<<<<< HEAD
+=======
+  methods: {
+    addRemark() {
+      const token = "your_token"; 
+      const openid = "student_openid_here";
+      const requestBody = {
+        remark: this.note,
+      };
+
+      axios
+        .post("http://your_api_url/web/user/remark?openid=" + openid, requestBody, {
+          headers: {
+            "Content-Type": "application/json",
+            "token": token,
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log("备注添加成功");
+          } else {
+            console.error("备注添加失败");
+          }
+        })
+        .catch((error) => {
+          console.error("发生错误", error);
+        });
+    },
+  },
+>>>>>>> b6cdb5a (2023.9.17)
 };
 </script>
 

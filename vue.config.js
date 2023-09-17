@@ -16,6 +16,9 @@ module.exports = {
     devServer: {
       port: 8888,
       open: true,
+      client: {
+        overlay: false
+      }
     },
     // plugins配置里加下面的代码
     plugins: [

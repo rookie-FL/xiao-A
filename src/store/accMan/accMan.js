@@ -13,7 +13,6 @@ export const accountStore = defineStore("account", {
       let results = await accMan(page, pageSize, localStorage.getItem("token"));
       this.accounts = results.data.records;
       this.pages = results.data.pages;
-      console.log("打印一些数据", results.data.records);
     },
   },
 });

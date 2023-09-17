@@ -46,9 +46,9 @@ setup(){
   get.sign()
   get.getcount()
   get.status()
- let signupCount=gets.signupCount
- let count=gets.counts
- let statusCount=gets.statusCount
+  let signupCount=gets.signupCount
+  let count=gets.counts
+  let statusCount=gets.statusCount
 
  return {
 
@@ -60,16 +60,13 @@ setup(){
 }
 
 }
-
-
 </script>
 
 <style scoped>
 
-
 .progress1 {
-  width: 50%;
-  height: 20%;
+  width: 45%;
+  height: 25%;
   border-radius: 10px;
 }
 
@@ -82,37 +79,46 @@ setup(){
   height: 100%;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 5px 5px 5px rgba(187, 187, 187, 100);
 }
 
 .progress1 .picture {
   margin: 10% auto;
-  width: 45%;
+  width: 46%;
   height: 30%;
+  margin-top: 30px;
   border-width: 1px;
   border-style: solid;
   border-radius: 10px;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .picture img {
-  position: relative;
   margin: 0 auto;
-  top: 15%;
-
+  transform: translate(-50%,-50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 .progress1 .word {
-  margin: 10% auto;
+  margin: auto;
   width: 80%;
-  height: 20%;
+  height: 30px;
   color: rgba(140, 137, 137, 100);
   text-align: center;
+  font-weight: 600;
+  line-height: 30px;
+  font-family: Microsoft YaHei!important;
 }
 
 .progress1 .number {
-  margin: 10% auto;
+  margin: auto;
   width: 80%;
   height: 20%;
   text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  font-family: Microsoft YaHei!important;
 }
 </style>

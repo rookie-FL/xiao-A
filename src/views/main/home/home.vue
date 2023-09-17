@@ -1,12 +1,10 @@
 <template>
-    <div style="width: 100%;height: 100%; backgroundColor:rgba(239, 239, 239, 100)">
+    <div style="width: 100%;height: 100%; backgroundColor:rgba(239, 239, 239, 100);padding: 20px; box-sizing: border-box;">
         <show-first-4></show-first-4>
         <show-first-1></show-first-1>
         <show-first-2></show-first-2>
         <show-first-5></show-first-5>
         <show-first-3></show-first-3>
-
-
     </div>
 </template>
 

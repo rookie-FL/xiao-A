@@ -2,7 +2,7 @@
     <div class="common-layout" >
         <el-container>
             <el-header class="header">
-                <img src="./logo.png" alt="" class="logo">
+                <img src="./logo.png" alt="">
                 <div class="title">小A招新后台管理系统</div>
                 <div class="welcome">
                     <span>您好，</span>
@@ -16,21 +16,19 @@
             </el-header>
             <el-container class="container">
                 <el-aside width="190px" class="side">
-                    <div @click="handleItemClick" data-url="/main/home" class="item" style="background-color:rgb(111, 209, 243) ;"> 首页</div>
+                    <div @click="handleItemClick" data-url="/main/home" class="item" style="background-color:rgb(187, 187, 187) ;"> 首页</div>
                     <div @click="handleItemClick" data-url="/main/personnelMan" class="item"> 人员管理</div>
                     <div @click="handleItemClick" data-url="/main/appraisalMan" class="item"> 考核管理</div>
                     <div class="set-item">
-                        <div @click="handleItemClick" data-url="/main/set" style=" font-family: 'icomoon';padding-left: 35px;" class="item"> 设置</div>
-                        <div @click="handleItemClick" data-url="/main/show" class="item children close"> 展示设置</div>
-                        <div @click="handleItemClick" data-url="/main/annouce" class="item children close"> 公告设置</div>
+                        <div @click="handleItemClick" data-url="/main/set" style=" font-family: 'icomoon';padding-left: 35px;" class="item" > 设置</div>
+                        <div @click="handleItemClick" data-url="/main/show" class="item" > 展示设置</div>
+                        <div @click="handleItemClick" data-url="/main/annouce" class="item"> 公告设置</div>
                     </div>
-                    <div @click="handleItemClick" data-url="/main/accMan" class="item" > 账号管理</div>
+                    <div @click="handleItemClick" data-url="/main/accMan" class="item"> 账号管理</div>
                 </el-aside>
                 <!-- 动态展示右侧页面 -->
                 <el-main class="hidden">
-                    <transition name="el-fade-in-linear">
-                        <router-view v-loading="loading" ></router-view>
-                    </transition>
+                    <router-view></router-view>
                 </el-main>
             </el-container>
         </el-container>
@@ -43,21 +41,16 @@
 import router from '@/router';
 import jwtDecode from "jwt-decode";
 import { useRouter } from 'vue-router';
-import {watch ,onMounted,onBeforeMount,ref} from 'vue'
-import { ElLoading } from 'element-plus'
+import {watch} from 'vue'
 
 const routers = useRouter()
 const code = jwtDecode(localStorage.getItem("token"));
 let info = JSON.parse(code.sub);
+console.log("打印解析后的token", info);
 
 function handleItemClick(event) {
     const url = event.target.dataset.url;
     router.push(url)
-    if(url=='/main/set'){
-       document.querySelectorAll('.children').forEach(element => {
-            element.classList.toggle('close')
-       });
-    }
     
 }
 // 退出登录
@@ -66,6 +59,8 @@ let confirmEvent=()=>{
     localStorage.removeItem('name')
     localStorage.removeItem('password')
 }
+
+
 // 监听当前路由
 watch(
   () => routers.currentRoute.value,
@@ -75,39 +70,17 @@ watch(
         if(newValue.fullPath==item[i].getAttribute('data-url'))
         {
             for(let j=0;j<item.length;j++)
-            {   
+            {
                 item[j].style.backgroundColor='#4E99CA'
-                if(i!=j){
-                    item[j].onmouseover = function () {
-                    this.style.backgroundColor = "rgb(70, 125, 201)";
-                    };
-                    item[j].onmouseout = function () {
-                    this.style.backgroundColor = "#4E99CA";
-                    }
-                }else{
-                    item[j].onmouseover = function () {
-                    this.style.backgroundColor = "rgb(131, 210, 244)";
-                    };
-                    item[j].onmouseout = function () {
-                    this.style.backgroundColor = "rgb(131, 210, 244)";
-                    }
-                }
-            };
-            item[i].style.backgroundColor='rgb(111, 209, 243)'
+            }
+            item[i].style.backgroundColor='rgb(187, 187, 187)'
         }
     }
   },
   { immediate: true }
 )
-let loading=ref(true)
-setTimeout(() => {
-  // 关闭全局Loading
-  loading.value=false
-}, 1000)
-onMounted(()=>{
-    let main=document.querySelector('.el-main')
-    main.style.padding=0
-})
+
+
 </script>
 
 
@@ -132,14 +105,12 @@ onMounted(()=>{
 .quit{
     position: absolute;
     right: 40px;
-    top: 25px;
+    top: 40px;
 }
 .welcome {
     position: absolute;
     right: 150px;
-    top: 30px;
-    font-weight: 600!important;
-    font-family:Microsoft YaHei !important;
+    top: 45px;
 }
 
 /* 你好语句 */
@@ -148,44 +119,28 @@ onMounted(()=>{
     cursor: pointer;
 }
 
-.close{
-    height: 0!important;
-    opacity: 0;
-    overflow: hidden;
-}
-
 .header {
-    display: flex;
-    flex-direction: row;
-    height: 80px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-bottom: 1px solid rgb(210, 210, 211);
-    z-index: 10;
+    position: relative;
+    height: 15vh;
+    border-bottom: 1px #C1C1C1 solid;
 }
 
 .header img {
-    display: inline-block;
     position: absolute;
-    top: px;
-    left: 50px;
-    height: 110px;
-    width: 110px;
-    border-radius: 50%;
+    left: 30px;
+    width: 23vh;
 }
 
 .header .title {
     position: absolute;
-    margin-left: 150px;
-    line-height: 80px;
-    font-weight: 500;
+    margin-left: 15%;
+    line-height: 15vh;
+    font-weight: 800;
     font-size: 30px;
-    font-family:Microsoft YaHei !important;
 }
 
 .container {
-    height: 90vh;
+    height: 85vh;
     margin-bottom: 0;
 }
 
@@ -200,10 +155,6 @@ onMounted(()=>{
 
 .set-item div{
     padding-left: 70px;
-    transition: all 0.4s;
-}
-.item:hover,.set-item div:hover{
-    background-color: rgb(70, 125, 201);
 }
 
 .item {
@@ -212,6 +163,5 @@ onMounted(()=>{
     height: 50px;
     line-height: 50px;
     padding-left: 35px;
-    transition: all 0.4s;
 }
 </style>

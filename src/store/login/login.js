@@ -22,7 +22,7 @@ export const useLoginStore = defineStore("login", {
         localStorage.setItem("token", loginResult.data.token);
         console.log("登录成功", loginResult);
         // 跳转页面
-        router.push("/main");
+        router.replace("/main");
       } else {
         ElMessage.error("账号或密码错误，请重新输入");
       }

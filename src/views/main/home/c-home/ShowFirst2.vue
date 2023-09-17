@@ -85,30 +85,32 @@ export default {
 .headword {
   width: 25%;
   font-size: 18px;
-
   font-weight: 600;
   padding-top: 10px;
   text-align: center;
+  margin-bottom: 20px;
+  font-family: Microsoft yahei!important;
 }
 
 .member {
-  margin-top: 1%;
-  width: 50%;
-  height: 33%;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 46%;
+  height:35%;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 5px 5px 5px rgba(187, 187, 187, 100);
+  box-sizing: border-box;
+  font-family: Microsoft yahei!important;
 }
-
-
-
 .headtitle {
   border-width: 0px 0px 2px 0px;
   border-color: rgba(187, 187, 187, 100);
   border-style: solid;
 }
 .M_data {
+  width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 .M_data ul {
@@ -116,6 +118,7 @@ export default {
   width: 100%;
   height: 12%;
   padding-inline-start: 0px;
+  font-weight: 600!important;
 }
 
 
@@ -126,7 +129,7 @@ export default {
   height: 100%;
   float: left;
   width: 25%;
-
+  font-family: Microsoft yahei!important;
 }
 
 </style>

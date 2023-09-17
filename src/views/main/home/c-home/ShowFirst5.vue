@@ -48,18 +48,23 @@ const leave=function(){
 
 <style scoped>
 .information {
+  cursor: pointer;
   position: relative;
   float: right;
-  margin-top: 3%;
-
-  width: 45%;
-  height: 40%;
-
+  margin-top: 20px;
+  width: 50%;
+  height: 35%;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 5px 5px 5px rgba(187, 187, 187, 100);
 }
-
+.headword{
+  width: 160px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10px;
+  font-family: Microsoft yahei!important;
+}
 .head {
   overflow: hidden;
   margin: 0 auto;
@@ -72,7 +77,6 @@ const leave=function(){
 .more {
   float: right;
   font-family: "icomoon";
-
   font-size: 20px;
   text-align: right;
 }
