@@ -21,57 +21,8 @@ const routes = [
         meta: { title: "人员管理", show: true },
         path: "/main/personnelMan",
         name: "personnelMan",
-<<<<<<< HEAD
-        component: () =>
-          import("../views/main/personnelMan/personnelMan.vue"),
-        children: [
-          {
-            meta: { title: "人员详情", show: false },
-            path: "/main/infoView/:index",
-            name: "infoView",
-            component: () =>
-              import(
-                "../views/main/personnelMan/personnelDetails/infoView.vue"
-              ),
-            props: true,
-          },
-        ],
-      },
-      {
-        meta: { title: "人员管理", show: true },
-        path: "/main/personnelMan/:group",
-        name: "personnelMans",
-        component: () =>
-          import("../views/main/personnelMan/personnelMan.vue"),
-        children: [
-          {
-            meta: { title: "人员详情", show: false },
-            path: "/main/infoView/:index",
-            name: "infoView",
-            component: () =>
-              import(
-                "../views/main/personnelMan/personnelDetails/infoView.vue"
-              ),
-            props: true,
-          },
-        ],
-      },
-      {
-        path: "/main/personnelMan/:id",
-        name: "InfoView",
-        component: () =>
-          import("../views/main/personnelMan/personnelMan.vue"),
-      },
-      {
-        meta: { title: "考核管理" },
-=======
         component: () => import("../views/main/personnelMan/personnelMan.vue"),
-        children:[{
-          meta:{title:'人员详情',show:false},
-          path: "/main/infoView",
-          name: "infoViewBasic", 
-          component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
-        },
+        children:[
         {
           meta:{title:'人员详情',show:false},
           path: "/main/infoView/:index", 
@@ -79,18 +30,10 @@ const routes = [
           component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
           props: true 
         },
-        {
-          meta:{title:'人员详情',show:false},
-          meta:{title:'人员详情'},
-          path: '/main/infoView/:id',
-          name: 'infoView',
-          component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
-          props: true
-        },]
+        ]
       },
       {
         meta:{title:'考核管理'},
->>>>>>> 89d657e809083d8b39d2f8824ce56a593dac74cd
         path: "/main/appraisalMan",
         name: "appraisalMan",
         component: () => import("../views/main/appraisalMan/appraisalMan.vue"),
@@ -143,30 +86,6 @@ const routes = [
         name: "inforEdit",
         component: () => import("../views/main/set/infoEdit.vue"),
       },
-<<<<<<< HEAD
-      {
-        path: "/main/infoView",
-        name: "infoViewBasic",
-        component: () =>
-          import("../views/main/personnelMan/personnelDetails/infoView.vue"),
-      },
-      {
-<<<<<<< HEAD
-        path: "/main/infoView/:index",
-        name: "infoViewWithIndex",
-        component: () =>
-          import("../views/main/personnelMan/personnelDetails/infoView.vue"),
-        props: true,
-      },
-      {
-        meta: { title: "人员详情" },
-        path: "/main/infoView/:id",
-        name: "infoView",
-        component: () =>
-          import("../views/main/personnelMan/personnelDetails/infoView.vue"),
-        props: true,
-      },
-=======
       //移到上面了
       // {
       //   path: "/main/infoView",
@@ -186,20 +105,12 @@ const routes = [
       //   component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
       //   props: true
       // },
->>>>>>> 89d657e809083d8b39d2f8824ce56a593dac74cd
       {
         meta: { title: "考核内容编辑" },
         path: "/main/contentEdit",
         name: "contentEdit",
         component: () => import("../views/main/appraisalMan/contentEdit.vue"),
         props: true,
-=======
-        meta:{title:'人员详情'},
-        path: '/main/infoView/:index',
-        name: 'infoView',
-        component: () => import('../views/main/personnelMan/personnelDetails/infoView.vue'),
-        props: true
->>>>>>> b6cdb5a (2023.9.17)
       },
       {
         path: "/main/contentEdit1",

@@ -55,8 +55,6 @@ export default {
       addRemark,
     };
   },
-<<<<<<< HEAD
-=======
   methods: {
     addRemark() {
       const token = "your_token"; 
@@ -84,7 +82,6 @@ export default {
         });
     },
   },
->>>>>>> b6cdb5a (2023.9.17)
 };
 </script>
 

@@ -137,9 +137,6 @@ export default {
     let searchpage = ref(1);
     let isShow = ref(false);
     let disabled = ref(true);
-<<<<<<< HEAD
-    
-=======
     // 格式转换
     function valueToNumber(value){
       if(value=='后台组'|| value=='笔试'||value=='按总分升序'){
@@ -158,7 +155,6 @@ export default {
         return ''
       }
     }
->>>>>>> b6cdb5a (2023.9.17)
     const get = getList();
     const gets = storeToRefs(get);
     let {page,size,groupOption,assessIndex,name,college,major,assessld,sort}=spot
@@ -171,15 +167,10 @@ export default {
     length = Math.ceil(gets.length.value / 10);
     const route = useRoute();
     const router = useRouter();
-<<<<<<< HEAD
-    const goToInfoView = (index) => {
-      router.push(`/main/infoView/${index}`);
-=======
     const goToInfoView = (index,n) => {
       let info=toRaw(n)
       let stringInfo=JSON.stringify(info)
       router.push({path:`/main/infoView/${index}`,query:{stringInfo:stringInfo}});
->>>>>>> b6cdb5a (2023.9.17)
     };
 
     //路由切换
@@ -234,11 +225,6 @@ export default {
   },
 };
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> b6cdb5a (2023.9.17)
 //   methods: {
 // //导出excel
 

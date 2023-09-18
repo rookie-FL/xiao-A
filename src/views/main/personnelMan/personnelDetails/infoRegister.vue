@@ -33,11 +33,6 @@ export default {
     const gets = storeToRefs(get);
     const List = gets.list;
     const info= ref(List.value[index]);
-<<<<<<< HEAD
-    console.log(List)
-    console.log(info._rawValue.openid)
-=======
->>>>>>> b6cdb5a (2023.9.17)
     return {
       info,
       index,
