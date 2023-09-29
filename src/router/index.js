@@ -33,6 +33,21 @@ const routes = [
         ]
       },
       {
+        meta: { title: "人员管理", show: true },
+        path: "/main/personnelMan/:group",
+        name: "personnelMans",
+        component: () => import("../views/main/personnelMan/personnelMan.vue"),
+        children:[
+        {
+          meta:{title:'人员详情',show:false},
+          path: "/main/infoView/:index", 
+          name: "infoViewWithIndex", 
+          component: () => import("../views/main/personnelMan/personnelDetails/infoView.vue"),
+          props: true 
+        },
+        ]
+      },
+      {
         meta:{title:'考核管理'},
         path: "/main/appraisalMan",
         name: "appraisalMan",

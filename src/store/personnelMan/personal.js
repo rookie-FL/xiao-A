@@ -34,6 +34,7 @@ export const getList = defineStore("getList", {
       const result = await requests.get({
         url: `/user/info?page=${page}&pageSize=${size}&assessIndex=${assessIndex}&name=${name}&college=${college}&major=${major}&groupOption=${groupOption}&assessld=${assessld}`
       }, useLoginStore().token)
+      console.log(result);
       let newList=[],n=0
       result.data.records.forEach(element => {
           if(element.name){

@@ -44,7 +44,8 @@ const open = () => {
     console.log(info.code);
    if(info.code.value==200){
     ElMessageBox.alert('修改成功', '确认操作', {confirmButtonText: '确认',})
-}else{
+}
+else{
     ElMessageBox.alert('修改失败', '确认操作', {
     confirmButtonText: '确认',
   })

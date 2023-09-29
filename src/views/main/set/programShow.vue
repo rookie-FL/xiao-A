@@ -14,6 +14,8 @@
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/swiper-bundle.css';
 import axios from 'axios';
+import { requests } from '@/service/request';
+import { anyToken } from '@/utils/anyToken';
 
 export default {
   components: {
@@ -34,12 +36,19 @@ export default {
   },
   methods: {
     fetchSwiperData() {
-      axios.get('/web/swiper', { 
-        params: {
-          publish: false,
-        },
+      // requests.get({
+      //   url: '/web/swiper?publish=true'
+      // },
+      // token=localStorage.getItem('token'),
+      // )
+    
+      axios.get('https://la.hiles.cn/web/swiper?publish=true', { 
+        // params: {
+        //   publish: true,
+        // },
         headers: {
           token: localStorage.getItem('token'),
+          // "Content-Type": "application/json",
         },
       })
       .then(response => {
@@ -55,7 +64,13 @@ export default {
       return slide.title === '首页内容';
     },
   },
+  mounted(){
+  setTimeout(() => {
+    console.log(this.slides);
+  }, 500);
+}
 };
+
 </script>
 
 

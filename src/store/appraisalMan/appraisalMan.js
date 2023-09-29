@@ -8,34 +8,27 @@ export const getprogress = defineStore("getprogresss", {
     add: '555',
     length:'999',
     progress:[],
+    code:400
   }),
   actions: {
 
-
-
-    async add(name, time, id) {
-      let times = time.split('-')
-      let startTime = times[0].split('.').map(Number)
-      let endTime = times[1].split('.').map(Number)
-
-      for (let i = 0; i < 3; i++) {
-        startTime.push(0)
-        endTime.push(0)
-      }
+    async add(name, startTime,endTime,id) {
       const result = await requests.post({
         url: "/assess/add",
         data: {
           id: id,
           assessGroup: anyToken().userGroup,
           name: name,
-          startTime: startTime,
-          endTime: endTime,
+          startTime: startTime+' 00:00:00',
+          endTime: endTime+' 00:00:00',
           contentUrl: '',
-          creatorUsername: '123'
+          creatorUsername: anyToken().username
         },
       },
         useLoginStore().token,
       )
+      this.code=result.code
+      console.log(this.code);
       this.getinformation()
     },
 
@@ -66,14 +59,20 @@ export const getprogress = defineStore("getprogresss", {
           assessGroup: anyToken().userGroup,
         },
       }, useLoginStore().token)
+      console.log(result.data);
+
       this.length=result.data.data.length/6
-      for (let i = 0; i < result.data.data.length; i++) {
-        //处理时间戳
-        result.data.data[i].startTime.splice(3, 3)
-        result.data.data[i].endTime.splice(3, 3)
+      for (let i = 0; i < result.data.data.length;i++) {
+        let startdate=result.data.data[i].startTime
+        let enddate=result.data.data[i].endTime
+        if(startdate&&enddate!=null){ 
+         startdate=result.data.data[i].startTime.slice(0,11)
+         enddate=result.data.data[i].endTime.slice(0,11)}
+
+
         const newTime = new Date().getTime()
-        let startdata = new Date(result.data.data[i].startTime.join('.')).getTime()
-        let enddata = new Date(result.data.data[i].endTime.join('.')).getTime()
+        let startdata = new Date(startdate).getTime()
+        let enddata = new Date(enddate).getTime()
 
         let status = ''
         let changeable = ''
@@ -84,13 +83,14 @@ export const getprogress = defineStore("getprogresss", {
         this.progress[i] = {
           'id': result.data.data[i].id,
           'name': result.data.data[i].name,
-          'time': result.data.data[i].startTime.join('.') + '-' + result.data.data[i].endTime.join('.'),
+          'time': startdate+ '- '+enddate,
           'status': status,
           'changeable': changeable,
           'contentUrl':result.data.data[i].contentUrl
         }
-
       }
+
+      
     }
   },
 

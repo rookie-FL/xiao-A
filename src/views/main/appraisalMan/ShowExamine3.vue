@@ -2,7 +2,7 @@
   <div class="content">
     <div
       class="fileline"
-      v-for="(n, index) in progress.slice((page - 1) * 5, 6)"
+      v-for="(n, index) in 6"
       :key="index"
     >
       <div class="e_picture">
@@ -134,7 +134,7 @@ export default {
 
 .edit {
   position: absolute;
-  top: 80%;
+  top: 90%;
   left: 70%;
 
   display: flex;
@@ -149,10 +149,12 @@ export default {
 }
 
 .page{
+  position: absolute;
   width: 100%;
   height: 5%;
   display: flex;
   justify-content: center;
+  top: 80%;
 
 }
 .mt-4 {

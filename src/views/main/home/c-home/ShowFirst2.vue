@@ -9,6 +9,7 @@
         <li>组别</li>
         <li>考核分数</li>
       </ul>
+      <ul v-if="member.length==0" class="none">没有数据</ul>
       <ul v-for="(n, index) in member" :key="index">
         <li style="font-size: 15px">{{ index + 1 }}</li>
         <li style="font-size: 15px">{{ n.name }}</li>
@@ -37,6 +38,7 @@ export default {
     let assessld = ''
 
     let groups = getprogress().base
+    console.log(getprogress().base);
 
     get.getList(1, 5, getprogress().base, assessIndex, name, college, major, assessld)
     let member = gets.list
@@ -95,7 +97,7 @@ export default {
 .member {
   cursor: pointer;
   margin-top: 10px;
-  width: 46%;
+  width: 45%;
   height:35%;
   background-color: white;
   border-radius: 10px;
@@ -130,6 +132,15 @@ export default {
   float: left;
   width: 25%;
   font-family: Microsoft yahei!important;
+}
+
+
+.none{
+margin-top: 10%;
+height: 20% !important;
+ text-align: center;
+ color: rgb(201, 207, 212);
+ font-size: 30px;
 }
 
 </style>

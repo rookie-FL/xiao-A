@@ -9,7 +9,9 @@
       <option value="5">电控组</option>
     </select>
     <div class="headword" @click="leave">考核管理(滚动鼠标查看进度)</div>
+    <ul v-if="progress.length==0" class="none">没有数据</ul>
     <ul class="lunbo">
+     
       <ul class="piece" v-for="(n, index) in progress" :key="index"
         v-bind:style="{ width: pagesize_x + 'px', height: pagesize_y + 'px' }">
         <li class="arrow" v-if="index<progress.length-1"></li>
@@ -39,8 +41,10 @@ export default {
 
     //获取信息
     get.getinformation()
+ 
     let group = ref(gets.base.value)
     let progress = ref(gets.progress.value[0])
+    console.log(progress);
     //监视组别
     watch(group, (newValue) => {
       progress.value = gets.progress.value[newValue]
@@ -138,7 +142,7 @@ function move(obj, distance) {
   border-radius: 10px;
   outline: none;
   border-color: black;
-  transition: all 0.3s;
+  transition: all 1s;
 }
 
 .headword {
@@ -154,7 +158,7 @@ function move(obj, distance) {
 .progress2 {
   position: relative;
   margin-top: 20px;
-  width: 46%;
+  width: 45%;
   height: 36%;
   background-color: white;
   border-radius: 10px;
@@ -168,7 +172,7 @@ ul {
 
 li.arrow {
   position: relative;
-  top:60px;
+  top:75px;
   right: -93%;
   font-family: "icomoon";
   color: rgba(11, 147, 234, 100);
@@ -195,7 +199,7 @@ li.arrow {
   justify-content: center;
   margin: 0 auto;
   width: 60%;
-  height: 50%;
+  height: 45%;
   border-radius: 10px;
   font-size: 18px;
   font-weight: 600;
@@ -225,5 +229,13 @@ li.arrow {
 
 select:hover{
   border-color: rgb(238, 174, 93);
+}
+
+.none{
+
+margin-top: 10%;
+ text-align: center;
+ color: rgb(201, 207, 212);
+ font-size: 30px;
 }
 </style>

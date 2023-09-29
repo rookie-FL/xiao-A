@@ -7,11 +7,12 @@
         <li>状态</li>
         <li>操作</li>
       </ul>
+      <ul v-if="progress.length==0" class="none">没有数据</ul>
       <ul v-for="(n, index) in progress" :key="index" class="line" v-bind:id='n.id'>
         <li style="font-size: 15px">{{ n.name }}</li>
         <li style="font-size: 15px; width: 40%">{{ n.time }}</li>
         <li style="font-size: 15px">{{ n.status }}</li>
-        <li @click="change(n.id,n.name,n.time)" class="change" style="
+        <li @click="change(n.id,n.name,n.time.slice(0,11),n.time.slice(13,24))" class="change" style="
             width: 7.5%;
             margin-left: 5%;
             color: rgba(11, 147, 234, 100);
@@ -27,7 +28,8 @@
         <li class='check' style='float:right;color:rgb(11, 147, 234); font-size:12px;margin: 0;width:7.5%'
           @click="addcancel">取消</li>
         <input  style="width:20%" v-model="add.name" >
-        <input style="width:40%;" v-model="add.time">
+        <input style="width:20%;" v-model="add.startTime" type="date">
+        <input style="width:20%;" v-model="add.endTime" type="date">
       </div>
     </div>
     <div class="func">
@@ -38,20 +40,33 @@
   </div>
 
   <teleport to="body" v-if="isShow">
-    <div class="background">
+
+    
+ <div class="background">
+
     </div>
+
+
+
     <div class="changepage">
       <h1>考核流程修改</h1>
       <ul>
-        <li>考核</li><input type="text" placeholder="请输入" v-model="changes.name">
+        <li>考核&nbsp;&nbsp;</li><el-input type="text" placeholder="请输入" v-model="changes.name"></el-input>
       </ul>
-      <ul>
-        <li>时间</li><input type="text" placeholder="请输入" v-model="changes.time">
-      </ul>
+    
+        <ul>
+         <li>开始时间</li><el-input type="date"  v-model="changes.startTime"></el-input>
+          </ul>
 
-      <div @click="changecancel">取消</div>
-      <div style="background-color: rgba(11, 147, 234, 100); " @click="changesure">确认</div>
-    </div>
+        <ul>
+         <li>结束时间</li><el-input type="date" v-model="changes.endTime" style="float: left;"></el-input>
+         </ul>
+
+         <ul>
+         <el-button type="primary" @click="changesure()">确定</el-button>
+          <el-button style="margin-left:57%;" @click="changecancel">取消</el-button>
+        </ul>
+    </div> 
   </teleport>
 </template>
 
@@ -71,11 +86,13 @@ export default {
       changetarget: '',
       add: {
         'name': '',
-        'time': ''
+        'startTime': '',
+        'endTime': ''
       },
       changes: {
         'name': '',
-        'time': ''
+        'startTime':'',
+        'endTime': ''
       },
     };
   },
@@ -94,54 +111,60 @@ export default {
     //确认按钮
     addsure() {
       if(this.addstatus == true){
-        let spot=this.judge(this.add.time)
-      if (this.add.name != "" && spot==true) {
-       this.get.add(this.add.name, this.add.time)
+      if (this.add.name != "" ) {
+       this.get.add(this.add.name, this.add.startTime,this.add.endTime)
         this.addstatus = false
         this.$refs.add.style.display = "block";
         this.add.name = ''
-        this.add.time = ''
+        this.add.startTime = ''
+        this.add.endTime = ''
       }else{
-       ElMessage.error('输入不符合格式，格式应该为xxxx.xx.xx-xxxx.xx.xx')
+       ElMessage.error('不能为空')
       }
     }
     },
+
+    // 取消按钮
     addcancel() {
       this.addstatus = false
       this.$refs.add.style.display = "block";
       this.add.name = ''
-      this.add.time = ''
+      this.add.startTime = ''
+      this.add.endTime = ''
     },
 
 
     //修改功能
-    change(id,name,time) {
+    change(id,name,startTime,endTime) {
       this.isShow = true;
       this.changetarget = id
       this.changes.name = name
-      this.changes.time = time
+      this.changes.startTime = startTime
+      this.changes.endTime = endTime
     },
+
+    // 修改取消
     changecancel() {
       this.isShow = false;
-      this.changes.name = ''
-      this.changes.time = ''
+      this.changes.startTime = ''
+      this.changes.endTime = ''
     },
-    changesure() {
-      let spot=this.judge(this.changes.time)
-      if (this.changes.name != "" && spot==true){
-      this.get.add(this.changes.name, this.changes.time, this.changetarget)
+
+    //修改确定
+    async changesure() {
+      await this.get.add(this.changes.name, this.changes.startTime,this.changes.endTime, this.changetarget)
+      if(this.get.code==200)
+      {
       this.isShow = false;
-      this.changes.name = ''
-      this.changes.time = ''
-      }else{
-        ElMessage.error('输入不符合格式，格式应该为xxxx.xx.xx-xxxx.xx.xx')
+      ElMessageBox.alert('修改成功', '确认操作')
+      this.changes.startTime = ''
+      this.changes.endTime = ''
+      }
+      else{
+        ElMessageBox.alert('修改失败', '确认操作')
       }
     },
 
-    judge(strings){
-      let regObj=new RegExp(/^[0-9]{4}[.]([0-1][0-2]|[0-9])[.]([0-9]|[1-3][0-9])[-][0-9]{4}[.]([0-1][0-2]|[0-9])[.]([0-9]|[1-3][0-9])$/)
-      return regObj.test(strings)
-    }
 
   },
 
@@ -241,8 +264,9 @@ export default {
   position: absolute;
   left: 30%;
   top: 30%;
-
-  width: 40%;
+min-width: 500px;
+min-height: 350px;
+  width: 35%;
   height: 40%;
   background-color: white;
 }
@@ -254,10 +278,10 @@ export default {
 }
 
 .changepage ul {
-  width: 50%;
+  width: 100%;
   height: 10%;
   margin: 5% 0 0 10%;
-}
+} 
 
 .changepage ul li {
   font-size: 25px;
@@ -265,29 +289,27 @@ export default {
 }
 
 .changepage ul input {
+  float: left;
   margin-left: 10%;
   height: 70%;
-  width: 60%;
+  width: 30%;
 }
 
-.changepage div {
-  display: inline-block;
-  margin-top: 10%;
-  margin-left: 24%;
-
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 50px;
-
-  text-align: center;
-  line-height: 30px;
-  width: 15%;
-  height: 30px;
-
+:deep(.el-input){
+  width: 50%;
+  margin-left: 10%;
 }
+
 
 input{
   background-color: white;
+}
+
+.none{
+margin-top: 10%;
+ text-align: center;
+ color: rgb(185, 194, 202);
+ font-size: 30px;
 }
 
 </style>

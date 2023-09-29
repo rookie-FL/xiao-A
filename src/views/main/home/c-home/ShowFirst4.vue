@@ -19,13 +19,14 @@
     </div>
     <div class="front" v-on:mouseover="mouse">
       <div class="line" v-for="(n, index) in progress" :key="index" @click="touch">
-        <div class="real" >
-       <li v-bind:style="{width:long[index]*100+'%'}"></li>
+        <div class="real">
+          <li v-if="progress[index] == null">没有数据</li>
+          <li v-bind:style="{ width: long[index] * 100 + '%' }"></li>
         </div>
       </div>
     </div>
     <div class="schedule">
-      <li v-for="(n, index) in 6" :key="index">{{ index*20+'%' }}</li>
+      <li v-for="(n, index) in 6" :key="index">{{ index * 20 + '%' }}</li>
     </div>
   </div>
 </template>
@@ -33,60 +34,29 @@
 <script>
 import { getprogress } from '@/store/home/home';
 import { storeToRefs } from "pinia";
-import {reactive, ref} from 'vue'
+import { reactive, ref } from 'vue'
 import router from "@/router";
+
 export default {
   name: "ShowFirst4",
   setup() {
-    const get=getprogress()
-    const gets=storeToRefs(get)
-
-     get.getinformation()
-
-    let progress=gets.progress.value
-
-    let long=reactive([])
-
-    const leave=function(){
-router.push("/main/appraisalMan")
-}
+    const get = getprogress()
+    const gets = storeToRefs(get)
+    let progress = gets.progress.value
+    let long= gets.long
 
 
-setTimeout(()=>{
-  for(let i=0;i<progress.length;i++)
-  {
-  let n=0
-    for(let j=0;j<progress[i].length;j++)
-    {
-      if(progress[i][j].status=='已完成'){n++}
-      long[i]=n/(j+1)
+    const leave = function () {
+      router.push("/main/appraisalMan")
     }
-    
-  }
-
-},200)
 
 
     return {
       progress,
       long,
       leave,
-
-
     }
   },
-  onmounted() {
-
-    for (var i = 0; i < this.progresss.length; i++) {
-      if (i == 0) { this.longer = this.progresss[0] }
-      else if (this.progresss[i].length > this.longer.length) { this.longer = this.progresss[i] }
-    }
-
-    setTimeout(() => {
-      this.justify()
-    }, 200)
-
-  }
 
 };
 </script>
@@ -102,14 +72,14 @@ setTimeout(()=>{
   cursor: pointer;
 }
 
-.headword{
+.headword {
   width: 160px;
   font-size: 18px;
   font-weight: 600;
   padding-top: 20px;
   text-align: center;
   margin-bottom: 10px;
-  font-family: Microsoft yahei!important;
+  font-family: Microsoft yahei !important;
 }
 
 .category {
@@ -118,8 +88,8 @@ setTimeout(()=>{
   width: 10%;
   height: 75%;
   font-size: 10px;
-  font-weight: 600!important;
-  font-family: Microsoft yahei!important;
+  font-weight: 600 !important;
+  font-family: Microsoft yahei !important;
   box-sizing: border-box;
   border-width: 0px 2px 0px 0px;
   border-color: rgba(187, 187, 187, 100);
@@ -132,7 +102,8 @@ setTimeout(()=>{
   justify-content: center;
   width: 100%;
   height: 14.3%;
-  font-family: Microsoft yahei !important;;
+  font-family: Microsoft yahei !important;
+  ;
 }
 
 .category li::after {
@@ -196,9 +167,11 @@ setTimeout(()=>{
 .real li {
   float: left;
   height: 100%;
+  width: 0%;
   background-color: rgb(33, 99, 223);
-  border-top-right-radius:5px ;
-  border-bottom-right-radius:5px ;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  transition: all 0.5s ease 0s;
 }
 
 
@@ -215,5 +188,13 @@ setTimeout(()=>{
   font-size: 8px;
   text-align: center;
   font-weight: 500;
+}
+
+.none {
+
+  margin-top: 10%;
+  text-align: center;
+  color: rgb(201, 207, 212);
+  font-size: 30px;
 }
 </style>
