@@ -1,90 +1,69 @@
 <template>
-  <div class="swiper">
-    <swiper :options="swiperOptions">
-      <swiper-slide v-for="(slide, index) in slides" :key="index">
-        <img :src="slide.image" alt="">
-        <div>{{ slide.caption }}</div>
-        <div>{{ isHomeContent(slide) ? '首页内容' : slide.content }}</div>
-      </swiper-slide>
-    </swiper>
+  <div class="carousel-container">
+    <p v-if="slides.length === 0">正在加载轮播图数据...</p>
+    <el-carousel :interval="5000" class="carousel">
+      <el-carousel-item v-for="(slide, index) in slides" :key="index">
+        <img :src="slide.url" alt="" class="carousel-image">
+      </el-carousel-item>
+    </el-carousel>
   </div>
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
-import 'swiper/swiper-bundle.css';
 import axios from 'axios';
-import { requests } from '@/service/request';
-import { anyToken } from '@/utils/anyToken';
 
 export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
   data() {
     return {
-      swiperOptions: {
-        loop: true,
-      },
       slides: [],
-      responseData: null,
     };
-  },
-  created() {
-    this.fetchSwiperData();
   },
   methods: {
     fetchSwiperData() {
-      // requests.get({
-      //   url: '/web/swiper?publish=true'
-      // },
-      // token=localStorage.getItem('token'),
-      // )
-    
-      axios.get('https://la.hiles.cn/web/swiper?publish=true', { 
-        // params: {
-        //   publish: true,
-        // },
+      axios.get('https://la.hiles.cn/web/swiper?publish=false', { 
         headers: {
           token: localStorage.getItem('token'),
-          // "Content-Type": "application/json",
         },
       })
       .then(response => {
-        this.slides = response.data;
-        this.responseData = response.data;
-        console.log('获取轮播图数据成功：', this.responseData);
-      })
-      .catch(error => {
-        console.error('获取轮播图数据失败：', error);
+        this.slides = response.data.data;
+        console.log(this.slides);
       });
     },
-    isHomeContent(slide) {
-      return slide.title === '首页内容';
-    },
   },
-  mounted(){
-  setTimeout(() => {
-    console.log(this.slides);
-  }, 500);
-}
+  mounted() {
+    this.fetchSwiperData();
+  },
 };
-
 </script>
 
-
- 
 <style scoped>
- .swiper{
-    height: 200px;
-    width: 28%;
-    margin-left: 110px;
- }
- img{
-    display: block;
-    width: 100%;
-    height: auto;
- }
-  </style>
-  
+.carousel-container {
+  width: 60%;
+  height: 30%; 
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: -20px;
+}
+.carousel {
+  position: relative;
+  width: 70%;
+  margin: 0 auto;
+}
+.carousel-button {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+img.carousel-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+</style>

@@ -38,10 +38,10 @@
     border: 1px solid #ccc;
     border-radius: 18px;
     padding: 20px;
-    margin-top: 2%;
-    margin-left: 80px;
-    width: 70%;
-    max-height: 65%;
+    margin-top: 8%;
+    margin-left: 18%;
+    width: 60%;
+    height: 70%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow-y: scroll;
   }

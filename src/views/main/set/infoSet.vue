@@ -96,6 +96,8 @@ router.push(`/main/set/infoEdit/${group.value}`)
 
 .smallbox {
     margin: 2.5% auto;
+    padding-top: 2%;
+    padding-right: 5%;
     width: 90%;
     height: 85%;
     background-color: rgba(239,239,239,100);
@@ -116,16 +118,14 @@ router.push(`/main/set/infoEdit/${group.value}`)
 }
 
 .group {
-position: absolute;
-left: 100%;
-margin-left: -105px;
-top: 5px;
-
-width: 100px;
-height: 30px;
-border-radius: 5px;
-
-outline: none;
+    position: absolute;
+    left: 100%;
+    margin-left: -105px;
+    top: 5px;
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
 }
 
 .content{
@@ -135,13 +135,13 @@ outline: none;
     height: 85%;
 }
 ::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 .content ul{
     display: flex;
     align-items: center;
     margin:10px auto;
-   width: 80%;
+    width: 80%;
     height: 10%;
 }
 .content li{
@@ -157,7 +157,7 @@ outline: none;
 
 .content div{
     margin:0 auto;
-   width: 80%;
+    width: 80%;
     font-size: 12px;
     line-height: 20px;
     font-weight: 500;

@@ -4,13 +4,11 @@
       <programShow></programShow>
       <team></team>
     </div>
+    <div class="separator"></div> 
     <div class="right">
       <announceShow></announceShow>
       <infoset></infoset>
     </div>
-
-
-
   </div>
 </template>
 
@@ -20,20 +18,15 @@ import programShow from './programShow.vue'
 import announceShow from './announceShow.vue';
 import infoset from './infoSet.vue'
 
-
 export default {
   components: {
     Team,
     programShow,
     announceShow,
     infoset
-
-  },
-
-
+  }
 };
 </script>
-
 
 <style>
 .set {
@@ -48,5 +41,11 @@ export default {
 
 .right {
   width: 45%;
+}
+
+.separator {
+  width: 1.5px; 
+  background-color: rgba(218, 218, 218); 
+  margin: 0 2%;
 }
 </style>
