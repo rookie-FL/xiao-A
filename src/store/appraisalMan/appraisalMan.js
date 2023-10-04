@@ -8,6 +8,7 @@ export const getprogress = defineStore("getprogresss", {
     add: '555',
     length:'999',
     progress:[],
+    progressx:[{name:233}],
     code:400
   }),
   actions: {
@@ -88,10 +89,15 @@ export const getprogress = defineStore("getprogresss", {
           'changeable': changeable,
           'contentUrl':result.data.data[i].contentUrl
         }
+
+  
       }
 
+
       
-    }
+    },
   },
+
+
 
 });

@@ -3,10 +3,12 @@ import { useLoginStore } from "@/store/login/login";
 import { requests } from "../../service/request/index";
 export const getList = defineStore("getList", {
   state: () => ({
+    pages:0,
     gethref: '',
     list: '',
-    length:'8',
-    trade:''
+    length: '8',
+    trade: '',
+    process: [],
   }),
   actions: {
     async excel() {
@@ -35,15 +37,16 @@ export const getList = defineStore("getList", {
         url: `/user/info?page=${page}&pageSize=${size}&assessIndex=${assessIndex}&name=${name}&college=${college}&major=${major}&groupOption=${groupOption}&assessld=${assessld}`
       }, useLoginStore().token)
       console.log(result);
-      let newList=[],n=0
+      let newList = [], n = 0
       result.data.records.forEach(element => {
-          if(element.name){
-            newList[n]=element
-            n++
-          }
+        if (element.name) {
+          newList[n] = element
+          n++
+        }
       });
       this.list = newList
-      
+      this.pages=result.data.pages
+
       //总分排序
       if (sort === '1') {
         for (let i = 0; i < this.list.length; i++) {
@@ -53,11 +56,11 @@ export const getList = defineStore("getList", {
               this.list[i] = this.list[j]
               this.list[j] = this.trade
             }
-            
+
+          }
+        }
       }
-    }
-  }
-      if(sort === '0'){
+      if (sort === '0') {
         for (let i = 0; i < this.list.length; i++) {
           for (let j = i; j < this.list.length; j++) {
             if (this.list[i].scores[0].score > this.list[j].scores[0].score) {
@@ -81,14 +84,22 @@ export const getList = defineStore("getList", {
         if (this.list[i].group_option == 5) { this.list[i].group_option = '电控组' }
         if (this.list[i].group_option == 6) { this.list[i].group_option = '管理组' }
       }
+
     },
 
-    async getlength() {
-      let results = await requests.get({
-        url: `/user/info?page=${1}&pageSize=${999}`
+
+    async getProcess(groupOption) {
+
+      this.process = await requests.post({
+        url: "/assess/getByGroup",
+        data: {
+          assessGroup: groupOption,
+        },
       }, useLoginStore().token)
-      this.length = results.data.records.length
     }
+
+
+
   }
 }
 );

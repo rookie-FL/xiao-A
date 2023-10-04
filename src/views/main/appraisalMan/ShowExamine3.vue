@@ -2,14 +2,14 @@
   <div class="content">
     <div
       class="fileline"
-      v-for="(n, index) in 6"
+      v-for="(n, index) in progress.slice(0+(page-1)*7,6+(page-1)*6)"
       :key="index"
     >
       <div class="e_picture">
         <img src="../../../assets/img/pdfPicture.png" />
         <li>{{ n.name }}</li>
       </div>
-      <a class="see" v-bind:href="n.contentUrl" target=_blank>查看</a>
+      <a class="see" v-bind:href="n.contentUrl" target=_blank style="{color:}">查看</a>
       <a class="download" v-bind:href="n.contentUrl" :download="n.name + '.pdf'"
       target=_blank>下载</a
       >
@@ -32,29 +32,27 @@
 
 <script>
 import { getprogress } from "@/store/appraisalMan/appraisalMan";
-import { ref, watch } from "vue";
+import { reactive, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import router from "@/router";
 export default {
   name: "ShowExamine3",
   setup() {
-    const store = storeToRefs(getprogress());
-    let progressx = store.progress;
-    let progress = progressx.value;
+  const store = storeToRefs(getprogress());
+  let progress = store.progress.value
     let page = ref(1);
-    console.log(progress)
     let pages = ref(store.length);
 
     const leave = function () {
       router.push("/main/contentEdit");
     };
 
-    const handleCurrentChange = function (newPage) {
+    const  handleCurrentChange = function (newPage) {
       page.value = newPage;
+
     };
 
     return {
-      progressx,
       progress,
       pages,
       page,
@@ -108,31 +106,20 @@ export default {
   height: 100%;
 }
 
-.see {
+a{
   display: flex;
   float: left;
   margin-left: 5%;
-  align-items: center;
-
-  width: 10%;
-  height: 90%;
-  color: rgba(11, 147, 234, 100);
-  font-size: 15px;
-}
-
-.download {
-  display: flex;
-  float: left;
-  margin-left: 5%;
-
   align-items: center;
   width: 10%;
   height: 90%;
   color: rgba(11, 147, 234, 100);
   font-size: 15px;
+
 }
 
 .edit {
+  cursor: pointer;
   position: absolute;
   top: 90%;
   left: 70%;
