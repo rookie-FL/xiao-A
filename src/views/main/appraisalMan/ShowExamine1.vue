@@ -7,12 +7,12 @@
         <li>状态</li>
         <li>操作</li>
       </ul>
-      <ul v-if="progress.length==0" class="none">没有数据</ul>
+      <ul v-if="progress.length == 0" class="none">没有数据</ul>
       <ul v-for="(n, index) in progress" :key="index" class="line" v-bind:id='n.id'>
         <li style="font-size: 15px">{{ n.name }}</li>
         <li style="font-size: 15px; width: 40%">{{ n.time }}</li>
         <li style="font-size: 15px">{{ n.status }}</li>
-        <li @click="change(n.id,n.name,n.time.slice(0,11),n.time.slice(13,24))" class="change" style="
+        <li @click="change(n.id, n.name, n.time.slice(0, 11), n.time.slice(13, 24))" class="change" style="
             width: 7.5%;
             margin-left: 5%;
             color: rgba(11, 147, 234, 100);
@@ -27,9 +27,10 @@
       <div v-if="addstatus">
         <li class='check' style='float:right;color:rgb(11, 147, 234); font-size:12px;margin: 0;width:7.5%'
           @click="addcancel">取消</li>
-        <input  style="width:20%" v-model="add.name" >
+        <input style="width:20%" v-model="add.name">
         <input style="width:20%;" v-model="add.startTime" type="date">
         <input style="width:20%;" v-model="add.endTime" type="date">
+        <input type="file" @change="handleFileInput" ref="fileInput" multiple style="width: 30%;"/>
       </div>
     </div>
     <div class="func">
@@ -41,8 +42,8 @@
 
   <teleport to="body" v-if="isShow">
 
-    
- <div class="background">
+
+    <div class="background">
 
     </div>
 
@@ -53,26 +54,27 @@
       <ul>
         <li>考核&nbsp;&nbsp;</li><el-input type="text" placeholder="请输入" v-model="changes.name"></el-input>
       </ul>
-    
-        <ul>
-         <li>开始时间</li><el-input type="date"  v-model="changes.startTime"></el-input>
-          </ul>
 
-        <ul>
-         <li>结束时间</li><el-input type="date" v-model="changes.endTime" style="float: left;"></el-input>
-         </ul>
+      <ul>
+        <li>开始时间</li><el-input type="date" v-model="changes.startTime"></el-input>
+      </ul>
 
-         <ul>
-         <el-button type="primary" @click="changesure()">确定</el-button>
-          <el-button style="margin-left:57%;" @click="changecancel">取消</el-button>
-        </ul>
-    </div> 
+      <ul>
+        <li>结束时间</li><el-input type="date" v-model="changes.endTime" style="float: left;"></el-input>
+      </ul>
+
+      <ul>
+        <el-button type="primary" @click="changesure()">确定</el-button>
+        <el-button style="margin-left:57%;" @click="changecancel">取消</el-button>
+      </ul>
+    </div>
   </teleport>
 </template>
 
 <script>
 import { getprogress } from '@/store/appraisalMan/appraisalMan';
 import { Teleport } from 'vue'
+import { requests } from '@/service/request';
 import { ElMessage } from "element-plus";
 
 export default {
@@ -83,6 +85,7 @@ export default {
       get: getprogress(),
       isShow: false,
       addstatus: false,
+      formData:'',
       changetarget: '',
       add: {
         'name': '',
@@ -91,12 +94,26 @@ export default {
       },
       changes: {
         'name': '',
-        'startTime':'',
+        'startTime': '',
         'endTime': ''
       },
     };
   },
   methods: {
+// 处理文件
+    uploadFiles(files) {
+     this.formData = new FormData();
+      files.forEach((file) => {
+        this.formData.append('file', file);
+      })
+    },
+
+    handleFileInput(e) {
+      const files = Array.from(e.target.files);
+      console.log(files);
+      this.uploadFiles(files);
+    },
+
     // 删除功能
     remove(id) {
       getprogress().deletes(id)
@@ -104,24 +121,36 @@ export default {
     //添加功能
     addprogress() {
       this.addstatus = true
-      setTimeout(()=>{
-        document.querySelector('.M_data').scrollTop=888
-      },100)
+      setTimeout(() => {
+        document.querySelector('.M_data').scrollTop = 888
+      }, 100)
     },
     //确认按钮
     addsure() {
-      if(this.addstatus == true){
-      if (this.add.name != "" ) {
-       this.get.add(this.add.name, this.add.startTime,this.add.endTime)
-        this.addstatus = false
-        this.$refs.add.style.display = "block";
-        this.add.name = ''
-        this.add.startTime = ''
-        this.add.endTime = ''
-      }else{
-       ElMessage.error('不能为空')
+      if (this.addstatus == true) {
+        if (this.add.name != "") {
+          this.get.add(this.add.name, this.add.startTime, this.add.endTime)
+          this.addstatus = false
+          this.$refs.add.style.display = "block";
+          this.add.name = ''
+          this.add.startTime = ''
+          this.add.endTime = ''
+        } else {
+          ElMessage.error('不能为空')
+        }
       }
-    }
+
+      //添加文件
+      requests.post({
+        url: 'https://la.hiles.cn/web/assess/uploadfile',
+        data: {file:this.formData}
+      },localStorage.getItem('token'),)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          console.error('文件上传失败:', error);
+        });
     },
 
     // 取消按钮
@@ -135,7 +164,7 @@ export default {
 
 
     //修改功能
-    change(id,name,startTime,endTime) {
+    change(id, name, startTime, endTime) {
       this.isShow = true;
       this.changetarget = id
       this.changes.name = name
@@ -152,15 +181,14 @@ export default {
 
     //修改确定
     async changesure() {
-      await this.get.add(this.changes.name, this.changes.startTime,this.changes.endTime, this.changetarget)
-      if(this.get.code==200)
-      {
-      this.isShow = false;
-      ElMessageBox.alert('修改成功', '确认操作')
-      this.changes.startTime = ''
-      this.changes.endTime = ''
+      await this.get.add(this.changes.name, this.changes.startTime, this.changes.endTime, this.changetarget)
+      if (this.get.code == 200) {
+        this.isShow = false;
+        ElMessageBox.alert('修改成功', '确认操作')
+        this.changes.startTime = ''
+        this.changes.endTime = ''
       }
-      else{
+      else {
         ElMessageBox.alert('修改失败', '确认操作')
       }
     },
@@ -264,8 +292,8 @@ export default {
   position: absolute;
   left: 30%;
   top: 30%;
-min-width: 500px;
-min-height: 350px;
+  min-width: 500px;
+  min-height: 350px;
   width: 35%;
   height: 40%;
   background-color: white;
@@ -281,7 +309,7 @@ min-height: 350px;
   width: 100%;
   height: 10%;
   margin: 5% 0 0 10%;
-} 
+}
 
 .changepage ul li {
   font-size: 25px;
@@ -295,21 +323,20 @@ min-height: 350px;
   width: 30%;
 }
 
-:deep(.el-input){
+:deep(.el-input) {
   width: 50%;
   margin-left: 10%;
 }
 
 
-input{
+input {
   background-color: white;
 }
 
-.none{
-margin-top: 10%;
- text-align: center;
- color: rgb(185, 194, 202);
- font-size: 30px;
+.none {
+  margin-top: 10%;
+  text-align: center;
+  color: rgb(185, 194, 202);
+  font-size: 30px;
 }
-
 </style>

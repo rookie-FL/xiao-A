@@ -36,19 +36,14 @@ export default {
     let college = ''
     let major = ''
     let assessld = ''
-
-    let groups = getprogress().base
-    console.log(getprogress().base);
+    getprogress().getgroup()
+    let groups = getprogress().group
 
     get.getList(1, 5, getprogress().base, assessIndex, name, college, major, assessld)
     let member = gets.list
-    console.log(member);
 
     const leave = function () {
-      let item = document.querySelectorAll('.item')
-      for (let i = 0; i < item.length; i++) { item[i].style.backgroundColor = '#4E99CA' }
-      item[1].style.backgroundColor = 'rgba(187, 187, 187, 100)'
-      router.push(`/main/personnelMan/${groups}`)
+      router.push(`/main/personnelMan/${groups}/${' '}`)
     }
 
     return {

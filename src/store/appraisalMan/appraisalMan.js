@@ -29,7 +29,6 @@ export const getprogress = defineStore("getprogresss", {
         useLoginStore().token,
       )
       this.code=result.code
-      console.log(this.code);
       this.getinformation()
     },
 

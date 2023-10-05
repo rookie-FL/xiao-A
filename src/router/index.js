@@ -34,7 +34,7 @@ const routes = [
       },
       {
         meta: { title: "人员管理", show: true },
-        path: "/main/personnelMan/:group",
+        path: "/main/personnelMan/:group/:process",
         name: "personnelMans",
         component: () => import("../views/main/personnelMan/personnelMan.vue"),
         children:[

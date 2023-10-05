@@ -8,29 +8,50 @@
         <li>通过率</li>
         <li>通过人员名单</li>
       </ul>
-      <ul v-for="(n, index) in condition" :key="index">
-        <li style="font-size: 15px">{{ n.exam }}</li>
-        <li style="font-size: 15px">{{ n.person }}</li>
-        <li style="font-size: 15px">{{ n.ratio }}</li>
-        <li style="color: rgba(11, 147, 234, 100); font-size: 15px">查看</li>
+      <ul v-for="(n, index) in progress" :key="index">
+        <li style="font-size: 15px">{{ n.name }}</li>
+        <li style="font-size: 15px">{{ 0 }}</li>
+        <li style="font-size: 15px">{{ 0 }}</li>
+        <li style="color: rgba(11, 147, 234, 100); font-size: 15px;cursor: pointer;" @click="toPersonalMan(n.id)">查看</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+
+
+import { getprogress } from '@/store/appraisalMan/appraisalMan';
+import { anyToken } from '@/utils/anyToken';
+import router from "@/router";
 export default {
   name: "ShowExamine2",
-  data() {
-    return {
-      condition: [
-        { exam: "笔试", person: "15", ratio: "20%" },
-        { exam: "一轮面试", person: "0", ratio: "0%" },
-        { exam: "一轮考核", person: "0", ratio: "0%" },
-        { exam: "二轮考核", person: "0", ratio: "0%" },
-        { exam: "最终答辩", person: "0", ratio: "0%" },
-      ],
-    };
+  setup() {
+getprogress().getinformation()
+let progress=getprogress().progress
+let base= anyToken().userGroup
+
+let group
+
+(()=>{
+      if (base == 0) { group = '后台组' }
+      if (base == 1) { group = '前端组' }
+      if (base == 2) { group = 'ai组' }
+      if (base == 3) { group = '运维组' }
+      if (base == 4) { group = '机械组' }
+      if (base == 5) { group = '电控组' }
+})()
+
+const toPersonalMan=function(process){
+  router.push(`/main/personnelMan/${group}/${process}`)
+}
+
+return {
+      progress,
+      base,
+      group,
+      toPersonalMan,
+};
   },
 };
 </script>
@@ -46,6 +67,7 @@ export default {
 }
 
 .M_data {
+  overflow: auto;
   margin: 0px auto;
   width: 90%;
   height: 80%;
@@ -54,11 +76,16 @@ export default {
   border-style: solid;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .M_data ul {
   overflow: hidden;
   width: 100%;
   padding-inline-start: 0px;
 }
+
 
 .headtitle {
   height: 15%;
@@ -69,7 +96,7 @@ export default {
 
 
 .M_data li {
-  margin-top: 1%;
+  margin-top: 10px;
   float: left;
   width: 20%;
   text-align: center;

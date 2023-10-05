@@ -70,16 +70,16 @@
           <el-col :span="7">
             <span class="selecttitle">进度</span>
             <el-select
-              v-model="spot.assessIndex"
+              v-model="spot.assessld"
               clearable
               placeholder="选择进度"
               :disabled="disabled"
             >
-              <el-option value="">选择进度</el-option>
+              <el-option value=' '>选择进度</el-option>
               <el-option
                 v-for="(n, index) in process.data"
                 :key="index"
-                :value="n.name"
+                :value="n.id"
                 >{{ n.name }}</el-option
               >
             </el-select>
@@ -196,6 +196,9 @@ export default {
     let searchpage = ref(1);
     let isShow = ref(false);
     let disabled = ref(true);
+    
+    const route = useRoute();
+    const router = useRouter();
     // 格式转换
     function valueToNumber(value) {
       if (value == "后台组" || value == "笔试" || value == "按总分升序") {
@@ -219,9 +222,10 @@ export default {
       }
     }
 
-    // const get = getList();
+
     const get = getList();
     const gets = storeToRefs(get);
+
 
     let {
       page,
@@ -234,7 +238,13 @@ export default {
       assessld,
       sort,
     } = spot;
-    get.getList(
+
+    if (route.params.group != undefined) {
+      spot.groupOption = route.params.group;
+      spot.assessld = route.params.process;
+      isShow.value = true;
+      disabled.value = false;
+      get.getList(
       page,
       size,
       valueToNumber(groupOption),
@@ -244,15 +254,30 @@ export default {
       major,
       assessld,
       valueToNumber(sort)
+
+      
+      
     );
+    get.getProcess(valueToNumber(groupOption));
+    process = gets.process;
+    console.log(process);
+
+
+    }
+
+
+
     get.excel();
+
     pages = gets.pages;
+
     const href = gets.gethref;
+
     List = gets.list;
+
     get.getProcess(groupOption);
     process = gets.process;
-    const route = useRoute();
-    const router = useRouter();
+
     const goToInfoView = (index, n) => {
       let info = toRaw(n);
       let stringInfo = JSON.stringify(info);
@@ -262,12 +287,7 @@ export default {
       });
     };
 
-    //路由切换
-    if (route.params.group != undefined) {
-      spot.groupOption = route.params.group;
-      isShow.value = true;
-      disabled.value = false;
-    }
+
 
     const changepage = function (page) {
       spot.page = page;
@@ -299,6 +319,7 @@ export default {
           assessld,
           valueToNumber(sort)
         );
+        console.log(spot);
 
         if (spot.groupOption != "") {
           isShow.value = true;
@@ -308,7 +329,7 @@ export default {
           disabled.value = true;
         }
       },
-      { deep: true }
+      { deep: true,immediate:true }
     );
 
     //检测更新流程
@@ -317,7 +338,7 @@ export default {
       (newValue) => {
         get.getProcess(valueToNumber(newValue));
       },
-      { deep: true }
+      { deep: true,immediate:true }
     );
 
     // 页面更新
@@ -377,6 +398,7 @@ export default {
   border-width: 0px 0px 2px 0px;
   border-color: rgba(187, 187, 187, 100);
   border-style: solid;
+  
 }
 
 .SelectMember ul {
