@@ -8,7 +8,6 @@
       <li>传媒组</li>
       <li>机械组</li>
       <li>电控组</li>
-      <li>管理组</li>
     </div>
     <div class="back">
       <div class="backchart"></div>
@@ -36,6 +35,8 @@ import { getprogress } from '@/store/home/home';
 import { storeToRefs } from "pinia";
 import { reactive, ref } from 'vue'
 import router from "@/router";
+import { requests } from '@/service/request';
+import { anyToken } from '@/utils/anyToken';
 
 export default {
   name: "ShowFirst4",
@@ -44,6 +45,8 @@ export default {
     const gets = storeToRefs(get)
     let progress = gets.progress.value
     let long= gets.long
+
+    
 
 
     const leave = function () {
@@ -66,10 +69,11 @@ export default {
   position: relative;
   float: right;
   width: 50%;
-  height: 60%;
+  height: 61%;
   background-color: white;
   border-radius: 10px;
   cursor: pointer;
+
 }
 
 .headword {
@@ -84,7 +88,7 @@ export default {
 
 .category {
   float: left;
-  margin-top: 2%;
+  margin-top: 3.75%;
   width: 10%;
   height: 75%;
   font-size: 10px;
@@ -101,7 +105,7 @@ export default {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 14.3%;
+  height: 16.6%;
   font-family: Microsoft yahei !important;
   ;
 }
@@ -112,7 +116,7 @@ export default {
   left: 8%;
   content: '';
   width: 2%;
-  height: 11%;
+  height: 12.8%;
   box-sizing: border-box;
   border-width: 1.5px 0px 1.5px 0px;
   border-color: rgba(187, 187, 187, 100);
@@ -156,7 +160,7 @@ export default {
   justify-content: center;
 
   position: relative;
-  height: 14.3%;
+  height: 16.66%;
 }
 
 .real {

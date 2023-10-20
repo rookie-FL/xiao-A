@@ -35,6 +35,7 @@ import { getprogress } from "@/store/appraisalMan/appraisalMan";
 import { reactive, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import router from "@/router";
+
 export default {
   name: "ShowExamine3",
   setup() {
@@ -42,6 +43,7 @@ export default {
   let progress = store.progress.value
     let page = ref(1);
     let pages = ref(store.length);
+
 
     const leave = function () {
       router.push("/main/contentEdit");
@@ -72,7 +74,7 @@ export default {
   top: -90%;
   width: 50%;
   height: 90%;
-  background-color: rgb(232, 232, 229);
+  background-color: rgb(240, 240, 240);
   border-radius: 15px;
   box-shadow: 5px 5px 5px rgba(187, 187, 187, 100);
 }
@@ -94,15 +96,14 @@ export default {
 }
 
 .e_picture img {
+margin-left: 50px;
   float: left;
-  width: 30%;
+  width: 20%;
   height: 100%;
 }
 .e_picture li {
   display: flex;
   align-items: center;
-  float: left;
-  width: 70%;
   height: 100%;
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="progress2" style="overflow: hidden" ref="bigbox">
-    <select class="group" style="float: right;z-index: 1;margin:2% 4% 0 0 ;" v-model="group" ref="sel" @click=stop>
+    <select class="group" style="float: right;z-index: 1;margin:2% 3% 0 0 ;" v-model="group" ref="sel" @click=stop>
       <option value="0">后台组</option>
       <option value="1">前端组</option>
       <option value="2">Al组</option>
@@ -137,12 +137,22 @@ function move(obj, distance) {
 
 <style scoped>
 .group {
-  width: 20%;
-  height: 10%;
-  border-radius: 10px;
+  width: 200px;
+  height: 35px;
+  border-radius: 5px;
+  border-width: 1.5px;
   outline: none;
-  border-color: black;
+  border-color: rgb(218, 218, 218);
   transition: all 1s;
+}
+.group:hover{
+  border-color: #4E99CA;
+}
+
+
+.group option{
+  width: 200px;
+  height: 35px;
 }
 
 .headword {
@@ -164,6 +174,7 @@ function move(obj, distance) {
   border-radius: 10px;
   box-sizing: border-box;
   padding: 10px;
+  cursor:ew-resize;
 }
 
 ul {

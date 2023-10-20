@@ -75,7 +75,7 @@
               placeholder="选择进度"
               :disabled="disabled"
             >
-              <el-option value=' '>选择进度</el-option>
+              <el-option value=' ' >选择进度</el-option>
               <el-option
                 v-for="(n, index) in process.data"
                 :key="index"
@@ -387,6 +387,7 @@ export default {
   height: 100%;
   padding: 20px;
   box-sizing: border-box;
+
 }
 
 .SelectMember {
@@ -480,6 +481,7 @@ export default {
   height: 40px;
   color: white;
   background-color: rgba(11, 147, 234, 100);
+  transition: all 1s ease;
 }
 
 .M_data li {

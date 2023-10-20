@@ -27,7 +27,7 @@
                     <div @click="handleItemClick" data-url="/main/accMan" class="item" > 账号管理</div>
                 </el-aside>
                 <!-- 动态展示右侧页面 -->
-                <el-main class="hidden">
+                <el-main class="hidden" style="overflow:initial;">
                     <transition name="el-fade-in-linear">
                         <router-view v-loading="loading" ></router-view>
                     </transition>

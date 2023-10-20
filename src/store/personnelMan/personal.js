@@ -44,7 +44,7 @@ export const getList = defineStore("getList", {
           n++
         }
       });
-      this.list = newList
+      this.list = result.data.records
       this.pages=result.data.pages
 
       //总分排序

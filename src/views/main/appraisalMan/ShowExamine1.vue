@@ -1,37 +1,42 @@
 <template>
   <div class="progress">
-    <div class="M_data" ref="data" style="overflow: auto">
+    <div class="M_data" ref="data" >
       <ul class="headtitle">
         <li>考核</li>
         <li style="width: 40%">时间</li>
         <li>状态</li>
         <li>操作</li>
       </ul>
+   <div class="view" style="cursor:ns-resize">
       <ul v-if="progress.length == 0" class="none">没有数据</ul>
       <ul v-for="(n, index) in progress" :key="index" class="line" v-bind:id='n.id'>
-        <li style="font-size: 15px">{{ n.name }}</li>
-        <li style="font-size: 15px; width: 40%">{{ n.time }}</li>
-        <li style="font-size: 15px">{{ n.status }}</li>
-        <li @click="change(n.id, n.name, n.time.slice(0, 11), n.time.slice(13, 24))" class="change" style="
-            width: 7.5%;
-            margin-left: 5%;
-            color: rgba(11, 147, 234, 100);
-            font-size: 8px;
-          " v-if="n.changeable">
+        <li style="font-size: 18px;font-weight: 600;">{{ n.name }}</li>
+        <li style="font-size: 15px; width: 40%;font-weight: 600;">{{ n.time }}</li>
+        <li style="font-size: 18px;font-weight: 600;">{{ n.status }}</li>
+        <li @click="change(n.id, n.name, n.time.slice(0, 11), n.time.slice(13, 24),n.changeable)" class="change" :style="{color:(()=>{return n.changeable==true?'rgba(11, 147, 234, 100)':'rgba(160, 160, 160, 100)'})()}
+          " >
           修改
         </li>
-        <li style="width: 7.5%; color: rgba(11, 147, 234, 100); font-size: 8px" @click=remove(n.id) v-if="n.changeable">
+        <li style="width: 7.5%; font-size: 15px; cursor: pointer;" :style="{color:(()=>{return n.changeable==true?'rgba(11, 147, 234, 100)':'rgba(160, 160, 160, 100)'})()}
+          " @click=remove(n.id,n.changeable) >
           删除
         </li>
       </ul>
-      <div v-if="addstatus">
-        <li class='check' style='float:right;color:rgb(11, 147, 234); font-size:12px;margin: 0;width:7.5%'
-          @click="addcancel">取消</li>
+   
+      <transition name="fade">
+      <div v-if="addstatus" style="height: 30px;display: flex;align-items: center;">
+
         <input style="width:20%" v-model="add.name">
         <input style="width:20%;" v-model="add.startTime" type="date">
         <input style="width:20%;" v-model="add.endTime" type="date">
         <input type="file" @change="handleFileInput" ref="fileInput" multiple style="width: 30%;"/>
+        <li class='check' style='float:right;color:rgb(11, 147, 234); font-size:15px;margin: 0;width:10%; cursor: pointer;'
+          @click="addcancel">取消</li>
       </div>
+          
+    </transition>
+    </div>
+     
     </div>
     <div class="func">
       <li class="add" @click="addprogress" ref="add">添加</li>
@@ -115,15 +120,22 @@ export default {
     },
 
     // 删除功能
-    remove(id) {
+    remove(id,status) {
+      if(status==true){
       getprogress().deletes(id)
+      }else{ ElMessage.error("已完成的流程不能删除");}
     },
     //添加功能
     addprogress() {
       this.addstatus = true
-      setTimeout(() => {
-        document.querySelector('.M_data').scrollTop = 888
-      }, 100)
+const view=document.querySelector('.view')
+      let n=0;
+     view.timer=setInterval(()=>{
+         if(n==111){clearInterval(view.timer)}
+          n++;
+          view.scrollTop = 8*n;
+     },5)
+  
     },
     //确认按钮
     addsure() {
@@ -164,12 +176,14 @@ export default {
 
 
     //修改功能
-    change(id, name, startTime, endTime) {
+    change(id, name, startTime, endTime,status) {
+      if(status==true){
       this.isShow = true;
       this.changetarget = id
       this.changes.name = name
       this.changes.startTime = startTime
       this.changes.endTime = endTime
+      }else{ ElMessage.error("已完成的流程不能修改");}
     },
 
     // 修改取消
@@ -209,7 +223,7 @@ export default {
 .progress {
   width: 47.5%;
   height: 42.5%;
-  background-color: rgb(232, 232, 229);
+  background-color: rgb(240, 240, 240);
   border-radius: 15px;
   box-shadow: 5px 5px 5px rgba(187, 187, 187, 100);
 }
@@ -233,11 +247,27 @@ export default {
   padding-inline-start: 0px;
 }
 
+.M_data ul li{
+
+}
+.M_data div{
+  height: 75%;
+  overflow: auto;
+}
+
 .headtitle {
+  display: flex;
+justify-content: center;
+align-items: center;
+
   height: 25%;
   border-width: 0px 0px 2px 0px;
   border-color: rgba(187, 187, 187, 100);
   border-style: solid;
+}
+.headtitle li{
+font-size: 20px;
+font-weight: 800;
 }
 
 .M_data li {
@@ -245,6 +275,10 @@ export default {
   float: left;
   width: 20%;
   text-align: center;
+}
+
+.line{
+  margin-top: 15px;
 }
 
 .condition .M_data li {
@@ -262,6 +296,7 @@ export default {
   float: left;
   margin-top: 5px;
   color: rgba(11, 147, 234, 100);
+  cursor: pointer;
 }
 
 .sure {
@@ -270,6 +305,7 @@ export default {
   width: 70px;
   height: 25px;
   line-height: 25px;
+  cursor: pointer;
 
   text-align: center;
   background-color: white;
@@ -339,4 +375,17 @@ input {
   color: rgb(185, 194, 202);
   font-size: 30px;
 }
+
+.change{
+  width: 7.5%!important;
+ margin-left: 5%;
+ color: rgba(11, 147, 234, 100);
+ font-size: 15px;
+ cursor: pointer;
+}
+
+
+
+
+
 </style>

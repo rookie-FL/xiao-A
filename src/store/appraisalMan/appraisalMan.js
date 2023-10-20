@@ -63,6 +63,13 @@ export const getprogress = defineStore("getprogresss", {
 
       this.length=result.data.data.length/6
       for (let i = 0; i < result.data.data.length;i++) {
+        let passRC= await requests.get({
+          url: `https://la.hiles.cn/web/assess/getPassCountAndRate?id=${result.data.data[i].id}`,
+        },useLoginStore().token)
+        console.log(passRC);
+    
+
+
         let startdate=result.data.data[i].startTime
         let enddate=result.data.data[i].endTime
         if(startdate&&enddate!=null){ 
@@ -86,15 +93,17 @@ export const getprogress = defineStore("getprogresss", {
           'time': startdate+ '- '+enddate,
           'status': status,
           'changeable': changeable,
-          'contentUrl':result.data.data[i].contentUrl
+          'contentUrl':result.data.data[i].contentUrl,
+          'passRate':passRC.data.passRate,
+          'passCount':passRC.data.passCount
         }
 
-  
       }
 
 
       
     },
+
   },
 
 

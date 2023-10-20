@@ -8,12 +8,14 @@
         <li>通过率</li>
         <li>通过人员名单</li>
       </ul>
-      <ul v-for="(n, index) in progress" :key="index">
-        <li style="font-size: 15px">{{ n.name }}</li>
-        <li style="font-size: 15px">{{ 0 }}</li>
-        <li style="font-size: 15px">{{ 0 }}</li>
+      <div style=" overflow: auto;height: 75%; cursor: ns-resize;">
+      <ul v-for="(n, index) in progress" :key="index" style="margin-top: 15px;">
+        <li style="font-size: 18px">{{ n.name }}</li>
+        <li style="font-size: 18px">{{ n.passCount +'人'}}</li>
+        <li style="font-size: 18px">{{ n.passCount +'%'}}</li>
         <li style="color: rgba(11, 147, 234, 100); font-size: 15px;cursor: pointer;" @click="toPersonalMan(n.id)">查看</li>
       </ul>
+    </div>
     </div>
   </div>
 </template>
@@ -24,14 +26,20 @@
 import { getprogress } from '@/store/appraisalMan/appraisalMan';
 import { anyToken } from '@/utils/anyToken';
 import router from "@/router";
+import { requests } from "@/service/request";
+import { useLoginStore } from "@/store/login/login";
 export default {
   name: "ShowExamine2",
   setup() {
 getprogress().getinformation()
 let progress=getprogress().progress
 let base= anyToken().userGroup
-
 let group
+
+setTimeout(() => {
+console.log(progress)
+}, 2000);
+
 
 (()=>{
       if (base == 0) { group = '后台组' }
@@ -60,14 +68,14 @@ return {
 .condition {
   width: 47.5%;
   height: 42.5%;
-  background-color: rgb(232, 232, 229);
+  background-color: rgb(240, 240, 240);
   border-radius: 15px;
   border-radius: 15px;
   box-shadow: 5px 5px 5px rgba(187, 187, 187, 100);
 }
 
 .M_data {
-  overflow: auto;
+
   margin: 0px auto;
   width: 90%;
   height: 80%;
@@ -88,10 +96,15 @@ return {
 
 
 .headtitle {
-  height: 15%;
-  border-width: 0px 0px 2px 0px;
-  border-color: rgba(187, 187, 187, 100);
-  border-style: solid;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25%;
+    border-width: 0px 0px 2px 0px;
+    border-color: rgba(187, 187, 187, 100);
+    border-style: solid;
+   font-weight: 800;
+   font-size: 20px;
 }
 
 
@@ -100,6 +113,7 @@ return {
   float: left;
   width: 20%;
   text-align: center;
+  font-weight: 800;
 }
 
 .condition .M_data li {

@@ -53,7 +53,7 @@ const leave=function(){
   float: right;
   margin-top: 20px;
   width: 50%;
-  height: 35%;
+  height: 36%;
   background-color: white;
   border-radius: 10px;
 }
